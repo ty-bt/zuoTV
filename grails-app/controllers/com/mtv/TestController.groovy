@@ -7,8 +7,7 @@ import org.jsoup.select.Elements
 
 class TestController {
 
-    def douyuRoomService
-    def pandaRoomService
+    def roomService
 
     def index() {
         println "进入"
@@ -23,12 +22,19 @@ class TestController {
     }
 
     def start(){
-        douyuRoomService.loadRoom()
+        roomService.loadRoom(Platform.findByFlag("douyu"))
         render "success"
     }
 
     def start1(){
-        pandaRoomService.loadRoom()
+        roomService.loadRoom(Platform.findByFlag("panda"))
+        render "success"
+    }
+
+    def loadAll(){
+        render(new Date())
+        roomService.loadAll()
+        render(new Date())
         render "success"
     }
 }

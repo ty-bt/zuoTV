@@ -2,7 +2,7 @@ package com.mtv.room
 
 import com.mtv.Platform
 import com.mtv.Room
-import com.mtv.StringUtils
+import com.mtv.utils.StringUtils
 import grails.transaction.Transactional
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -12,14 +12,11 @@ import org.springframework.util.Assert
 
 
 @Transactional
-class DouyuRoomService implements SupportLoadRoom {
+class DouyuRoomService extends SupportLoadRoom {
 
-    // 当前平台标识
-    final static String FLAG = "douyu"
 
-    @Override
-    boolean support(String object) {
-        return object == FLAG
+    public DouyuRoomService() {
+        super("douyu")
     }
 
     /**
@@ -27,9 +24,6 @@ class DouyuRoomService implements SupportLoadRoom {
      */
     @Override
     void loadRoom() {
-        log.info("开始获取${FLAG}数据.")
-        Platform platform = Platform.findByFlag(FLAG)
-        Assert.notNull(platform, "没有找到平台数据${FLAG}")
 
         // 获取总页数
         Document pageCountDoc = Jsoup.parse(new URL("http://www.douyu.com/directory/all?page=2&isAjax=0"), 60000)
@@ -38,10 +32,14 @@ class DouyuRoomService implements SupportLoadRoom {
             throw new Exception("总页数获取失败")
         }
         int pageCount = pageCountStr.toInteger()
-        log.info("${FLAG}总页数${pageCount}.")
+        log.info("${platformFlag}总页数${pageCount}.")
+
+        // 将所有状态置为不在线
+        Room.executeUpdate("update Room r set r.isOnLine = true where r.platform = ?", [platform])
+
         // 循环获取每一页的数据
         for(int a = 0; a < pageCount; a++){
-            println "正在获取第${a+1}页数据."
+            println "${platformFlag}正在获取第${a+1}页数据."
             Document pageDoc = Jsoup.parse(new URL("http://www.douyu.com/directory/all?page=${a+1}&isAjax=1"), 60000)
             Elements eles = pageDoc.select("li")
             eles.each {
@@ -52,6 +50,7 @@ class DouyuRoomService implements SupportLoadRoom {
                 if(!room){
                     room = new Room(platform: platform, flag: flag, quoteUrl: "http://staticlive.douyutv.com/common/share/play.swf?room_id=${flag}")
                 }
+                room.isOnLine = true
                 room.name = ele.select("h3.ellipsis").text()
                 room.img = ele.select(".imgbox img").attr("data-original")
                 room.tag = ele.select(".tag").text()
@@ -61,7 +60,6 @@ class DouyuRoomService implements SupportLoadRoom {
                 room.save()
             }
         }
-        log.info("${FLAG}获取完成.")
     }
 
 

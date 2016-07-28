@@ -1,26 +1,21 @@
 package com.mtv.room
 
 import com.alibaba.fastjson.JSON
-import com.mtv.Platform
 import com.mtv.Room
-import com.mtv.StringUtils
 import grails.transaction.Transactional
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
-import org.jsoup.select.Elements
 import org.springframework.util.Assert
 
 
 @Transactional
-class PandaRoomService implements SupportLoadRoom {
+class PandaRoomService extends SupportLoadRoom {
 
-    // 当前平台标识
-    final static String FLAG = "panda"
-
-    @Override
-    public boolean support(String object) {
-        return object == FLAG
+    /**
+     *
+     * @param platformFlag 平台标识
+     */
+    PandaRoomService() {
+        super("panda")
     }
 
     /**
@@ -28,26 +23,26 @@ class PandaRoomService implements SupportLoadRoom {
      */
     @Override
     public void loadRoom() {
-        log.info("开始获取${FLAG}数据...")
-        Platform platform = Platform.findByFlag(FLAG)
-        Assert.notNull(platform, "没有找到平台数据${FLAG}")
 
-        def tempObj = getPageObj(1, 1)
-        Assert.notNull(tempObj?.data?.total, "${FLAG}获取总条数异常")
+        def tempObj = this.getPageObj(1, 1)
+        Assert.notNull(tempObj?.data?.total, "${platformFlag}获取总条数异常")
 
         // 总条数
         int total = tempObj.data.total
         int pageSize = 120
         // 总页数
         int pageCount = Math.ceil(total / pageSize.doubleValue()).intValue()
-        log.info("${FLAG}总条数:${total},总页数${pageCount}")
+        log.info("${platformFlag}总条数:${total},总页数${pageCount}")
+
+        // 将所有状态置为不在线
+        Room.executeUpdate("update Room r set r.isOnLine = true where r.platform = ?", [platform])
 
         for(int a = 1; a <= pageCount; a++){
-            println "正在获取第${a}页数据."
-            Object pageObj = getPageObj(a, pageSize)
+            println "${platformFlag}正在获取第${a}页数据."
+            Object pageObj = this.getPageObj(a, pageSize)
             List<Map> list = pageObj?.data?.items
 
-            Assert.notNull(list, "${FLAG}第${a}页获取异常...")
+            Assert.notNull(list, "${platformFlag}第${a}页获取异常...")
 
             list.each{
                 // 查看如果是老数据则覆盖,新数据则新建
@@ -56,6 +51,7 @@ class PandaRoomService implements SupportLoadRoom {
                 if(!room){
                     room = new Room(platform: platform, flag: roomId)
                 }
+                room.isOnLine = true
                 room.name = it.name
                 room.img = it.pictures.img
                 room.tag = it.classification.cname
@@ -65,7 +61,6 @@ class PandaRoomService implements SupportLoadRoom {
                 room.save()
             }
         }
-        log.info("${FLAG}数据获取完成...")
 
     }
 

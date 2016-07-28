@@ -1,4 +1,4 @@
-package com.mtv
+package com.mtv.utils
 
 /**
  * 基础服务提供接口

@@ -1,8 +1,13 @@
 package com.mtv
 
+import com.sun.org.apache.xpath.internal.operations.Bool
+
 class Room {
 
     Platform platform
+
+    /* 是否在线 */
+    Boolean isOnLine
 
     /* 平台中的唯一标识 房间号 */
     String flag
