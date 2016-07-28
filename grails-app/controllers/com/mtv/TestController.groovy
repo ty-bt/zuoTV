@@ -8,6 +8,7 @@ import org.jsoup.select.Elements
 class TestController {
 
     def douyuRoomService
+    def pandaRoomService
 
     def index() {
         println "进入"
@@ -23,6 +24,11 @@ class TestController {
 
     def start(){
         douyuRoomService.loadRoom()
+        render "success"
+    }
+
+    def start1(){
+        pandaRoomService.loadRoom()
         render "success"
     }
 }

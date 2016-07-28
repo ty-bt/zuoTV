@@ -30,6 +30,7 @@ class Room {
 
 
     static constraints = {
+        quoteUrl nullable: true
     }
 
 }

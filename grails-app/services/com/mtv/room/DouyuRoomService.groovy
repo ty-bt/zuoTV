@@ -14,6 +14,7 @@ import org.springframework.util.Assert
 @Transactional
 class DouyuRoomService implements SupportLoadRoom {
 
+    // 当前平台标识
     final static String FLAG = "douyu"
 
     @Override
@@ -26,6 +27,7 @@ class DouyuRoomService implements SupportLoadRoom {
      */
     @Override
     void loadRoom() {
+        log.info("开始获取${FLAG}数据.")
         Platform platform = Platform.findByFlag(FLAG)
         Assert.notNull(platform, "没有找到平台数据${FLAG}")
 
@@ -36,7 +38,7 @@ class DouyuRoomService implements SupportLoadRoom {
             throw new Exception("总页数获取失败")
         }
         int pageCount = pageCountStr.toInteger()
-
+        log.info("${FLAG}总页数${pageCount}.")
         // 循环获取每一页的数据
         for(int a = 0; a < pageCount; a++){
             println "正在获取第${a+1}页数据."
@@ -59,6 +61,7 @@ class DouyuRoomService implements SupportLoadRoom {
                 room.save()
             }
         }
+        log.info("${FLAG}获取完成.")
     }
 
 
