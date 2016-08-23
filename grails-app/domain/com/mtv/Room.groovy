@@ -1,7 +1,5 @@
 package com.mtv
 
-import com.sun.org.apache.xpath.internal.operations.Bool
-
 class Room {
 
     Platform platform
