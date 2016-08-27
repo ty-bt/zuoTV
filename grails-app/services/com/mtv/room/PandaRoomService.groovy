@@ -22,7 +22,7 @@ class PandaRoomService extends SupportLoadRoom {
      * 刷新平台房间数据
      */
     @Override
-    public void loadRoom() {
+    public List<List<Map>> loadData() {
 
         def tempObj = this.getPageObj(1, 1)
         Assert.notNull(tempObj?.data?.total, "${platformFlag}获取总条数异常")
@@ -34,16 +34,28 @@ class PandaRoomService extends SupportLoadRoom {
         int pageCount = Math.ceil(total / pageSize.doubleValue()).intValue()
         log.info("${platformFlag}总条数:${total},总页数${pageCount}")
 
-        // 将所有状态置为不在线
-        Room.executeUpdate("update Room r set r.isOnLine = true where r.platform = ?", [platform])
-
+        List pageList = []
         for(int a = 1; a <= pageCount; a++){
-            println "${platformFlag}正在获取第${a}页数据."
+//            println "${platformFlag}正在获取第${a}页数据."
             Object pageObj = this.getPageObj(a, pageSize)
             List<Map> list = pageObj?.data?.items
 
             Assert.notNull(list, "${platformFlag}第${a}页获取异常...")
+            pageList << list
 
+        }
+        return pageList
+    }
+
+    @Override
+    void saveRoom(Object obj) {
+        List<List<Map>> pageList = (List<List<Map>>)obj
+        Date lastUpdated = new Date()
+        int i = 1
+        // 解析并保存数据
+        pageList.each {
+//            print("${platform.name}: ${pageList.size()}/${i++}")
+            List<Map> list = it
             list.each{
                 // 查看如果是老数据则覆盖,新数据则新建
                 String roomId = it.id
@@ -58,14 +70,18 @@ class PandaRoomService extends SupportLoadRoom {
                 room.adNum = Long.parseLong(it.person_num)
                 room.anchor = it.userinfo.nickName
                 room.url = "http://www.panda.tv/" + it.id
+                room.lastUpdated = lastUpdated
                 room.save()
             }
         }
 
+        // 将平台下所有房间置为离线
+        Room.executeUpdate("update Room r set r.isOnLine = false where r.platform = ? and r.lastUpdated < ?", [this.platform, lastUpdated])
     }
 
     public Object getPageObj(int pageIndex, int pageSize){
         String body = Jsoup.connect("http://www.panda.tv/live_lists?status=2&order=person_num&pageno=${pageIndex}&pagenum=${pageSize}")
+                .timeout(60000)
                 .header("User-Agent","Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2")
                 .ignoreContentType(true).execute().body()
         return JSON.parse(body)

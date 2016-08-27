@@ -31,6 +31,12 @@ class Room {
     /* 外部引用url */
     String quoteUrl
 
+    /*创建时间*/
+    Date dateCreated
+
+    /*最后修改时间*/
+    Date lastUpdated
+
 
     static constraints = {
         quoteUrl nullable: true

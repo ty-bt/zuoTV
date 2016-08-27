@@ -37,4 +37,11 @@ class TestController {
         render(new Date())
         render "success"
     }
+
+    def loadAllT(){
+        render(new Date())
+        roomService.loadAllT()
+        render(new Date())
+        render "success"
+    }
 }

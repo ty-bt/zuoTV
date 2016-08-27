@@ -26,7 +26,7 @@
             meituo TV
         </div>
         <div class="body">
-            <a ng-repeat="room in rooms" repeat-finish class="room" ng-href="{{room.url}}" target="_blank" ng-style="roomSize">
+            <a ng-repeat="room in rooms" repeat-finish class="room trans2" ng-href="{{room.url}}" target="_blank" ng-style="roomSize">
                 <table cellspacing="0" cellpadding="0">
                     <tr>
                         <td style="width:70%;"></td>
