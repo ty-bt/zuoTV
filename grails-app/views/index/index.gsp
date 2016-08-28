@@ -9,7 +9,7 @@
 <!DOCTYPE HTML>
 <html ng-app="main">
 <head>
-    <title>meituo TV</title>
+    <title>TV</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="${resource(file: '/css/normalize.css')}" rel="stylesheet" />
     <link href="${resource(file: '/css/base.css')}" rel="stylesheet" />
@@ -21,35 +21,12 @@
     <script type="text/javascript" src="${resource(file: '/js/self/main.js')}"></script>
 </head>
 
-<body ng-controller="main.index">
+<body>
     <div class="main">
         <div class="head">
-            meituo TV
+            TV
         </div>
-        <div class="body">
-            <a ng-repeat="room in rooms" repeat-finish class="room trans2" ng-href="{{room.url}}" target="_blank" ng-style="roomSize">
-                <table cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td style="width:70%;"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="photo" ng-style="{height: roomSize.height - 50}">
-                            <img ng-src="{{room.img}}"/>
-                            <span class="pla-name">{{room.platform.name}}</span>
-                        </td>
-                    </tr>
-                    <tr class="top">
-                        <td class="ellipsis title">{{room.name}}</td>
-                        <td class="t-r ellipsis tag">{{room.tag}}</td>
-                    </tr>
-                    <tr class="bottom">
-                        <td class="ellipsis anchor">{{room.anchor}}</td>
-                        <td class="t-r ellipsis num">{{room.adNum | wanNum}}</td>
-                    </tr>
-                </table>
-            </a>
-            <div ng-if="paginate" t-paginate="paginate"></div>
+        <div ui-view>
         </div>
     </div>
 </body>

@@ -36,4 +36,7 @@ a{text-decoration: none; color: #313131}
 /* 分页样式 */
 .t-pagination{width:100%;text-align: center;line-height: 20px;color: #7f7f7f;}
 .t-pagination .page{display: inline-block;border: 1px solid #7f7f7f;width: 36px;border-radius: 3px;margin: 5px;font-size: 12px;cursor: pointer;}
+.t-pagination .page:hover{border-color: #000; color: #000}
 .t-pagination .pre,.t-pagination .next{width: auto;padding: 0 10px;}
+.t-pagination .current,.t-pagination .current:hover{background: #000; color: #fff; border-color: #000; cursor: default}
+.t-pagination .page.disable, .t-pagination .page.disable:hover{border-color: #ccc;color: #ccc;cursor: default;}

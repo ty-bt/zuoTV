@@ -1,14 +1,14 @@
-<div class="t-pagination" a="{{config.pageCount}}" ng-if="config.pageCount" ng-init="tempCount = config.showCount; pCount = tempCount / 2">
-    <a class="pre page" cl="{{pCount}}">上一页</a>
-    <a class="page">1</a>
+<div class="t-pagination" ng-if="config.pageCount" ng-init="tempCount = config.showCount; pCount = tempCount / 2">
+    <a href="{{createHref(config.current - 1)}}" class="pre page" ng-class="{disable: config.current == 1}">上一页</a>
+    <a href="{{createHref(1)}}" class="page" ng-class="{current: config.current == 1}">1</a>
 
     <a class="sh" ng-if="config.current - config.leftCount > 2">...</a>
-    <a class="page" ng-repeat="i in (config.current - config.leftCount | arr: config.leftCount)">{{i}}</a>
-    <a class="page" ng-if="config.leftCount">{{config.current}}</a>
+    <a href="{{createHref(i)}}" class="page" ng-repeat="i in (config.current - config.leftCount | arr: config.leftCount)">{{i}}</a>
+    <a href="{{createHref(i)}}" class="page current" ng-if="config.leftCount || config.current == 2">{{config.current}}</a>
 
-    <a class="page" ng-repeat="i in (config.current + 1 | arr: config.rightCount)" ng-if="i <= config.pageCount">{{i}}</a>
+    <a href="{{createHref(i)}}" class="page" ng-repeat="i in (config.current + 1 | arr: config.rightCount)" ng-if="i <= config.pageCount">{{i}}</a>
     <a class="sh" ng-if="config.pageCount - config.rightCount != config.current">...</a>
     <!--最后一页-->
-    <a class="page" ng-if="config.current + config.rightCount < config.pageCount">{{config.pageCount}}</a>
-    <a class="next page">下一页</a>
+    <a href="{{createHref(config.pageCount)}}" class="page" ng-if="config.current + config.rightCount < config.pageCount">{{config.pageCount}}</a>
+    <a href="{{createHref(config.current + 1)}}" class="next page" ng-class="{disable: config.current == config.pageCount}">下一页</a>
 </div>

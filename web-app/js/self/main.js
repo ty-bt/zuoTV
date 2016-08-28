@@ -6,43 +6,45 @@
     main.run(['$rootScope', function($rootScope){
         $rootScope.ctx = window.ctx;
     }]);
+
+    main.run(['$rootScope', '$state', '$stateParams',
+        function($rootScope, $state, $stateParams) {
+            $rootScope.$state = $state;
+            $rootScope.$stateParams = $stateParams;
+        }
+    ]);
+
     //
-    // main.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-    //     $urlRouterProvider.otherwise('/');
-    //
-    //     $stateProvider.state('about', {
-    //         url: '/about',
-    //         template: '<h1>Welcome to UI-Router Demo</h1>',
-    //
-    //         // optional below
-    //         templateProvider: ['$timeout',
-    //             function($timeout) {
-    //                 return $timeout(function() {
-    //                     return '<p class="lead">UI-Router Resource</p>' +
-    //                         '<p>The second line</p>'
-    //                 }, 100);
-    //             }
-    //         ],
-    //
-    //         templateUrl: window.ctx +　'about.html',
-    //
-    //         controller: 'main.index'
-    //     });
-    // }]);
+    main.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider
+            // .when('/', '/')
+            .otherwise('/');
 
 
-    main.controller('main.index', ['$scope', '$http', function($scope, $http){
+        $stateProvider.state('index', {
+            url: '/:offset',
+            templateUrl: window.ctx +　'/html/room/index.html',
+            controller: 'main.index'
+        });
+    }]);
+
+
+    main.controller('main.index', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
+        // 每页显示
+        var max = 120;
         $http({
             url: window.ctx + "room/page",
-            params: {max: 120, offset: 0}
+            params: {max: max, offset: $stateParams.offset || 0}
         }).success(function(data){
-            console.log(data);
             $scope.rooms = data.rooms;
             // 分页
             $scope.paginate = {
-                pageSize: 120,
+                pageSize: max,
                 total: data.total,
-                current: 1
+                current: parseInt($stateParams.offset || 0) / 120 + 1,
+                href: function(cur){
+                    return $state.href("index", $.extend({}, $stateParams, {offset: (cur - 1) * 120}));
+                } 
             }
         });
 
@@ -51,10 +53,10 @@
         $scope.roomSize = {width: initWidth, height: 251};
         var ratio = $scope.roomSize.width / $scope.roomSize.height;
         $(window).resize(function(){
-            $(".body").height($(window).height() - 45);
-            $(".body").width($(window).width() - 10).show();
+            $element.find(".body").height($(window).height() - 45);
+            $element.find(".body").width($(window).width() - 10).show();
             // console.log($(window).width() - 10);
-            var bodyWidth = $(".body").width() - ($('.body')[0].offsetWidth - $('.body')[0].scrollWidth);
+            var bodyWidth = $element.find(".body").width() - ($('.body')[0].offsetWidth - $('.body')[0].scrollWidth);
             var size = Math.ceil(bodyWidth / (initWidth + 10));
             var width = Math.floor(bodyWidth / size - 10);
             $scope.roomSize = {width: width, height: width / ratio};

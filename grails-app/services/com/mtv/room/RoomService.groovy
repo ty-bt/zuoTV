@@ -84,6 +84,9 @@ class RoomService {
             v.join()
             log.info("保存${k}开始")
             Long startDate = System.currentTimeMillis()
+            if(!dataMap[k]){
+                return
+            }
             this.saveRoom(serverMap[k], dataMap[k])
             log.info("保存${k}完成, 用时${System.currentTimeMillis() - startDate}ms")
         }

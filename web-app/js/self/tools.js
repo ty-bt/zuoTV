@@ -59,8 +59,10 @@ window.tool = {
             total: 200,
             pageSize: 10,
             current: 1,
-            // 除了当前页,第一页和最后一页 还显示的页码
-            showCount: 6
+            // 除了当前页,第一页和最后一页 还显示的页码数量
+            showCount: 6,
+            // url生成方法
+            href: $.noop
         };
 
         return {
@@ -73,6 +75,7 @@ window.tool = {
 
                 var config = scope.config = $.extend({}, defaultConfig, scope.config);
                 config.pageCount = Math.ceil(config.total / config.pageSize);
+                // 计算当前页左边和右边显示的页码数量
                 var right = config.showCount;
                 var left = 0;
                 var pCount = right / 2;
@@ -84,9 +87,16 @@ window.tool = {
                         break;
                     }
                 }
-                scope.config.leftCount = left;
-                scope.config.rightCount = right;
-                console.log(config )
+                config.leftCount = left;
+                config.rightCount = right;
+                // 生成链接方法  去除无效的页码
+                scope.createHref = function(num){
+                    if(num && num > 0 && num <= config.pageCount){
+                        return config.href(num);
+                    }
+                    return "javascript:void(0);"
+                };
+                // console.log(config )
 
             }
         };
