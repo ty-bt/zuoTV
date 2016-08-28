@@ -5,6 +5,14 @@ package com.mtv
  */
 class Platform {
 
+    static{
+        grails.converters.JSON.registerObjectMarshaller(Platform){
+            return it.properties.findAll{k,v->
+                !(k in ['class', 'dateCreated', 'lastUpdated'])
+            } + [id:it.id]
+        }
+    }
+
     /* 名称*/
     String name
 

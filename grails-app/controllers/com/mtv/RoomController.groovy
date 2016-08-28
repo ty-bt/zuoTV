@@ -9,6 +9,6 @@ class RoomController {
             eq('isOnLine', true)
             order('adNum', "desc")
         }
-        render([rooms: rooms] as JSON)
+        render([rooms: rooms, total: rooms.totalCount] as JSON)
     }
 }

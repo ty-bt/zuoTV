@@ -2,6 +2,14 @@ package com.mtv
 
 class Room {
 
+    static{
+        grails.converters.JSON.registerObjectMarshaller(Room){
+            return it.properties.findAll{k,v->
+                !(k in ['class', 'dateCreated', 'lastUpdated'])
+            } + [id:it.id]
+        }
+    }
+
     Platform platform
 
     /* 是否在线 */

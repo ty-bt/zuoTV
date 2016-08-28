@@ -16,6 +16,7 @@
     <script type="text/javascript">window.ctx = "${createLink(uri:'/')}";</script>
     <script type="text/javascript" src="${resource(file: '/js/jquery-3.1.0.min.js')}"></script>
     <script type="text/javascript" src="${resource(file: '/js/angular/angular.min.js')}"></script>
+    <script type="text/javascript" src="${resource(file: '/js/angular/angular-ui-router.min.js')}"></script>
     <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}"></script>
     <script type="text/javascript" src="${resource(file: '/js/self/main.js')}"></script>
 </head>
@@ -33,7 +34,10 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td colspan="2" class="photo" ng-style="{height: roomSize.height - 50}"><img ng-src="{{room.img}}"/></td>
+                        <td colspan="2" class="photo" ng-style="{height: roomSize.height - 50}">
+                            <img ng-src="{{room.img}}"/>
+                            <span class="pla-name">{{room.platform.name}}</span>
+                        </td>
                     </tr>
                     <tr class="top">
                         <td class="ellipsis title">{{room.name}}</td>
@@ -41,10 +45,11 @@
                     </tr>
                     <tr class="bottom">
                         <td class="ellipsis anchor">{{room.anchor}}</td>
-                        <td class="t-r ellipsis num">{{room.adNum}}</td>
+                        <td class="t-r ellipsis num">{{room.adNum | wanNum}}</td>
                     </tr>
                 </table>
             </a>
+            <div ng-if="paginate" t-paginate="paginate"></div>
         </div>
     </div>
 </body>
