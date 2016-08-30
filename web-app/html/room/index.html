@@ -1,8 +1,9 @@
 <div class="body">
     <a ng-repeat="room in rooms"
        repeat-finish
-       class="room trans2" target="_blank"
-       ng-href="{{room.url}}"
+       class="room trans2"
+       target="{{room.quoteUrl ? '_self' : '_blank'}}"
+       ng-href="{{room.href}}"
        ng-click="openRoom(room, $event)"
        ng-style="roomSize">
         <table cellspacing="0" cellpadding="0">
@@ -28,5 +29,5 @@
         </table>
     </a>
     <div ng-if="paginate" t-paginate="paginate"></div>
-    <div class="r-detail ui-view"></div>
 </div>
+<div ui-view></div>

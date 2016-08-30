@@ -14,6 +14,7 @@ a{text-decoration: none; color: #313131}
 /* 超出隐藏 */
 .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;word-wrap: normal;word-break: keep-all;}
 
+.filter-blur{-webkit-filter: blur(5px); -moz-filter: blur(5px); -ms-filter: blur(5px); -o-filter: blur(5px); filter: blur(5px); filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=4, MakeShadow=false);}
 
 .main{background: #F2F2F2}
 .head{height: 45px;font-size: 27px;font-weight: bold;padding-left: 5px;line-height: 45px;background: #52c3dd;color: #fff;}
@@ -29,7 +30,7 @@ a{text-decoration: none; color: #313131}
 .room tr td+td{width: 30%;}
 .room .ellipsis{padding: 0 5px;}
 .room .photo{width: 100%;position: relative;display: table-cell;}
-.room .photo img{width: 100%; height: 100%; overflow: hidden}
+.room .photo img{width: 100%; height: 100%; overflow: hidden; -webkit-filter: blur(0px);}
 .room:hover .photo img{-webkit-filter: blur(5px); -moz-filter: blur(5px); -ms-filter: blur(5px); -o-filter: blur(5px); filter: blur(5px); filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=4, MakeShadow=false);   }
 /* 播放图标 */
 .room .photo .pla-name{position: absolute;top: 0;right: 0;color: #fff;font-size: 13px;line-height: 18px;padding: 0 4px;text-shadow: 0 0 8px #000;border: 1px solid #fff;border-radius: 4px;margin: 5px;opacity: 0.5;}
@@ -50,3 +51,13 @@ a{text-decoration: none; color: #313131}
 .t-pagination .pre,.t-pagination .next{width: auto;padding: 0 10px;}
 .t-pagination .current,.t-pagination .current:hover{background: #000; color: #fff; border-color: #000; cursor: default}
 .t-pagination .page.disable, .t-pagination .page.disable:hover{border-color: #ccc;color: #ccc;cursor: default;}
+
+.r-detail, .r-detail>*{position: absolute;width: 100%;height: 100%;top: 0;left: 0;overflow: hidden;}
+.r-detail .back-img{}
+.r-detail .d-content{}
+.r-detail .d-content .top, .r-detail .d-content .bottom{ text-align: right; font-size: 24px; width: auto; color: #fff; text-shadow: 0 0 5px #000; padding: 5px 16px; }
+.r-detail .d-content .fa{cursor: pointer}
+.r-detail .d-content a{color: #fff}
+.r-detail .d-content .fa:hover{color: #52c3dd}
+.r-detail .d-content .cen{ text-align: center;}
+.r-detail .d-content .bottom{}

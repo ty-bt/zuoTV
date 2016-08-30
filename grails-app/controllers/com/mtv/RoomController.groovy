@@ -1,6 +1,7 @@
 package com.mtv
 
 import grails.converters.JSON
+import org.springframework.util.Assert
 
 class RoomController {
 
@@ -14,5 +15,13 @@ class RoomController {
             order('adNum', "desc")
         }
         render([rooms: rooms, total: rooms.totalCount] as JSON)
+    }
+
+    def one(){
+        def roomId = params.getLong("id")
+        Assert.notNull(roomId, "ID不能为空")
+
+        def room = Room.findById(roomId)
+        render([room: room] as JSON)
     }
 }
