@@ -1,10 +1,6 @@
+<!--所有房间列表-->
 <div class="body">
-    <a ng-repeat="room in rooms"
-       repeat-finish
-       class="room trans2" target="_blank"
-       ng-href="{{room.url}}"
-       ng-click="openRoom(room, $event)"
-       ng-style="roomSize">
+    <a ng-repeat="room in rooms" repeat-finish class="room trans2" ng-href="{{room.url}}" target="_blank" ng-style="roomSize">
         <table cellspacing="0" cellpadding="0">
             <tr>
                 <td style="width:70%;"></td>
@@ -28,5 +24,6 @@
         </table>
     </a>
     <div ng-if="paginate" t-paginate="paginate"></div>
+    <!-- 房间详情 -->
     <div class="r-detail ui-view"></div>
 </div>

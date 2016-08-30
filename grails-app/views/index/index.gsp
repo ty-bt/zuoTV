@@ -11,6 +11,7 @@
 <head>
     <title>TV</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="${resource(file: '/css/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" />
     <link href="${resource(file: '/css/normalize.css')}" rel="stylesheet" />
     <link href="${resource(file: '/css/base.css')}" rel="stylesheet" />
     <script type="text/javascript">window.ctx = "${createLink(uri:'/')}";</script>
