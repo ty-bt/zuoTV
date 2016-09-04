@@ -79,7 +79,7 @@ class RoomService {
                 }
             })
         }
-        // 线程执行完毕之后 执行报错方法 插入数据库
+        // 线程执行完毕之后 执行保存方法 插入数据库
         threadList.each {k, v ->
             v.join()
             log.info("保存${k}开始")

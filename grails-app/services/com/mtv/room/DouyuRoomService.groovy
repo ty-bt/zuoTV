@@ -1,7 +1,7 @@
 package com.mtv.room
 
 import com.mtv.Room
-import com.mtv.utils.StringUtils
+import com.mtv.StringUtils
 import grails.transaction.Transactional
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document

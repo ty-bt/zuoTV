@@ -1,4 +1,4 @@
-package com.mtv.utils
+package com.mtv
 
 /**
  * 字符串工具类
