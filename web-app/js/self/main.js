@@ -26,19 +26,25 @@
                     $log(data.message || "系统错误");
                 }
             });
-        }
+        };
         $rootScope.loadLogin()
+
+        //platforms: platforms, types: types]
+        // 获取分类和平台
+        $http.post(window.ctx + "index/getIndexData").success(function(data){
+            $rootScope.topData = data.data;
+        });
     }]);
 
     // 路由配置
     main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
         // 无效链接全部转向首页
         $urlRouterProvider
-            .otherwise('/0');
+            .otherwise('/0///');
 
         // 首页
         $stateProvider.state('room', {
-            url: '/:offset',
+            url: '/:offset/:kw/:platformName/:tag',
             templateUrl: window.ctx +　'/html/room/index.html',
             controller: 'room.index'
         }).state('room.insetDetail', {
@@ -62,7 +68,13 @@
         var max = 120;
         $http({
             url: window.ctx + "room/page",
-            params: {max: max, offset: $stateParams.offset || 0}
+            params: {
+                max: max,
+                offset: $stateParams.offset || 0,
+                tag: $stateParams.tag,
+                kw: $stateParams.kw,
+                platformName: $stateParams.platformName
+            }
         }).success(function(data){
             $(data.rooms).each(function(){
                 this.href = this.quoteUrl ? $state.href("room.insetDetail", $.extend({}, $stateParams, {roomId: this.id})) : this.url;
@@ -90,8 +102,9 @@
                 $(window).unbind('resize', arguments.callee);
                 return;
             }
-            bodyEle.height($(window).height() - 45);
-            bodyEle.width($(window).width() - 10).show();
+            var offset = bodyEle.offset();
+            bodyEle.height($(window).height() - offset.top);
+            bodyEle.width($(window).width() - 10 - offset.left).show();
             // console.log($(window).width() - 10);
             var bodyWidth = bodyEle.width() - (bodyEle[0].offsetWidth - bodyEle[0].scrollWidth);
             var size = Math.ceil(bodyWidth / (initWidth + 10));

@@ -11,8 +11,20 @@ class RoomController {
 
     def page(){
         def rooms = Room.createCriteria().list(ParamUtils.limit()){
+            if(params.kw){
+                like('name', params.kw)
+            }
+            if(params.tag){
+                eq('tag', params.tag)
+            }
+            if(params.platformName){
+                Platform platform = Platform.findByName(params.platformName)
+                Assert.notNull(platform, "找不到对应的平台")
+                eq('platform', platform)
+            }
             eq('isOnLine', true)
             order('adNum', "desc")
+
         }
         render([rooms: rooms, total: rooms.totalCount] as JSON)
     }

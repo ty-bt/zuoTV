@@ -5,6 +5,7 @@ package com.mtv.jobs
 class RoomJob {
 
     def roomService
+    def typeService
 
     static triggers = {
         // 10分钟刷新一次
@@ -14,5 +15,6 @@ class RoomJob {
     def execute() {
         println "定时任务执行 " + System.currentTimeMillis()
         roomService.loadAllT()
+        typeService.reloadAll()
     }
 }
