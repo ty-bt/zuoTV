@@ -26,8 +26,20 @@
     <div class="main">
         <div class="head">
             TV
+            <div style="float: right">
+                <span ng-click="windows.add({url: '${resource(file: 'html/user/login.html')}'})">登录</span>
+                <span ng-click="windows.add({url: '${resource(file: 'html/user/register.html')}'})">注册</span>
+            </div>
+            <div style="float: right">
+                <span><i class="fa fa-user"></i>{{curUser.name}}</span>
+            </div>
         </div>
         <div ui-view>
+        </div>
+        %{--<div class="show-window" ng-include="'${resource(file: 'html/user/login.html')}'">--}%
+        %{--</div>--}%
+        <div m-window="windows">
+
         </div>
     </div>
 </body>

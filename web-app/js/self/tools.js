@@ -51,7 +51,7 @@ window.tool = {
     });
 
     /**
-     * repeat完成 指令
+     * 分页指令
      */
     tools.directive('tPaginate', function ($timeout) {
 
@@ -97,6 +97,60 @@ window.tool = {
                     return "javascript:void(0);"
                 };
                 // console.log(config )
+
+            }
+        };
+    });
+
+
+    /**
+     * 弹出窗口管理
+     */
+    tools.directive('mWindow', function ($timeout) {
+
+        var wIndex = 1;
+        var defaultConfig = {
+            windows: []
+
+        };
+
+        return {
+            restrict: 'A',
+            templateUrl: window.ctx + '/html/m-window.html',
+            scope: {
+                config: '=mWindow'
+            },
+            link: function(scope, element, attr) {
+                var config = scope.config = $.extend({}, defaultConfig, scope.config);
+                config.add = function(options){
+                    // options = {url: '', success: function, hide: true}
+                    options.index = wIndex++;
+                    config.windows.push(options)
+                };
+
+                config.hide = function(win){
+                    win.hide = true;
+                };
+
+                config.show = function(win){
+                    win.hide = false;
+                };
+
+                config.close = function(win){
+                    $(config.windows).each(function(i){
+                        if(win == this){
+                            config.windows.splice(i, 1);
+                        }
+                    });
+                };
+
+                config.resize = function(win){
+                    var winEle = element.find("[index=" + win.index + "]");
+                    winEle.css({
+                        'margin-left': -winEle.width() / 2,
+                        'margin-top': -winEle.height() / 2
+                    });
+                }
 
             }
         };

@@ -1,0 +1,12 @@
+<!-- 登录页面 -->
+<div class="login" ng-controller="register">
+    <h2>注册</h2>
+    <div>
+        <form ng-submit="registerSubmit($event)">
+            <input type="text" ng-model="register.name" placeholder="请输入账户名称"/><br/>
+            <input type="password" ng-model="register.password" placeholder="请输入密码"/><br/>
+            <input type="password" ng-model="register.rePassword" placeholder="再输一次密码"/><br/>
+            <button type="submit">注册</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<!-- 登录页面 -->
+<div class="login" ng-controller="login">
+    <h2>登录</h2>
+    <div>
+        <form ng-submit="loginSubmit($event)">
+            <input type="text" ng-model="login.name" placeholder="请输入账户名称"/><br/>
+            <input type="password" ng-model="login.password" placeholder="请输入密码"/><br/>
+            <button type="submit">登录</button>
+        </form>
+    </div>
+</div>

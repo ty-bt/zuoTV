@@ -1,0 +1,11 @@
+<div class="t-window">
+    <div class="show-window"
+         ng-repeat="curWindow in config.windows"
+         ng-show="!curWindow.hide"
+         index="{{curWindow.index}}">
+        <i class="fa fa-close close" ng-class="{insert: room.quoteUrl}" ng-click="config.close(curWindow)"></i>
+        <div ng-include="curWindow.url" onload="config.resize(curWindow)">
+        </div>
+    </div>
+
+</div>

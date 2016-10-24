@@ -7,15 +7,31 @@
         $rootScope.ctx = window.ctx;
     }]);
 
-    main.run(['$rootScope', '$state', '$stateParams',
-        function($rootScope, $state, $stateParams) {
-            $rootScope.$state = $state;
-            $rootScope.$stateParams = $stateParams;
+    main.run(['$rootScope', '$state', '$stateParams', '$log', '$http', function($rootScope, $state, $stateParams, $log, $http) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+
+        // 弹出窗口管理对象 使用m-window指令
+        $rootScope.windows = {};
+
+        // 当前登录用户
+        $rootScope.curUser = null;
+
+        // 刷新登录状态
+        $rootScope.loadLogin = function(){
+            $http.post(window.ctx + "user/getCurrentUser").success(function(data){
+                if(data.success){
+                    $rootScope.curUser = data.data;
+                }else{
+                    $log(data.message || "系统错误");
+                }
+            });
         }
-    ]);
+        $rootScope.loadLogin()
+    }]);
 
     // 路由配置
-    main.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+    main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
         // 无效链接全部转向首页
         $urlRouterProvider
             .otherwise('/0');
@@ -30,6 +46,11 @@
             templateUrl: window.ctx +　'/html/room/inset-detail.html',
             controller: "room.insetDetail"
         });
+        // 改变post提交方式 data所在位置
+        $httpProvider.defaults.headers.post = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     }]);
 
 
@@ -141,5 +162,34 @@
             loadEmbed();
         }
     }]);
+
+    main.controller('login', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
+        $scope.loginSubmit = function(){
+            $http.post(window.ctx + "user/login", $.param($scope.login)).success(function(data){
+                console.log(data);
+                if(data.success){
+                    $scope.$root.loadLogin();
+                    $scope.$root.windows.close($scope.curWindow);
+                }else{
+                    alert(data.message || "系统错误")
+                }
+            });
+        }
+    }]);
+
+    main.controller('register', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
+        $scope.registerSubmit = function(){
+            $http.post(window.ctx + "user/register", $.param($scope.register)).success(function(data){
+                if(data.success){
+                    $scope.$root.loadLogin();
+                    $scope.$root.windows.close($scope.curWindow);
+                }else{
+                    alert(data.message || "系统错误")
+                }
+            });
+        }
+    }]);
+    
+    
 
 })();

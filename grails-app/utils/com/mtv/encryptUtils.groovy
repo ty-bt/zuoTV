@@ -7,7 +7,7 @@ package com.mtv
 class EncryptUtils {
 
     /** 密码盐值*/
-    public final String SALT_PWD = "MTTV-PWD@nozuonodie.cn"
+    public static final String SALT_PWD = "MTTV-PWD@nozuonodie.cn"
 
     /**
      * 密码加密
