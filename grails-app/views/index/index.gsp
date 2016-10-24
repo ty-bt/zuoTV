@@ -44,8 +44,8 @@
                 <div class="m-search">
                     <h1>TV</h1>
                     <div class="condition">
-                        <input type="text" ng-model="search.kw" value="{{$stateParams.kw}}"/>
-                        <i class="fa fa-search"></i>
+                        <input type="text" ng-keyup="search.submit($event)" ng-model="search.kw" />
+                        <i class="fa fa-search" ng-click="$state.go('room', {page:0, kw: search.kw}, {reload: true, inherit: true})"></i>
                     </div>
                     <div class="condition">
                         <h2>平台</h2>
@@ -64,6 +64,7 @@
                         <h2>分类</h2>
                         <div class="checkeds">
                             <a ui-sref="room({page:0, tag: ''})"
+                               ui-sref-opts="{reload: true, inherit: true}"
                                ng-class="{selected: !$stateParams.tag}">全部</a>
                             <a ng-repeat="t in topData.types.slice(0,20)"
                                ui-sref="room({page:0, tag: t.name})"

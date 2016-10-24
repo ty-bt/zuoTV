@@ -29,4 +29,14 @@ class StringUtils {
             return text.toLong()
         }
     }
+
+    /**
+     * 自动转义 % 和 _
+     * @param likeText
+     * @return
+     */
+    public static String escapeSql(String likeText){
+        return likeText.replaceAll("%", "\\\\%").replaceAll("_", "\\\\_")
+    }
+
 }

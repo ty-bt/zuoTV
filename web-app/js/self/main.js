@@ -34,6 +34,17 @@
         $http.post(window.ctx + "index/getIndexData").success(function(data){
             $rootScope.topData = data.data;
         });
+
+        // 关键字搜索
+        $rootScope.search = {
+            kw: "",
+            submit: function($event){
+                if($event && $event.keyCode != 13){
+                    return;
+                }
+                $rootScope.$state.go('room', {page:0, kw: this.kw}, {reload: true, inherit: true})
+            }
+        }
     }]);
 
     // 路由配置
@@ -64,6 +75,7 @@
      * 显示所有房间
      */
     main.controller('room.index', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
+        $scope.$root.search.kw = $stateParams.kw;
         // 每页显示
         var max = 120;
         $http({

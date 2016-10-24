@@ -1,6 +1,7 @@
 package com.mtv
 
 import grails.converters.JSON
+import org.apache.commons.lang.StringEscapeUtils
 import org.springframework.util.Assert
 
 class RoomController {
@@ -12,7 +13,8 @@ class RoomController {
     def page(){
         def rooms = Room.createCriteria().list(ParamUtils.limit()){
             if(params.kw){
-                like('name', params.kw)
+                like('name', "%${StringUtils.escapeSql(params.kw)}%")
+
             }
             if(params.tag){
                 eq('tag', params.tag)

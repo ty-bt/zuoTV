@@ -1,10 +1,7 @@
 package com.mtv
 
 import grails.converters.JSON
-import grails.validation.ValidationErrors
 import grails.validation.ValidationException
-import org.springframework.validation.Errors
-import org.springframework.validation.FieldError
 
 class ExceptionController {
 
