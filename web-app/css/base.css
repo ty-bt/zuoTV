@@ -21,7 +21,7 @@ a{text-decoration: none; color: #313131}
 .main{background: #F2F2F2}
 .head{height: 45px;font-size: 27px;font-weight: bold;padding-left: 5px;line-height: 45px;background: #52c3dd;color: #fff;}
 .main .body{padding-left: 10px; overflow-y: auto; display: none;}
-.main .content>.left{width: 225px;padding: 0 10px;background: #2c2c2c;color: #c6c6c6;}
+.main .content>.left{width: 225px;padding: 0 10px;background: #2c2c2c;color: #fff;}
 
 /* 房间块样式*/
 .room{width: 338px;height: 251px;display: inline-block;background: #fff;margin: 10px 10px 10px 0;overflow: hidden;}
@@ -81,10 +81,22 @@ a{text-decoration: none; color: #313131}
 .login-user{margin-top: 0px;}
 
 .m-search{}
-.m-search h2{border-bottom: 1px solid #c6c6c6; }
-.m-search .checkeds a{color: #000;display: inline-block;padding: 0 5px;margin: 0 5px 7px 0;background: #52c3dd;border-radius: 4px;line-height: 20px;cursor: pointer;}
+.m-search h2{border-bottom: 1px solid #c6c6c6;margin: 5px 0 10px 0;}
+.m-search .checkeds a{color: #000;display: inline-block;padding: 0 4px;margin: 0 4px 5px 0;background: #52c3dd;border-radius: 4px;line-height: 20px;cursor: pointer;}
 .m-search .checkeds a.selected{box-shadow: 0 0 5px 0 #fff}
 
 .search-input{position: relative}
 .search-input input{border-radius: 4px;width: 215px;border: 1px solid #2c2c2c;padding: 3px 5px;}
 .search-input i{position: absolute;color: #000;float: right;right: 0;padding: 0 5px;top: 0;line-height: 24px;cursor: pointer;}
+/*width: 225px;*/
+/*height: 167.086px;*/
+.room2{display: inline-block;width: 225px;height: 126px;position: relative;margin-bottom: 10px;border-radius: 4px;overflow: hidden;box-shadow: 0 0 5px 0 #000;}
+.room2 img{width: 100%; height: 100%;}
+.room2>span{position: absolute;color: #fff;padding: 1% 2%;}
+
+.room2>span.top{top:0;box-shadow: 0 36px 36px -36px #000 inset;}
+.room2>span.bottom{bottom: 0;box-shadow: 0 -36px 36px -36px #000 inset;}
+.room2>span.pla-name{width: 26%;right: 0;text-align: right;}
+.room2>span.anchor{width: 66%;left: 0;}
+.room2>span.room-name{width: 66%;left: 0;}
+.room2>span.num{width: 26%;right: 0;text-align: right;}

@@ -79,36 +79,15 @@
                             <a ng-repeat="coll in $root.collects"
                                repeat-finish
                                ng-init="room = coll.room"
-                               class="room trans2"
+                               class="room2 trans2"
                                target="{{room.quoteUrl ? '_self' : '_blank'}}"
-                               ng-href="{{room.href}}"
-                               ng-style="{width: 220, height: 150}">
-                                <table cellspacing="0" cellpadding="0">
-                                    <tr>
-                                        <td style="width:70%;"></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="photo"  ng-style="{height: 100}">
-                                            <img ng-src="{{room.img}}"/>
-                                            <span class="pla-name">{{room.platform.name}}</span>
-                                            <i class="fa fa-play-circle play" ng-class="{insert: room.quoteUrl}"></i>
-                                        </td>
-                                    </tr>
-                                    <tr class="top">
-                                        <td class="ellipsis title">{{room.name}}</td>
-                                        <td class="t-r ellipsis tag">{{room.tag}}</td>
-                                    </tr>
-                                    <tr class="bottom">
-                                        <td class="ellipsis anchor">
-                                            <i title="关注" roomId="{{room.id}}"
-                                               ng-click="$root.changeCollect($event, room);$event.stopPropagation();"
-                                               ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
-                                               class="fa heart"></i>{{room.anchor}}
-                                        </td>
-                                        <td class="t-r ellipsis num"><i class="fa fa-child"></i>{{room.adNum | wanNum}}</td>
-                                    </tr>
-                                </table>
+                               ng-href="{{room.href}}">
+                                <img ng-src="{{room.img}}"/>
+                                <span class="ellipsis top pla-name">{{room.platform.name}}</span>
+                                <span class="ellipsis top anchor">{{room.anchor}}</span>
+                                <span class="ellipsis bottom room-name">{{room.name}}</span>
+                                <span class="ellipsis bottom num">{{room.adNum | wanNum}}</span>
+                                %{--<i class="fa fa-play-circle play" ng-class="{insert: room.quoteUrl}"></i>--}%
                             </a>
                         </div>
                     </div>
