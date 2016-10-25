@@ -43,18 +43,18 @@
             <div class="left">
                 <div class="m-search">
                     <h1>TV</h1>
-                    <div class="condition">
+                    <div class="condition search-input">
                         <input type="text" ng-keyup="search.submit($event)" ng-model="search.kw" />
-                        <i class="fa fa-search" ng-click="$state.go('room', {page:0, kw: search.kw}, {reload: true, inherit: true})"></i>
+                        <i class="fa fa-search" ng-click="$state.go('room', {page:1, kw: search.kw}, {reload: true, inherit: true})"></i>
                     </div>
                     <div class="condition">
                         <h2>平台</h2>
-                        <div class="checkeds">
+                        <div class="checkeds"> 
                             <a href="#" ng-class="{selected: !$stateParams.platformName}"
-                               ui-sref="room({page:0, platformName: ''})"
+                               ui-sref="room({page:1, platformName: ''})"
                                ui-sref-opts="{reload: true, inherit: true}">全部</a>
                             <a ng-repeat="pla in topData.platforms"
-                               ui-sref="room({page:0, platformName: pla.name})"
+                               ui-sref="room({page:1, platformName: pla.name})"
                                ui-sref-opts="{reload: true, inherit: true}"
                                ng-class="{selected: pla.name == $stateParams.platformName}">{{pla.name}}</a>
 
@@ -63,11 +63,11 @@
                     <div class="condition">
                         <h2>分类</h2>
                         <div class="checkeds">
-                            <a ui-sref="room({page:0, tag: ''})"
+                            <a ui-sref="room({page:1, tag: ''})"
                                ui-sref-opts="{reload: true, inherit: true}"
                                ng-class="{selected: !$stateParams.tag}">全部</a>
                             <a ng-repeat="t in topData.types.slice(0,20)"
-                               ui-sref="room({page:0, tag: t.name})"
+                               ui-sref="room({page:1, tag: t.name})"
                                ui-sref-opts="{reload: true, inherit: true}"
                                ng-class="{selected: t.name == $stateParams.tag}">{{t.name}}</a>
                             <a href="#" ng-show="topData.types.length > 20">更多...</a>
@@ -75,8 +75,41 @@
                     </div>
                     <div class="condition">
                         <h2>我的关注</h2>
-                        <div class="checkeds">
-
+                        <div >
+                            <a ng-repeat="coll in $root.collects"
+                               repeat-finish
+                               ng-init="room = coll.room"
+                               class="room trans2"
+                               target="{{room.quoteUrl ? '_self' : '_blank'}}"
+                               ng-href="{{room.href}}"
+                               ng-style="{width: 220, height: 150}">
+                                <table cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td style="width:70%;"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="photo"  ng-style="{height: 100}">
+                                            <img ng-src="{{room.img}}"/>
+                                            <span class="pla-name">{{room.platform.name}}</span>
+                                            <i class="fa fa-play-circle play" ng-class="{insert: room.quoteUrl}"></i>
+                                        </td>
+                                    </tr>
+                                    <tr class="top">
+                                        <td class="ellipsis title">{{room.name}}</td>
+                                        <td class="t-r ellipsis tag">{{room.tag}}</td>
+                                    </tr>
+                                    <tr class="bottom">
+                                        <td class="ellipsis anchor">
+                                            <i title="关注" roomId="{{room.id}}"
+                                               ng-click="$root.changeCollect($event, room);$event.stopPropagation();"
+                                               ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
+                                               class="fa heart"></i>{{room.anchor}}
+                                        </td>
+                                        <td class="t-r ellipsis num"><i class="fa fa-child"></i>{{room.adNum | wanNum}}</td>
+                                    </tr>
+                                </table>
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,6 @@ class RoomController {
         def rooms = Room.createCriteria().list(ParamUtils.limit()){
             if(params.kw){
                 like('name', "%${StringUtils.escapeSql(params.kw)}%")
-
             }
             if(params.tag){
                 eq('tag', params.tag)

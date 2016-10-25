@@ -3,6 +3,8 @@ package com.mtv
 import grails.converters.JSON
 import grails.validation.ValidationException
 
+import javax.security.auth.login.LoginException
+
 class ExceptionController {
 
 
@@ -14,7 +16,7 @@ class ExceptionController {
                 response.status = 200
                 render(convertExceptionToResponse(exception) as JSON)
             } else {
-                render(view: '500')
+                render(view: '/error')
             }
         } catch (e) {
             e.printStackTrace()
@@ -33,8 +35,9 @@ class ExceptionController {
             ValidationException exception = (ValidationException) ex
             responseBody = Response.failure(exception.errors, "字段验证不通过，请检查")
         } else if(ex instanceof IllegalArgumentException){
-            IllegalArgumentException exception = (IllegalArgumentException) ex
-            responseBody = Response.failure('', exception.message)
+            responseBody = Response.failure('', ex.message)
+        }else if(ex instanceof LoginException){
+            responseBody = Response.failure('login', ex.message)
         }else {
             responseBody = Response.failure(null, "服务器正忙，请稍后再试")
         }

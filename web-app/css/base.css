@@ -42,6 +42,7 @@ a{text-decoration: none; color: #313131}
 .room .tag{color: #f60;}
 .room .bottom{color: #797979;height: 20px;}
 .room .bottom td{padding-bottom:5px}
+.room .bottom .fa{font-size: 15px;color: #52c3dd;margin-right: 3px;}
 .room .top{height: 25px;}
 
 /* 分页样式 */
@@ -81,5 +82,9 @@ a{text-decoration: none; color: #313131}
 
 .m-search{}
 .m-search h2{border-bottom: 1px solid #c6c6c6; }
-.m-search .checkeds a{ color: #000; display: inline-block; padding: 0 5px; margin: 0 5px 7px 0; background: #52c3dd; border-radius: 4px; line-height: 20px;  }
+.m-search .checkeds a{color: #000;display: inline-block;padding: 0 5px;margin: 0 5px 7px 0;background: #52c3dd;border-radius: 4px;line-height: 20px;cursor: pointer;}
 .m-search .checkeds a.selected{box-shadow: 0 0 5px 0 #fff}
+
+.search-input{position: relative}
+.search-input input{border-radius: 4px;width: 215px;border: 1px solid #2c2c2c;padding: 3px 5px;}
+.search-input i{position: absolute;color: #000;float: right;right: 0;padding: 0 5px;top: 0;line-height: 24px;cursor: pointer;}

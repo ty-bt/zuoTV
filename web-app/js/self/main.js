@@ -22,12 +22,57 @@
             $http.post(window.ctx + "user/getCurrentUser").success(function(data){
                 if(data.success){
                     $rootScope.curUser = data.data;
+                    $rootScope.loadCollect();
                 }else{
                     $log(data.message || "系统错误");
                 }
             });
         };
-        $rootScope.loadLogin()
+
+        $rootScope.collectMap = {};
+        // 加载收藏夹
+        $rootScope.loadCollect = function(){
+            $http.post(window.ctx + "center/collect/list").success(function(data){
+                if(data.success){
+                    // [collects: collects, total: collects.totalCount]
+                    $rootScope.collects = data.data.collects;
+                    var collectMap = {};
+                    $($rootScope.collects).each(function(){
+                        collectMap[this.room.id] = this.id;
+                    });
+                    $rootScope.collectMap = collectMap;
+                    console.log($rootScope.collectMap);
+                }else{
+                    $log(data.message || "系统错误");
+                }
+            });
+        };
+
+        // 修改收藏夹状态
+        $rootScope.changeCollect = function($event, room){
+            $event.stopPropagation();
+            $event.preventDefault();
+            var collectId = $rootScope.collectMap[room.id];
+            if(collectId){
+                $http.post(window.ctx + "center/collect/delete", $.param({
+                    id: collectId
+                })).success(function(data){
+                    if(data.success){
+                        $rootScope.loadCollect();
+                    }
+                });
+            }else{
+                $http.post(window.ctx + "center/collect/add", $.param({
+                    roomId: room.id
+                })).success(function(data){
+                    if(data.success){
+                        $rootScope.loadCollect();
+                    }
+                });
+            }
+        };
+
+        $rootScope.loadLogin();
 
         //platforms: platforms, types: types]
         // 获取分类和平台
@@ -55,7 +100,7 @@
 
         // 首页
         $stateProvider.state('room', {
-            url: '/:offset/:kw/:platformName/:tag',
+            url: '/:page/:kw/:platformName/:tag',
             templateUrl: window.ctx +　'/html/room/index.html',
             controller: 'room.index'
         }).state('room.insetDetail', {
@@ -78,27 +123,28 @@
         $scope.$root.search.kw = $stateParams.kw;
         // 每页显示
         var max = 120;
+        var page = parseInt($stateParams.page) || 1;
         $http({
             url: window.ctx + "room/page",
             params: {
                 max: max,
-                offset: $stateParams.offset || 0,
+                page: page,
                 tag: $stateParams.tag,
                 kw: $stateParams.kw,
                 platformName: $stateParams.platformName
             }
         }).success(function(data){
             $(data.rooms).each(function(){
-                this.href = this.quoteUrl ? $state.href("room.insetDetail", $.extend({}, $stateParams, {roomId: this.id})) : this.url;
+                this.href = this.quoteUrl ? $state.href("room.insetDetail", {roomId: this.id}, {inherit: true}) : this.url;
             });
             $scope.rooms = data.rooms;
             // 分页
             $scope.paginate = {
                 pageSize: max,
                 total: data.total,
-                current: parseInt($stateParams.offset || 0) / 120 + 1,
+                current: page,
                 href: function(cur){
-                    return $state.href("room", $.extend({}, $stateParams, {offset: (cur - 1) * 120}));
+                    return $state.href("room", {page: cur}, {inherit: true});
                 } 
             }
         });
@@ -131,10 +177,10 @@
             $(window).resize();
         });
 
-        $scope.openRoom = function(room, e){
-            $scope.curRoom = room;
-            $scope.curTarget = e.currentTarget;
-        };
+        // $scope.openRoom = function(room, e){
+        //     $scope.curRoom = room;
+        //     $scope.curTarget = e.currentTarget;
+        // };
     }]);
 
 

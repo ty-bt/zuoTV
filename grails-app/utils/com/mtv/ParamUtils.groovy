@@ -23,13 +23,11 @@ class ParamUtils {
      * @return
      */
     public static Map limit(def params) {
-
-        Integer offset = params.int('offset', 0)
-
-        Integer max = params.int('max', 20)
-
+        Integer max = params.int('max', 200)
+        Integer page = params.int('page', 1)
+        Integer offset = (page - 1) * max
+        println "${max}-${offset}"
         return [offset: offset, max: max]
-
     }
 
     public static GrailsParameterMap getParams() {

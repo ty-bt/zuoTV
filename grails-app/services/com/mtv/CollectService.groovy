@@ -35,7 +35,7 @@ class CollectService {
         Collect collect = Collect.get(id)
         Assert.notNull(collect, "没有找到对应的收藏")
         if(userId){
-            if(userId != collect.userId){
+            if(userId != collect.user.id){
                 Assert.notNull(collect, "没有找到对应的收藏")
             }
         }
