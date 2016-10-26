@@ -22,10 +22,10 @@
     <script type="text/javascript" src="${resource(file: '/js/self/main.js')}"></script>
 </head>
 
-<body>
+<body style="overflow: hidden">
     <div class="main" ng-cloak>
 
-        <div class="table content">
+        <div class="content table">
             <div class="left trans2">
                 <div class="m-search">
                     <h1>TV</h1>
@@ -95,10 +95,11 @@
                         </div>
                     </div>
                 </div>
-                <div ui-view>
+                <div ui-view class="m-view">
 
                 </div>
             </div>
+            <div class="clear"></div>
         </div>
 
 

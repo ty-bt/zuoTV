@@ -91,14 +91,20 @@
                 }
                 $rootScope.$state.go('room', {page:0, kw: this.kw}, {reload: true, inherit: true})
             }
-        }
+        };
+
+        var rightDiv = $(".main .content>.right");
+        var viewDiv = rightDiv.find(".m-view");
+        $(window).resize(function(){
+            rightDiv.width($(window).width() - rightDiv.offset().left);
+            viewDiv.height($(window).height() - viewDiv.offset().top);
+        });
     }]);
 
     // 路由配置
     main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
         // 无效链接全部转向首页
-        $urlRouterProvider
-            .otherwise('/0///');
+        $urlRouterProvider.otherwise('/1///');
 
         // 首页
         $stateProvider.state('room', {
@@ -194,10 +200,10 @@
                 $(window).unbind('resize', arguments.callee);
                 return;
             }
-            detailEle.height($(window).height());
-            detailEle.width($(window).width());
-            var maxWidth = $(window).width();
-            var maxHeight = $(window).height() - 41 * 2;
+            // detailEle.height($(window).height());
+            // detailEle.width($(window).width());
+            var maxWidth = detailEle.width();
+            var maxHeight = detailEle.height() - 41 * 2;
             var radio = 1.777;
             if(maxHeight * radio < maxWidth){
                 $element.find("embed").css({
@@ -207,8 +213,9 @@
             }else{
                 $element.find("embed").css({
                     height: maxWidth / radio,
-                    width: maxWidth
-                })
+                    width: maxWidth,
+                    'margin-top': (maxHeight - (maxWidth / radio)) / 2
+                });
             }
         });
 
