@@ -81,7 +81,7 @@
                                ng-init="room = coll.room"
                                class="room2 trans2"
                                target="{{room.quoteUrl ? '_self' : '_blank'}}"
-                               ng-href="{{room.href}}">
+                               ng-href="{{room.quoteUrl ? $state.href('room.insetDetail', {roomId: room.id}, {inherit: true}) : room.url;}}">
                                 <img ng-src="{{room.img}}"/>
                                 <span class="ellipsis top pla-name">{{room.platform.name}}</span>
                                 <span class="ellipsis top anchor">{{room.anchor}}</span>
