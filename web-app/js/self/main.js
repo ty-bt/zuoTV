@@ -43,7 +43,6 @@
                         collectMap[this.room.id] = this.id;
                     });
                     $rootScope.collectMap = collectMap;
-                    console.log($rootScope.collectMap);
                 }else{
                     $log(data.message || "系统错误");
                 }
@@ -93,11 +92,12 @@
             }
         };
 
-        var rightDiv = $(".main .content>.right");
-        var viewDiv = rightDiv.find(".m-view");
         $(window).resize(function(){
+            var rightDiv = $(".main .content>.right");
+            var viewDiv = rightDiv.find(".m-view");
             rightDiv.width($(window).width() - rightDiv.offset().left);
             viewDiv.height($(window).height() - viewDiv.offset().top);
+
         });
     }]);
 
@@ -169,9 +169,9 @@
                 return;
             }
             var offset = bodyEle.offset();
-            bodyEle.height($(window).height() - offset.top);
-            bodyEle.width($(window).width() - 10 - offset.left).show();
-            // console.log($(window).width() - 10);
+            // bodyEle.height($(window).height() - offset.top);
+            // bodyEle.width($(window).width() - 10 - offset.left).show();
+            bodyEle.show();
             var bodyWidth = bodyEle.width() - (bodyEle[0].offsetWidth - bodyEle[0].scrollWidth);
             var size = Math.ceil(bodyWidth / (initWidth + 10));
             var width = Math.floor(bodyWidth / size - 10);
@@ -208,7 +208,8 @@
             if(maxHeight * radio < maxWidth){
                 $element.find("embed").css({
                     height: maxHeight,
-                    width: maxHeight * radio
+                    width: maxHeight * radio,
+                    'margin-top': 0
                 });
             }else{
                 $element.find("embed").css({
@@ -235,7 +236,6 @@
             }).success(function(data){
                 $scope.curRoom = data.room;
                 loadEmbed();
-                console.log($scope.curRoom);
             });
 
         }else{
@@ -246,7 +246,6 @@
     main.controller('login', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
         $scope.loginSubmit = function(){
             $http.post(window.ctx + "user/login", $.param($scope.login)).success(function(data){
-                console.log(data);
                 if(data.success){
                     $scope.$root.loadLogin();
                     $scope.$root.windows.close($scope.curWindow);
