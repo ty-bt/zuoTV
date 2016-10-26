@@ -21,7 +21,7 @@ a{text-decoration: none; color: #313131}
 .main{background: #F2F2F2}
 .head{height: 45px;font-size: 27px;font-weight: bold;padding-left: 5px;line-height: 45px;background: #52c3dd;color: #fff;}
 .main .body{padding-left: 10px; overflow-y: auto; display: none;}
-.main .content>.left{width: 225px;padding: 0 10px;background: #2c2c2c;color: #fff;}
+.main .content>.left{width: 225px;padding: 0 10px;background: #2c2c2c;color: #d0d0d0;}
 
 /* 房间块样式*/
 .room{width: 338px;height: 251px;display: inline-block;background: #fff;margin: 10px 10px 10px 0;overflow: hidden;}
@@ -81,9 +81,9 @@ a{text-decoration: none; color: #313131}
 .login-user{margin-top: 0px;}
 
 .m-search{}
-.m-search h2{border-bottom: 1px solid #c6c6c6;margin: 5px 0 10px 0;}
-.m-search .checkeds a{color: #000;display: inline-block;padding: 0 4px;margin: 0 4px 5px 0;background: #52c3dd;border-radius: 4px;line-height: 20px;cursor: pointer;}
-.m-search .checkeds a.selected{box-shadow: 0 0 5px 0 #fff}
+.m-search h2{border-bottom: 1px solid #d0d0d0;margin: 5px 0 10px 0;padding: 2px 0;font-weight: 200;}
+.m-search .checkeds a{color: #d0d0d0;display: inline-block;padding: 0 4px;margin: 0 4px 5px 0;background: #3f3f3f;border-radius: 4px;line-height: 20px;box-shadow: 0px 0px 0px 0 #000;cursor: pointer;}
+.m-search .checkeds a.selected{box-shadow: 0px 0px 5px 0px #000;}
 
 .search-input{position: relative}
 .search-input input{border-radius: 4px;width: 215px;border: 1px solid #2c2c2c;padding: 3px 5px;}

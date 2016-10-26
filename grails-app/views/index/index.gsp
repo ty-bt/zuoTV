@@ -24,23 +24,9 @@
 
 <body>
     <div class="main" ng-cloak>
-        <div class="head trans2">
-            TV
-            <div style="float: right; height: 45px; overflow: hidden; text-align: right">
-                <div class="cur-user" ng-class="{'login-user': curUser}">
-                    <div>
-                        <a><i class="fa fa-user"></i>{{curUser.name}}</a>
-                    </div>
-                    <div>
-                        <a ng-click="windows.add({url: '${resource(file: 'html/user/login.html')}'})">登录</a>
-                        <a ng-click="windows.add({url: '${resource(file: 'html/user/register.html')}'})">注册</a>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </div>
-        </div>
+
         <div class="table content">
-            <div class="left">
+            <div class="left trans2">
                 <div class="m-search">
                     <h1>TV</h1>
                     <div class="condition search-input">
@@ -93,8 +79,25 @@
                     </div>
                 </div>
             </div>
-            <div class="right" ui-view>
+            <div class="right">
+                <div class="head trans2">
 
+                    <div style="float: right; height: 45px; overflow: hidden; text-align: right">
+                        <div class="cur-user" ng-class="{'login-user': curUser}">
+                            <div>
+                                <a><i class="fa fa-user"></i>{{curUser.name}}</a>
+                            </div>
+                            <div>
+                                <a ng-click="windows.add({url: '${resource(file: 'html/user/login.html')}'})">登录</a>
+                                <a ng-click="windows.add({url: '${resource(file: 'html/user/register.html')}'})">注册</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div ui-view>
+
+                </div>
             </div>
         </div>
 

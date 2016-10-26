@@ -22,7 +22,9 @@
             $http.post(window.ctx + "user/getCurrentUser").success(function(data){
                 if(data.success){
                     $rootScope.curUser = data.data;
-                    $rootScope.loadCollect();
+                    if($rootScope.curUser){
+                        $rootScope.loadCollect();
+                    }
                 }else{
                     $log(data.message || "系统错误");
                 }
