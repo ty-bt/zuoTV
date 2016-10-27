@@ -31,17 +31,17 @@
                     <h1>TV</h1>
                     <div class="condition search-input">
                         <input type="text" ng-keyup="search.submit($event)" ng-model="search.kw" />
-                        <i class="fa fa-search" ng-click="$state.go('room', {page:1, kw: search.kw}, {reload: true, inherit: true})"></i>
+                        <i class="fa fa-search" ng-click="$state.go('room', {page:1, kw: search.kw}, {inherit: true})"></i>
                     </div>
                     <div class="condition">
                         <h2>平台</h2>
                         <div class="checkeds"> 
                             <a href="#" ng-class="{selected: !$stateParams.platformName}"
                                ui-sref="room({page:1, platformName: ''})"
-                               ui-sref-opts="{reload: true, inherit: true}">全部</a>
+                               ui-sref-opts="{inherit: true}">全部</a>
                             <a ng-repeat="pla in topData.platforms"
                                ui-sref="room({page:1, platformName: pla.name})"
-                               ui-sref-opts="{reload: true, inherit: true}"
+                               ui-sref-opts="{inherit: true}"
                                ng-class="{selected: pla.name == $stateParams.platformName}">{{pla.name}}</a>
 
                         </div>
@@ -50,17 +50,22 @@
                         <h2>分类</h2>
                         <div class="checkeds">
                             <a ui-sref="room({page:1, tag: ''})"
-                               ui-sref-opts="{reload: true, inherit: true}"
+                               ui-sref-opts="{inherit: true}"
                                ng-class="{selected: !$stateParams.tag}">全部</a>
                             <a ng-repeat="t in topData.types.slice(0,20)"
                                ui-sref="room({page:1, tag: t.name})"
-                               ui-sref-opts="{reload: true, inherit: true}"
+                               ui-sref-opts="{inherit: true}"
                                ng-class="{selected: t.name == $stateParams.tag}">{{t.name}}</a>
-                            <a href="#" ng-show="topData.types.length > 20">更多...</a>
+                            <a ui-sref="room.type"
+                               ui-sref-opts="{inherit: true}"
+                               ng-show="topData.types.length > 20">更多...</a>
                         </div>
                     </div>
                     <div class="condition">
-                        <h2>我的关注</h2>
+                        <h2>我的关注
+                            <a ui-sref="room.collect"
+                               ui-sref-opts="{inherit: true}">全部</a>
+                        </h2>
                         <div >
                             <a ng-repeat="coll in $root.collects"
                                repeat-finish
@@ -70,7 +75,12 @@
                                ng-href="{{room.quoteUrl ? $state.href('room.insetDetail', {roomId: room.id}, {inherit: true}) : room.url;}}">
                                 <img ng-src="{{room.img}}"/>
                                 <span class="ellipsis top pla-name">{{room.platform.name}}</span>
-                                <span class="ellipsis top anchor">{{room.anchor}}</span>
+                                <span class="ellipsis top anchor">
+                                    <i title="关注" roomId="{{room.id}}"
+                                       ng-click="$root.changeCollect($event, room);$event.stopPropagation();"
+                                       ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
+                                       class="fa heart"></i>{{room.anchor}}
+                                </span>
                                 <span class="ellipsis bottom room-name">{{room.name}}</span>
                                 <span class="ellipsis bottom num">{{room.adNum | wanNum}}</span>
                                 %{--<i class="fa fa-play-circle play" ng-class="{insert: room.quoteUrl}"></i>--}%

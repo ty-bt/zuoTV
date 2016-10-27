@@ -92,13 +92,36 @@
             }
         };
 
+        // 获取滚动条宽度
+        $rootScope.scrollWidth = (function(){
+            var tempDiv = $('<div style="overflow: scroll"></div>');
+            $("body").append(tempDiv);
+            var scrollWidth = tempDiv[0].offsetWidth - tempDiv[0].scrollWidth;
+            tempDiv.remove();
+            return scrollWidth;
+        })();
+
+
+        // var initWidth = 338;
+        // $rootScope.roomSize = {width: 0, height: 0};
+        var initWidth = 338;
+        $rootScope.roomSize = {width: initWidth, height: 251};
+        var ratio = initWidth / 251;
+
         $(window).resize(function(){
             var rightDiv = $(".main .content>.right");
             var viewDiv = rightDiv.find(".m-view");
             rightDiv.width($(window).width() - rightDiv.offset().left);
+            rightDiv.height($(window).height());
             viewDiv.height($(window).height() - viewDiv.offset().top);
 
-        });
+            // 计算房间块大小
+            var bodyWidth = viewDiv.width() - $rootScope.scrollWidth - 10;
+            var size = Math.ceil(bodyWidth / (initWidth + 10));
+            var width = Math.floor(bodyWidth / size - 10);
+            $rootScope.roomSize = {width: width, height: width / ratio};
+            $rootScope.$apply('roomSize');
+        }).resize();
     }]);
 
     // 路由配置
@@ -115,6 +138,12 @@
             url: '/inset-detail/:roomId',
             templateUrl: window.ctx +　'/html/room/inset-detail.html',
             controller: "room.insetDetail"
+        }).state('room.collect', {
+            url: '/collect',
+            templateUrl: window.ctx +　'/html/collect.html'
+        }).state('room.type', {
+            url: '/type',
+            templateUrl: window.ctx +　'/html/type.html'
         });
         // 改变post提交方式 data所在位置
         $httpProvider.defaults.headers.post = {
@@ -157,38 +186,9 @@
             }
         });
 
-        // 房间块大小根据窗口大小修改
-        var initWidth = 338;
-        $scope.roomSize = {width: initWidth, height: 251};
-        var ratio = $scope.roomSize.width / $scope.roomSize.height;
-        var bodyEle = $element.find(".body");
-        $(window).resize(function(){
-            // 如果元素已经被删除 则解除绑定
-            if(!bodyEle.parents("body").length){
-                $(window).unbind('resize', arguments.callee);
-                return;
-            }
-            var offset = bodyEle.offset();
-            // bodyEle.height($(window).height() - offset.top);
-            // bodyEle.width($(window).width() - 10 - offset.left).show();
-            bodyEle.show();
-            var bodyWidth = bodyEle.width() - (bodyEle[0].offsetWidth - bodyEle[0].scrollWidth);
-            var size = Math.ceil(bodyWidth / (initWidth + 10));
-            var width = Math.floor(bodyWidth / size - 10);
-            $scope.roomSize = {width: width, height: width / ratio};
-            $scope.$apply('roomSize');
-        });
-        setTimeout(function(){
-            $(window).resize();
-        });
         $scope.$on("onRepeatFinish", function(){
             $(window).resize();
         });
-
-        // $scope.openRoom = function(room, e){
-        //     $scope.curRoom = room;
-        //     $scope.curTarget = e.currentTarget;
-        // };
     }]);
 
 

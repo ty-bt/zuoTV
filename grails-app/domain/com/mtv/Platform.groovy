@@ -25,6 +25,12 @@ class Platform {
     /* 排序 越大越往前*/
     Long sort = 0l
 
+    /* 在线人数 */
+    Long onLineAd = 0l
+
+    /* 在线房间数 */
+    Long onLineRoom = 0l
+
     /*创建时间*/
     Date dateCreated
 
