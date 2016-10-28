@@ -7,8 +7,8 @@
                ui-sref-opts="{reload: true, inherit: true}"
                ng-class="{selected: pla.name == $stateParams.platformName}">
                 <span class="ellipsis">{{pla.name}}</span>
-                <span class="ellipsis"><i class="fa fa-child"></i>{{pla.onLineAd | wanNum}}</span>
-                <span class="ellipsis"><i class="fa fa-home"></i>{{pla.onLineRoom | wanNum}}</span>
+                <span class="min ellipsis"><i class="fa fa-child"></i>{{pla.onLineAd | wanNum}}</span>
+                <span class="min ellipsis"><i class="fa fa-home"></i>{{pla.onLineRoom | wanNum}}</span>
             </a>
         </div>
     </div>
@@ -21,8 +21,8 @@
                ui-sref-opts="{reload: true, inherit: true}"
                ng-class="{selected: t.name == $stateParams.tag}">
                 <span class="ellipsis">{{t.name}}</span>
-                <span class="ellipsis"><i class="fa fa-child"></i>{{t.adSum | wanNum}}</span>
-                <span class="ellipsis"><i class="fa fa-home"></i>{{t.roomCount | wanNum}}</span>
+                <span class="min ellipsis"><i class="fa fa-child"></i>{{t.adSum | wanNum}}</span>
+                <span class="min ellipsis"><i class="fa fa-home"></i>{{t.roomCount | wanNum}}</span>
             </a>
         </div>
     </div>

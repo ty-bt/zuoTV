@@ -19,22 +19,51 @@ a{text-decoration: none; color: #313131}
 
 /* 首页 */
 .main{background: #F2F2F2}
-.head{height: 45px;font-size: 27px;font-weight: bold;padding-left: 5px;line-height: 45px;background: #52c3dd;color: #fff;}
+.head{height: 50px;overflow: hidden;/* font-size: 27px; *//* font-weight: bold; */padding-left: 10px;line-height: 50px;background: #3498db;color: #fff;/* border-bottom: 1px solid #000; */}
 .main .body{padding-left: 10px;overflow-y: auto;/* display: none; */height: 100%;}
 .main .content>div{height:100%;overflow:hidden;}
-.main .content>.left{width: 225px;padding: 0 10px;background: #2c2c2c;color: #d0d0d0;}
-.main .content>.left h1{margin-top:0}
+.main .content>.left{width: 245px;background: #34495e;color: #fff;}
+.main .content>.left h1{margin: 0;padding: 0;line-height: 50px;background: #2980b9;color: #fff;padding-right: 20px;text-align: right;}
+.main .content .right-o{float: right; height: 40px; overflow: hidden; text-align: right}
 .main .content .m-view{position: relative}
 
+.top-menu{float: left;}
+.top-menu a{
+    font-weight: 500;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 4px 15px;
+    margin-right: 9px;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #fff;
+    margin-top: 10px;
+    line-height: normal;
+}
+.top-menu a:hover{background: #2980b9;/* color: #fff; */}
+
+
+/* 用户显示 */
+.user-o{margin-right: -69px;font-size: 0;/* height: 40px; *//* overflow: hidden; */}
+.user-o:hover{margin-right: 0;}
+.user-o i{cursor: pointer;display: inline-block;font-size: 14px;line-height: 50px;padding: 0 12px;/* margin-left: 5px; */}
+
+
+
 /* 搜索样式 */
-.m-search{}
-.m-search h2{border-bottom: 1px solid #d0d0d0;margin: 5px 0 10px 0;padding: 2px 0;font-weight: 200;}
-.m-search .checkeds a{color: #d0d0d0;display: inline-block;padding: 0 4px;margin: 0 4px 5px 0;background: #3f3f3f;border-radius: 4px;line-height: 20px;box-shadow: 0px 0px 0px 0 #000;cursor: pointer;}
+.m-search{
+    width: 225px;
+    padding: 0 10px;
+}
+.m-search h2{border-bottom: 1px solid #fff;margin: 5px 0 10px 0;padding: 2px 0;font-weight: 200;position: relative;}
+.m-search h2 a{font-size:13px;position: absolute;color: #fff;right: 0;bottom: 3px;cursor: pointer;}
+.m-search .checkeds a{color: #fff;display: inline-block;padding: 0 4px;margin: 0 4px 5px 0;background: #2980b9;border-radius: 4px;line-height: 20px;/* box-shadow: 0px 0px 0px 0 #000; */cursor: pointer;}
 .m-search .checkeds a.selected{box-shadow: 0px 0px 5px 0px #000;}
 
-.search-input{position: relative}
-.search-input input{border-radius: 4px;width: 215px;border: 1px solid #2c2c2c;padding: 3px 5px;}
-.search-input i{position: absolute;color: #000;float: right;right: 0;padding: 0 5px;top: 0;line-height: 24px;cursor: pointer;}
+.search-input{position: relative;margin-top: 10px;}
+.search-input input{border-radius: 4px;width: 215px;border: none;padding: 3px 5px;}
+.search-input i{position: absolute;color: #3498db;float: right;right: 0;padding: 0 5px;top: 0;line-height: 19px;cursor: pointer;}
 
 /* 房间块样式*/
 .room{width: 338px;height: 251px;display: inline-block;background: #fff;margin: 10px 10px 10px 0;overflow: hidden;}
@@ -88,9 +117,9 @@ a{text-decoration: none; color: #313131}
 .login input{ width: 96%; margin-bottom: 20px; height: 30px; border-radius: 4px; border: 1px solid #ccc; padding: 0 2%;  }
 .login button{ width: 100%; border: 0; height: 30px; background: #52c3dd; color: #fff; font-size: 15px;/* font-weight: bold; */  }
 
-.cur-user{margin-top: -45px;font-size: 14px;font-weight: 500;}
+.cur-user{margin-top: -55px;font-size: 14px;font-weight: 500;}
 /*.cur-user>div{float: left;}*/
-.cur-user a{cursor: pointer;margin: 0 10px;}
+.cur-user a{cursor: pointer;margin: 0 10px;vertical-align: middle;color: #fff;}
 .cur-user a i{margin-right: 5px;}
 .login-user{margin-top: 0px;}
 
@@ -112,7 +141,9 @@ a{text-decoration: none; color: #313131}
 /* 更多分类 */
 .types{position: absolute;width: 96%;height: 100%;overflow-y: auto;padding: 0 2%;top: 0;left: 0;background: #fff;}
 .types h2{font-weight: 500;border-bottom: 1px solid #c6c6c6; }
-.types .t a{display: inline-block;width: 86px;text-align: center;background: #158b80;margin: 0 17px 15px 0;height: 100px;vertical-align: top;font-size: 15px;padding: 5px;color: #fff;border-radius: 2px;}
-.types .t a span{ width: 100%; display: inline-block; line-height: 32px; }
+.types .t a{display: inline-block;width: 86px;text-align: center;background: #2980b9;margin: 0 17px 15px 0;height: 100px;vertical-align: top;font-size: 17px;padding: 5px;color: #fff;border-radius: 2px;}
+.types .t a span{width: 100%;display: inline-block;line-height: 44px;}
+.types .t a span.min{font-size:12px;line-height: 20px;}
 
 .collect{position: absolute;width: 100%;height: 100%;background: #F2F2F2;top: 0;left: 0;padding-left: 10px;}
+

@@ -11,13 +11,20 @@
 <head>
     <title>TV</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="${resource(file: '/css/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" />
-    <link href="${resource(file: '/css/normalize.css')}" rel="stylesheet" />
+    %{--<link href="${resource(file: '/css/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" />--}%
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    %{--<link href="${resource(file: '/css/normalize.css')}" rel="stylesheet" />--}%
+    <link href="http://cdn.bootcss.com/normalize/5.0.0/normalize.css" rel="stylesheet">
     <link href="${resource(file: '/css/base.css')}" rel="stylesheet" />
     <script type="text/javascript">window.ctx = "${createLink(uri:'/')}";</script>
-    <script type="text/javascript" src="${resource(file: '/js/jquery-3.1.0.min.js')}"></script>
-    <script type="text/javascript" src="${resource(file: '/js/angular/angular.min.js')}"></script>
-    <script type="text/javascript" src="${resource(file: '/js/angular/angular-ui-router.min.js')}"></script>
+    %{--<script type="text/javascript" src="${resource(file: '/js/jquery-3.1.0.min.js')}"></script>--}%
+    <script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.bootcss.com/angular.js/1.5.6/angular.min.js"></script>
+    %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular.min.js')}"></script>--}%
+    %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular-ui-router.min.js')}"></script>--}%
+    <script type="text/javascript" src="http://cdn.bootcss.com/angular-ui-router/1.0.0-beta.3/angular-ui-router.min.js"></script>
+
+
     <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}"></script>
     <script type="text/javascript" src="${resource(file: '/js/self/main.js')}"></script>
 </head>
@@ -27,8 +34,8 @@
 
         <div class="content table">
             <div class="left trans2">
+                <h1>Dou TV</h1>
                 <div class="m-search">
-                    <h1>TV</h1>
                     <div class="condition search-input">
                         <input type="text" ng-keyup="search.submit($event)" ng-model="search.kw" />
                         <i class="fa fa-search" ng-click="$state.go('room', {page:1, kw: search.kw}, {inherit: true})"></i>
@@ -47,7 +54,10 @@
                         </div>
                     </div>
                     <div class="condition">
-                        <h2>分类</h2>
+                        <h2>分类<a ui-sref="room.type"
+                                 ui-sref-opts="{inherit: true}"
+                                 ng-show="topData.types.length > 20">全部></a>
+                        </h2>
                         <div class="checkeds">
                             <a ui-sref="room({page:1, tag: ''})"
                                ui-sref-opts="{inherit: true}"
@@ -56,18 +66,16 @@
                                ui-sref="room({page:1, tag: t.name})"
                                ui-sref-opts="{inherit: true}"
                                ng-class="{selected: t.name == $stateParams.tag}">{{t.name}}</a>
-                            <a ui-sref="room.type"
-                               ui-sref-opts="{inherit: true}"
-                               ng-show="topData.types.length > 20">更多...</a>
+
                         </div>
                     </div>
                     <div class="condition">
                         <h2>我的关注
                             <a ui-sref="room.collect"
-                               ui-sref-opts="{inherit: true}">全部</a>
+                               ui-sref-opts="{inherit: true}" ng-show="$root.curUser">全部></a>
                         </h2>
                         <div >
-                            <a ng-repeat="coll in $root.collects"
+                            <a ng-repeat="coll in $root.onLineCollects"
                                repeat-finish
                                ng-init="room = coll.room"
                                class="room2 trans2"
@@ -91,11 +99,24 @@
             </div>
             <div class="right">
                 <div class="head trans2">
+                    <div class="top-menu">
+                        <a ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
+                           ui-sref-opts="{roload:true}">首页</a>
+                        <a ui-sref="room.type"
+                           ui-sref-opts="{inherit: true}">分类</a>
+                        <a ui-sref="room.collect"
+                           ui-sref-opts="{inherit: true}"
+                           ng-show="$root.curUser">我的关注</a>
+                    </div>
+                    %{--<div style="float: right; height: 45px; overflow: hidden; text-align: right">--}%
+                    <div class="right-o">
 
-                    <div style="float: right; height: 45px; overflow: hidden; text-align: right">
                         <div class="cur-user" ng-class="{'login-user': curUser}">
-                            <div>
-                                <a><i class="fa fa-user"></i>{{curUser.name}}</a>
+
+                            <div class="user-o">
+                                <i class="fa fa-user" style="cursor: default">&nbsp;{{curUser.name}}</i>
+                                <i class="fa fa-key" ng-click="windows.add({url: '${resource(file: 'html/user/update-pwd.html')}'})" title="修改密码"></i>
+                                <i class="fa fa-power-off" ng-click="$root.logout()" title="退出"></i>
                             </div>
                             <div>
                                 <a ng-click="windows.add({url: '${resource(file: 'html/user/login.html')}'})">登录</a>

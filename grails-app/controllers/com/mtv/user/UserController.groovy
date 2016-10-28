@@ -1,27 +1,19 @@
 package com.mtv.user
 
 import com.mtv.Response
-import com.mtv.User
 
 class UserController {
 
+    static namespace = "center"
+
     def userService
 
-    def index() {
+    def updatePwd(){
+        if(!params.oldPwd){
+            throw new IllegalArgumentException("老密码不能为空")
+        }
+        userService.updatePwd(userService.getCurrentUser().id, params.password, params.oldPwd)
+        render Response.success().toJSON()
 
-    }
-
-    def login(){
-        User user = userService.login(params.name, params.password)
-        render Response.success(user).toJSON()
-    }
-
-    def register(){
-        User user = userService.register(params.name, params.password, params.email)
-        render Response.success(user).toJSON()
-    }
-
-    def getCurrentUser(){
-        render Response.success(userService.getCurrentUser()).toJSON()
     }
 }

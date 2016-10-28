@@ -1,0 +1,12 @@
+<!-- 登录页面 -->
+<div class="login" ng-controller="updatePwd">
+    <h2>修改密码</h2>
+    <div>
+        <form ng-submit="submit($event)">
+            <input type="text" ng-model="sData.oldPwd" placeholder="请输入当前密码"/><br/>
+            <input type="password" ng-model="sData.password" placeholder="请输入密码"/><br/>
+            <input type="password" ng-model="sData.rePassword" placeholder="再输一次密码"/><br/>
+            <button type="submit">确认</button>
+        </form>
+    </div>
+</div>

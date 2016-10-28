@@ -19,14 +19,27 @@
 
         // 刷新登录状态
         $rootScope.loadLogin = function(){
-            $http.post(window.ctx + "user/getCurrentUser").success(function(data){
+            $http.post(window.ctx + "auth/getCurrentUser").success(function(data){
                 if(data.success){
                     $rootScope.curUser = data.data;
                     if($rootScope.curUser){
                         $rootScope.loadCollect();
+                    }else{
+                        // 清空我的关注
+                        $rootScope.collects = [];
+                        $rootScope.collectMap = {};
                     }
                 }else{
                     $log(data.message || "系统错误");
+                }
+            });
+        };
+
+        // 退出
+        $rootScope.logout = function(){
+            $http.post(window.ctx + "auth/logout").success(function(data){
+                if(data.success){
+                    $rootScope.loadLogin();
                 }
             });
         };
@@ -39,8 +52,12 @@
                     // [collects: collects, total: collects.totalCount]
                     $rootScope.collects = data.data.collects;
                     var collectMap = {};
+                    $rootScope.onLineCollects= [];
                     $($rootScope.collects).each(function(){
                         collectMap[this.room.id] = this.id;
+                        if(this.room.isOnLine){
+                            $rootScope.onLineCollects.push(this);
+                        }
                     });
                     $rootScope.collectMap = collectMap;
                 }else{
@@ -245,7 +262,7 @@
 
     main.controller('login', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
         $scope.loginSubmit = function(){
-            $http.post(window.ctx + "user/login", $.param($scope.login)).success(function(data){
+            $http.post(window.ctx + "auth/login", $.param($scope.login)).success(function(data){
                 if(data.success){
                     $scope.$root.loadLogin();
                     $scope.$root.windows.close($scope.curWindow);
@@ -258,9 +275,22 @@
 
     main.controller('register', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
         $scope.registerSubmit = function(){
-            $http.post(window.ctx + "user/register", $.param($scope.register)).success(function(data){
+            $http.post(window.ctx + "auth/register", $.param($scope.register)).success(function(data){
                 if(data.success){
                     $scope.$root.loadLogin();
+                    $scope.$root.windows.close($scope.curWindow);
+                }else{
+                    alert(data.message || "系统错误")
+                }
+            });
+        }
+    }]);
+
+    main.controller('updatePwd', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
+        $scope.submit = function(){
+            $http.post(window.ctx + "center/user/updatePwd", $.param($scope.sData)).success(function(data){
+                if(data.success){
+                    alert("修改成功");
                     $scope.$root.windows.close($scope.curWindow);
                 }else{
                     alert(data.message || "系统错误")

@@ -56,6 +56,35 @@ class UserService {
         return user
     }
 
+    public void logout(){
+        HttpServletRequest request = RequestUtils.getRequest()
+        request.session.invalidate()
+    }
+
+
+    /**
+     * 修改密码
+     * @param userId
+     * @param newPwd
+     * @param oldPwd 老密码不传或为null则不校验老密码是否正确
+     */
+    public void updatePwd(Long userId, String newPwd, String oldPwd = null){
+        Assert.notNull(userId, "用户ID不能为空")
+        if(!newPwd){
+            throw new IllegalArgumentException("新密码不能为空")
+        }
+        User user = User.get(userId)
+        if(oldPwd && user.password != EncryptUtils.pwd(oldPwd)){
+            throw new IllegalArgumentException("密码错误")
+        }
+        user.password = EncryptUtils.pwd(newPwd)
+        user.save()
+    }
+
+    /**
+     * 获取当前登录用户
+     * @return
+     */
     public User getCurrentUser(){
         HttpServletRequest request = RequestUtils.getRequest()
         return request.session.getAttribute("user")
