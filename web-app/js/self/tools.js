@@ -96,7 +96,6 @@ window.tool = {
                     }
                     return "javascript:void(0);"
                 };
-                // console.log(config )
 
             }
         };

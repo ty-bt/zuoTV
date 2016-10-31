@@ -10,7 +10,6 @@
     main.run(['$rootScope', '$state', '$stateParams', '$log', '$http', '$window', function($rootScope, $state, $stateParams, $log, $http, $window) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-        console.log($window);
         // 弹出窗口管理对象 使用m-window指令
         $rootScope.windows = {};
 
