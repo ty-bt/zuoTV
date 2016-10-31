@@ -32,7 +32,8 @@ class UserService {
         user.name = name
         user.password = EncryptUtils.pwd(password)
         user.email = email
-        return user.save()
+        user.save()
+        return this.login(name, password)
     }
 
     /**

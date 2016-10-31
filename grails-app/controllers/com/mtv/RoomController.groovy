@@ -13,7 +13,11 @@ class RoomController {
     def page(){
         def rooms = Room.createCriteria().list(ParamUtils.limit()){
             if(params.kw){
-                like('name', "%${StringUtils.escapeSql(params.kw)}%")
+                or{
+                    like('name', "%${StringUtils.escapeSql(params.kw)}%")
+                    like('anchor', "%${StringUtils.escapeSql(params.kw)}%")
+                }
+
             }
             if(params.tag){
                 eq('tag', params.tag)

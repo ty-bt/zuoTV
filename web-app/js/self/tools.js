@@ -67,7 +67,7 @@ window.tool = {
 
         return {
             restrict: 'A',
-            templateUrl: window.ctx + '/html/paginate.html',
+            templateUrl: window.ctx + 'html/paginate.html',
             scope: {
                 config: '=tPaginate'
             },
@@ -116,7 +116,7 @@ window.tool = {
 
         return {
             restrict: 'A',
-            templateUrl: window.ctx + '/html/m-window.html',
+            templateUrl: window.ctx + 'html/m-window.html',
             scope: {
                 config: '=mWindow'
             },

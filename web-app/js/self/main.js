@@ -7,10 +7,10 @@
         $rootScope.ctx = window.ctx;
     }]);
 
-    main.run(['$rootScope', '$state', '$stateParams', '$log', '$http', function($rootScope, $state, $stateParams, $log, $http) {
+    main.run(['$rootScope', '$state', '$stateParams', '$log', '$http', '$window', function($rootScope, $state, $stateParams, $log, $http, $window) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-
+        console.log($window);
         // 弹出窗口管理对象 使用m-window指令
         $rootScope.windows = {};
 
@@ -139,6 +139,15 @@
             $rootScope.roomSize = {width: width, height: width / ratio};
             $rootScope.$apply('roomSize');
         }).resize();
+
+        // 加载左侧滚轮事件
+        // http://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js
+        setTimeout(function(){
+            $.getScript('http://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js', function(){
+
+            });
+        }, 500);
+
     }]);
 
     // 路由配置
@@ -149,18 +158,18 @@
         // 首页
         $stateProvider.state('room', {
             url: '/:page/:kw/:platformName/:tag',
-            templateUrl: window.ctx +　'/html/room/index.html',
+            templateUrl: window.ctx +　'html/room/index.html',
             controller: 'room.index'
         }).state('room.insetDetail', {
             url: '/inset-detail/:roomId',
-            templateUrl: window.ctx +　'/html/room/inset-detail.html',
+            templateUrl: window.ctx +　'html/room/inset-detail.html',
             controller: "room.insetDetail"
         }).state('room.collect', {
             url: '/collect',
-            templateUrl: window.ctx +　'/html/collect.html'
+            templateUrl: window.ctx +　'html/collect.html'
         }).state('room.type', {
             url: '/type',
-            templateUrl: window.ctx +　'/html/type.html'
+            templateUrl: window.ctx +　'html/type.html'
         });
         // 改变post提交方式 data所在位置
         $httpProvider.defaults.headers.post = {

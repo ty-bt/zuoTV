@@ -1,4 +1,5 @@
 <div class="body">
+    <h3 ng-if="rooms" class="show-tit" ng-show="!rooms.length">米有找到相应的房间...</h3>
     <a ng-repeat="room in rooms"
        repeat-finish
        class="room trans2"

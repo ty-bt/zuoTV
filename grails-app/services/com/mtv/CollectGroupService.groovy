@@ -1,7 +1,7 @@
 package com.mtv
 
 import grails.transaction.Transactional
-import org.spockframework.util.Assert
+import org.springframework.util.Assert
 
 @Transactional
 class CollectGroupService {

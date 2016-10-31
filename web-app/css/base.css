@@ -22,7 +22,7 @@ a{text-decoration: none; color: #313131}
 .head{height: 50px;overflow: hidden;/* font-size: 27px; *//* font-weight: bold; */padding-left: 10px;line-height: 50px;background: #3498db;color: #fff;/* border-bottom: 1px solid #000; */}
 .main .body{padding-left: 10px;overflow-y: auto;/* display: none; */height: 100%;}
 .main .content>div{height:100%;overflow:hidden;}
-.main .content>.left{width: 245px;background: #34495e;color: #fff;}
+.main .content>.left{width: 245px;background: #2980b9;color: #fff;}
 .main .content>.left h1{margin: 0;padding: 0;line-height: 50px;background: #2980b9;color: #fff;padding-right: 20px;text-align: right;}
 .main .content .right-o{float: right; height: 40px; overflow: hidden; text-align: right}
 .main .content .m-view{position: relative}
@@ -59,11 +59,11 @@ a{text-decoration: none; color: #313131}
 .m-search h2{border-bottom: 1px solid #fff;margin: 5px 0 10px 0;padding: 2px 0;font-weight: 200;position: relative;}
 .m-search h2 a{font-size:13px;position: absolute;color: #fff;right: 0;bottom: 3px;cursor: pointer;}
 .m-search .checkeds a{color: #fff;display: inline-block;padding: 0 4px;margin: 0 4px 5px 0;background: #2980b9;border-radius: 4px;line-height: 20px;/* box-shadow: 0px 0px 0px 0 #000; */cursor: pointer;}
-.m-search .checkeds a.selected{box-shadow: 0px 0px 5px 0px #000;}
+.m-search .checkeds a.selected{/* box-shadow: 0px 0px 1px 0px #000; */background: #3498db;}
 
 .search-input{position: relative;margin-top: 10px;}
-.search-input input{border-radius: 4px;width: 215px;border: none;padding: 3px 5px;}
-.search-input i{position: absolute;color: #3498db;float: right;right: 0;padding: 0 5px;top: 0;line-height: 19px;cursor: pointer;}
+.search-input input{border-radius: 4px;width: 215px;border: none;padding: 6px 5px;}
+.search-input i{position: absolute;color: #3498db;float: right;right: 0;padding: 0 5px;top: 0;line-height: 24px;cursor: pointer;}
 
 /* 房间块样式*/
 .room{width: 338px;height: 251px;display: inline-block;background: #fff;margin: 10px 10px 10px 0;overflow: hidden;}
@@ -77,8 +77,8 @@ a{text-decoration: none; color: #313131}
 /* 播放图标 */
 .room .photo .pla-name{position: absolute;top: 0;right: 0;color: #fff;font-size: 13px;line-height: 18px;padding: 0 4px;text-shadow: 0 0 8px #000;border: 1px solid #fff;border-radius: 4px;margin: 5px;opacity: 0.5;}
 /*.room .photo .play:before{font-size: 77px;display: inline-block;width: 30%;text-align: center;left: 35%;line-height: 100%;height: 50%;top: -50%}*/
-.room .photo .play{position: absolute;display: inline-block;font-size: 77px;width: 30%;text-align: center;left: 35%;line-height: 100%;height: 50%;top: -50%;color: #fff;text-shadow: 0 0 20px #000; overflow: hidden}
-.room .photo .play.insert{color: #52c3dd; text-shadow: 0 0 20px #000;}
+.room .photo .play{position: absolute;display: inline-block;font-size: 77px;width: 30%;text-align: center;left: 35%;line-height: 100%;height: 50%;top: -50%;color: #696969;text-shadow: 0 0 20px #000;overflow: hidden;}
+.room .photo .play.insert{color: #fff;text-shadow: 0 0 20px #000;}
 .room:hover .photo .play{top: 25%; overflow: visible}
 .room .title{font-size: 14px;}
 .room .tag{color: #f60;}
@@ -146,4 +146,10 @@ a{text-decoration: none; color: #313131}
 .types .t a span.min{font-size:12px;line-height: 20px;}
 
 .collect{position: absolute;width: 100%;height: 100%;background: #F2F2F2;top: 0;left: 0;padding-left: 10px;}
+
+/* 我的关注-登录 */
+.collect-login,.collect-login a{color: #fff; text-align: center;}
+.collect-login a{margin: 0 10px; cursor: pointer}
+
+.show-tit{font-weight: 500;text-align: center;}
 

@@ -9,7 +9,7 @@
 <!DOCTYPE HTML>
 <html ng-app="main">
 <head>
-    <title>TV</title>
+    <title>Zuo TV</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     %{--<link href="${resource(file: '/css/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" />--}%
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -34,10 +34,10 @@
 
         <div class="content table">
             <div class="left trans2">
-                <h1>Dou TV</h1>
+                <h1>Zou TV</h1>
                 <div class="m-search">
                     <div class="condition search-input">
-                        <input type="text" ng-keyup="search.submit($event)" ng-model="search.kw" />
+                        <input type="text" placeholder="输入房间名或主播名搜索" ng-keyup="search.submit($event)" ng-model="search.kw" />
                         <i class="fa fa-search" ng-click="$state.go('room', {page:1, kw: search.kw}, {inherit: true})"></i>
                     </div>
                     <div class="condition">
@@ -72,9 +72,18 @@
                     <div class="condition">
                         <h2>我的关注
                             <a ui-sref="room.collect"
-                               ui-sref-opts="{inherit: true}" ng-show="$root.curUser">全部></a>
+                               ui-sref-opts="{inherit: true}" ng-show="$root.curUser && $root.collects.length">全部></a>
                         </h2>
-                        <div >
+                        %{-- 未登录 --}%
+                        <div ng-if="!$root.curUser" class="collect-login">
+                            <a ng-click="windows.add({url: '${resource(file: 'html/user/login.html')}'})">登录</a>
+                            |
+                            <a ng-click="windows.add({url: '${resource(file: 'html/user/register.html')}'})">注册</a>
+                        </div>
+                        %{-- 已登录 --}%
+                        <div ng-if="$root.curUser">
+                            <h3 class="show-tit" ng-show="!$root.onLineCollects.length">你关注的房间都没上线,哈哈...</h3>
+                            <h3 class="show-tit" ng-show="!$root.collects.length">额,原来你一个房间都没关注 -.-</h3>
                             <a ng-repeat="coll in $root.onLineCollects"
                                repeat-finish
                                ng-init="room = coll.room"
