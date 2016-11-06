@@ -70,15 +70,15 @@
                         </div>
                     </div>
                     <div class="condition">
-                        <h2>我的关注
+                        <h2>我的关注&nbsp;<span style="font-size: 13px;" ng-show="$root.collects.length">{{$root.onLineCollects.length}}/{{$root.collects.length}}</span>
                             <a ui-sref="room.collect"
                                ui-sref-opts="{inherit: true}" ng-show="$root.curUser && $root.collects.length">全部></a>
                         </h2>
                         %{-- 未登录 --}%
                         <div ng-if="!$root.curUser" class="collect-login">
-                            <a ng-click="windows.add({url: '${resource(file: 'html/user/login.html')}'})">登录</a>
+                            <a ng-click="$root.login()">登录</a>
                             |
-                            <a ng-click="windows.add({url: '${resource(file: 'html/user/register.html')}'})">注册</a>
+                            <a ng-click="$root.register()">注册</a>
                         </div>
                         %{-- 已登录 --}%
                         <div ng-if="$root.curUser">
@@ -128,8 +128,8 @@
                                 <i class="fa fa-power-off" ng-click="$root.logout()" title="退出"></i>
                             </div>
                             <div>
-                                <a ng-click="windows.add({url: '${resource(file: 'html/user/login.html')}'})">登录</a>
-                                <a ng-click="windows.add({url: '${resource(file: 'html/user/register.html')}'})">注册</a>
+                                <a class="login-btn" ng-click="$root.login()">登录</a>
+                                <a class="register-btn" ng-click="$root.register()">注册</a>
                             </div>
                             <div class="clear"></div>
                         </div>

@@ -29,9 +29,17 @@
                         $rootScope.collectMap = {};
                     }
                 }else{
-                    $log(data.message || "系统错误");
+                    $log.log(data.message || "系统错误");
                 }
             });
+        };
+
+        $rootScope.login = function(){
+            $rootScope.windows.add({url: window.ctx + 'html/user/login.html'});
+        };
+
+        $rootScope.register = function(){
+            $rootScope.windows.add({url: window.ctx + 'html/user/register.html'});
         };
 
         // 退出
@@ -42,6 +50,8 @@
                 }
             });
         };
+
+
 
         $rootScope.collectMap = {};
         // 加载收藏夹
@@ -60,15 +70,47 @@
                     });
                     $rootScope.collectMap = collectMap;
                 }else{
-                    $log(data.message || "系统错误");
+                    $log.log(data.message || "系统错误");
                 }
             });
         };
+        // 浏览器标签页切换事件 自动刷新关注
+        (function(){
+            // 当前浏览器标签页是否隐藏状态
+            $rootScope.browserHidden = false;
+            var hiddenProperty = 'hidden' in document ? 'hidden' :
+                'webkitHidden' in document ? 'webkitHidden' :
+                    'mozHidden' in document ? 'mozHidden' :
+                        null;
+            var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+            var onVisibilityChange = function(){
+
+                if (!document[hiddenProperty]) {
+                    $rootScope.browserHidden = false;
+                    $rootScope.loadCollect();
+                }else{
+                    $rootScope.browserHidden = true;
+                }
+            };
+            // 三分钟刷新一次
+            setTimeout(function(){
+                if($rootScope.browserHidden && $rootScope.curUser){
+                    $rootScope.loadCollect();
+                }
+                setTimeout(arguments.callee, 60000 * 3);
+            }, 60000 * 3);
+            document.addEventListener(visibilityChangeEvent, onVisibilityChange);
+        })();
+
 
         // 修改收藏夹状态
         $rootScope.changeCollect = function($event, room){
             $event.stopPropagation();
             $event.preventDefault();
+            if(!$rootScope.curUser){
+                $rootScope.login();
+                return;
+            }
             var collectId = $rootScope.collectMap[room.id];
             if(collectId){
                 $http.post(window.ctx + "center/collect/delete", $.param({
@@ -227,20 +269,25 @@
             }
             // detailEle.height($(window).height());
             // detailEle.width($(window).width());
-            var maxWidth = detailEle.width();
-            var maxHeight = detailEle.height() - 41 * 2;
+            // 两边留白10px
+            var maxWidth = detailEle.width() - 20;
+            var maxHeight = detailEle.height() - 110;
             var radio = 1.777;
             if(maxHeight * radio < maxWidth){
-                $element.find("embed").css({
+                $element.find(".cen").css({
+                    'margin-top': 0,
+                    width: maxHeight * radio
+                }).find("embed").css({
                     height: maxHeight,
-                    width: maxHeight * radio,
-                    'margin-top': 0
+                    width: maxHeight * radio
                 });
             }else{
-                $element.find("embed").css({
+                $element.find(".cen").css({
+                    'margin-top': (maxHeight - (maxWidth / radio)) / 2,
+                    width: maxWidth
+                }).find("embed").css({
                     height: maxWidth / radio,
-                    width: maxWidth,
-                    'margin-top': (maxHeight - (maxWidth / radio)) / 2
+                    width: maxWidth
                 });
             }
         });
@@ -248,7 +295,7 @@
         var loadEmbed = function(){
             // $element.find("embed").attr("src", $scope.curRoom.quoteUrl)
             var embedEle = $('<embed src="' + $scope.curRoom.quoteUrl + '" width="640" height="360" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">')
-            $element.find(".cen").append(embedEle);
+            $element.find(".embed-div").append(embedEle);
             setTimeout(function(){
                 $(window).resize();
             })

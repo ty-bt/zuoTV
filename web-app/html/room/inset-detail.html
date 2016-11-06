@@ -7,9 +7,21 @@
         <div class="top">
             <i class="fa fa-close" title="关闭" ng-click="$state.go('^')"></i>
         </div>
-        <div class="cen"></div>
-        <div class="bottom">
-            <!--<a class="fa fa-newspaper-o" target="_blank" ui-sref="^"></a>-->
+        <div class="cen">
+
+            <h3 class="ellipsis">{{curRoom.name}}<span><i class="fa fa-child"></i>{{curRoom.adNum | wanNum}}</span></h3>
+
+            <div class="embed-div">
+
+            </div>
+            <div class="bottom">
+                <a ><i title="关注" roomId="{{room.id}}"
+                       ng-click="$root.changeCollect($event, curRoom);$event.stopPropagation();"
+                       ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
+                       class="fa heart"></i>{{curRoom.anchor}}</a>
+                <a class="right" target="_blank" href="{{curRoom.url}}"><i class="fa fa-level-up"></i>跳转到{{curRoom.platform.name}}观看</a>
+            </div>
         </div>
+
     </div>
 </div>
