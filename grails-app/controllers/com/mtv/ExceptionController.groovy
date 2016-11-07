@@ -12,7 +12,7 @@ class ExceptionController {
         try {
             Exception exception = (Exception) request?.exception // 判断是否是ajax请求
             Exception realEx = getRealException(exception)
-            if (request.xhr && exception) {
+            if (request.xhr && realEx) {
                 response.status = 200
                 render(convertExceptionToResponse(exception) as JSON)
             } else {

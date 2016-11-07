@@ -56,6 +56,9 @@
         $rootScope.collectMap = {};
         // 加载收藏夹
         $rootScope.loadCollect = function(){
+            if(!$rootScope.curUser){
+                return;
+            }
             $http.post(window.ctx + "center/collect/list").success(function(data){
                 if(data.success){
                     // [collects: collects, total: collects.totalCount]
@@ -94,7 +97,7 @@
             };
             // 三分钟刷新一次
             setTimeout(function(){
-                if($rootScope.browserHidden && $rootScope.curUser){
+                if($rootScope.browserHidden){
                     $rootScope.loadCollect();
                 }
                 setTimeout(arguments.callee, 60000 * 3);
