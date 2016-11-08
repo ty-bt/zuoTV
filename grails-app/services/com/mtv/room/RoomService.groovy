@@ -56,7 +56,9 @@ class RoomService {
         Map dataMap = [:]
         // 线程
         Map<String, Thread> threadList = [:]
-        Platform.findAll().each {
+        Platform.createCriteria().list({
+            order('onLineRoom')
+        }).each {
             Platform platform = it
             // 获取平台指定服务类
             Object support = BeanLookup.support(SupportLoadRoom.class, platform.flag)

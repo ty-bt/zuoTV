@@ -34,7 +34,7 @@
 
         <div class="content table">
             <div class="left trans2">
-                <h1>Zou TV</h1>
+                <h1>Zuo TV</h1>
                 <div class="m-search">
                     <div class="condition search-input">
                         <input type="text" placeholder="输入房间名或主播名搜索" ng-keyup="search.submit($event)" ng-model="search.kw" />

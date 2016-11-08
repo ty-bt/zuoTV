@@ -9,7 +9,9 @@ class IndexController {
     }
 
     def getIndexData(){
-        List platforms = Platform.findAll()
+        List platforms = Platform.createCriteria().list {
+            order('onLineAd', 'desc')
+        }
         List types = Type.findAll()
         render Response.success([platforms: platforms, types: types]).toJSON()
     }
