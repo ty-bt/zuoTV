@@ -15,7 +15,7 @@ class RoomJob {
 
     def execute() {
         Long start = System.currentTimeMillis()
-        println "定时任务执行 " + start
+        println "定时任务执行 " + new Date()
         roomService.loadAllT()
         typeService.reloadAll()
         platformService.statistics()

@@ -138,7 +138,7 @@
 
         //platforms: platforms, types: types]
         // 获取分类和平台
-        $http.post(window.ctx + "index/getIndexData").success(function(data){
+        $http.get(window.ctx + "index/getIndexData").success(function(data){
             $rootScope.topData = data.data;
         });
 
