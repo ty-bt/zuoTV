@@ -40,11 +40,15 @@ class Room {
     String quoteUrl
 
     /*创建时间*/
-    Date dateCreated
+    Date dateCreated = new Date()
 
     /*最后修改时间*/
-    Date lastUpdated
+    Date lastUpdated = new Date()
 
+    static mapping = {
+        // 更新的时候会自动更新lastUpdated 所以这个不用自动更新时间
+        autoTimestamp false
+    }
 
     static constraints = {
         quoteUrl nullable: true
