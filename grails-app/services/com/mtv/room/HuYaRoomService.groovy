@@ -1,6 +1,7 @@
 package com.mtv.room
 
 import com.alibaba.fastjson.JSON
+import com.mtv.DateUtils
 import com.mtv.Room
 import grails.transaction.Transactional
 import org.jsoup.Jsoup
@@ -39,7 +40,7 @@ class HuYaRoomService extends SupportLoadRoom {
     @Override
     void saveRoom(Object obj) {
         List<List<Map>> pageList = (List<List<Map>>)obj
-        Date lastUpdated = new Date()
+        Date lastUpdated = DateUtils.getDateNoMSEL()
         // 解析并保存数据
         pageList.each {
             List<Map> list = it

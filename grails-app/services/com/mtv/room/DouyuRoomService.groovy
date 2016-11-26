@@ -1,5 +1,6 @@
 package com.mtv.room
 
+import com.mtv.DateUtils
 import com.mtv.Room
 import com.mtv.StringUtils
 import grails.transaction.Transactional
@@ -61,7 +62,7 @@ class DouyuRoomService extends SupportLoadRoom {
     void saveRoom(Object obj) {
         List<Map> roomList = (List<Map>)obj
         // 最后修改时间
-        Date lastUpdated = new Date()
+        Date lastUpdated = DateUtils.getDateNoMSEL()
         // 解析并保存数据
         int i = 1
         roomList.each {
