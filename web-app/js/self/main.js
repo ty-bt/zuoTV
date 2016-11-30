@@ -169,12 +169,36 @@
         $rootScope.roomSize = {width: initWidth, height: 251};
         var ratio = initWidth / 251;
 
+        /**
+         * 左侧滚轮事件
+         * @param delta 大于0则往上 小于则往下 0则不变
+         */
+        var leftMousewheel = function(delta){
+            var leftEle = $('.m-search');
+            var moveEle = leftEle.find(">div:eq(0)");
+            var curMar = parseInt(moveEle.css("margin-top")) || 0;
+            var height = leftEle.height() - curMar;
+            var targetMar = curMar + delta * 100;
+            // 最小上边距
+            var minMar = $(window).height() - leftEle.offset().top - height;
+            if(targetMar < minMar){
+                targetMar = minMar
+            }
+            if(targetMar > 0){
+                targetMar = 0;
+            }
+            moveEle.css("margin-top", targetMar);
+        };
+
         $(window).resize(function(){
             var rightDiv = $(".main .content>.right");
             var viewDiv = rightDiv.find(".m-view");
             rightDiv.width($(window).width() - rightDiv.offset().left);
             rightDiv.height($(window).height());
             viewDiv.height($(window).height() - viewDiv.offset().top);
+
+            // 重新调整滚动位置
+            leftMousewheel(0);
 
             // 计算房间块大小
             var bodyWidth = viewDiv.width() - $rootScope.scrollWidth - 10;
@@ -188,8 +212,20 @@
         // http://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js
         setTimeout(function(){
             $.getScript('http://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js', function(){
-
+                $('.m-search').mousewheel(function(event, delta) {
+                    leftMousewheel(delta);
+                });
             });
+
+            // google跟踪代码
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-88253768-1', 'auto');
+            ga('send', 'pageview');
+
         }, 500);
 
     }]);
