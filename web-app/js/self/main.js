@@ -16,6 +16,23 @@
         // 当前登录用户
         $rootScope.curUser = null;
 
+        /**
+         * 打开房间的时候调用
+         * @param room 房间对象
+         */
+        $rootScope.openRoom = function(room){
+            $rootScope.curRoom = room;
+        };
+
+        /**
+         * 返回是否支持页内播放
+         * @param flag 平台标识
+         * @returns {boolean}
+         */
+        $rootScope.isInsert = function(flag){
+            return flag != "panda" && flag != "zhanQi";
+        };
+
         // 刷新登录状态
         $rootScope.loadLogin = function(){
             $http.post(window.ctx + "auth/getCurrentUser").success(function(data){
@@ -35,11 +52,11 @@
         };
 
         $rootScope.login = function(){
-            $rootScope.windows.add({url: window.ctx + 'html/user/login.html'});
+            $rootScope.windows.add({url: 'login-tem'});
         };
 
         $rootScope.register = function(){
-            $rootScope.windows.add({url: window.ctx + 'html/user/register.html'});
+            $rootScope.windows.add({url: 'register-tem'});
         };
 
         // 退出
@@ -155,7 +172,7 @@
 
         // 获取滚动条宽度
         $rootScope.scrollWidth = (function(){
-            var tempDiv = $('<div style="overflow: scroll"></div>');
+            var tempDiv = $('<div style="overflow: scroll; height: 1px"><div style="height: 100px;;"></div></div>');
             $("body").append(tempDiv);
             var scrollWidth = tempDiv[0].offsetWidth - tempDiv[0].scrollWidth;
             tempDiv.remove();
@@ -189,7 +206,7 @@
             }
             moveEle.css("margin-top", targetMar);
         };
-
+        var resizeIsInit = true;
         $(window).resize(function(){
             var rightDiv = $(".main .content>.right");
             var viewDiv = rightDiv.find(".m-view");
@@ -205,7 +222,12 @@
             var size = Math.ceil(bodyWidth / (initWidth + 10));
             var width = Math.floor(bodyWidth / size - 10);
             $rootScope.roomSize = {width: width, height: width / ratio};
-            $rootScope.$apply('roomSize');
+            // 第一次resize 大部分模板没有初始化完毕 禁止$apply
+            if(resizeIsInit){
+                resizeIsInit = false;
+            }else{
+                $rootScope.$apply('roomSize');
+            }
         }).resize();
 
         // 加载左侧滚轮事件
@@ -238,18 +260,18 @@
         // 首页
         $stateProvider.state('room', {
             url: '/:page/:kw/:platformName/:tag',
-            templateUrl: window.ctx +　'html/room/index.html',
+            templateUrl: "index-tem",
             controller: 'room.index'
         }).state('room.insetDetail', {
             url: '/inset-detail/:roomId',
-            templateUrl: window.ctx +　'html/room/inset-detail.html',
+            templateUrl: 'inset-detail-tem',
             controller: "room.insetDetail"
         }).state('room.collect', {
             url: '/collect',
-            templateUrl: window.ctx +　'html/collect.html'
+            templateUrl: 'collect-tem'
         }).state('room.type', {
             url: '/type',
-            templateUrl: window.ctx +　'html/type.html'
+            templateUrl: 'type-tem'
         });
         // 改变post提交方式 data所在位置
         $httpProvider.defaults.headers.post = {
@@ -278,7 +300,7 @@
             }
         }).success(function(data){
             $(data.rooms).each(function(){
-                this.href = this.quoteUrl ? $state.href("room.insetDetail", {roomId: this.id}, {inherit: true}) : this.url;
+                this.href = $state.href("room.insetDetail", {roomId: this.id}, {inherit: true});
             });
             $scope.rooms = data.rooms;
             // 分页
@@ -332,15 +354,24 @@
         });
 
         var loadEmbed = function(){
-            // $element.find("embed").attr("src", $scope.curRoom.quoteUrl)
-            var embedEle = $('<embed src="' + $scope.curRoom.quoteUrl + '" width="640" height="360" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">')
-            $element.find(".embed-div").append(embedEle);
-            setTimeout(function(){
-                $(window).resize();
-            })
+            if(!$scope.$root.isInsert($scope.curRoom.platform.flag)){
+                window.open($scope.curRoom.url, "_blank");
+                $state.go('^');
+                return;
+            }
+            if($scope.curRoom.quoteUrl){
+                var embedEle = $('<embed src="' + $scope.curRoom.quoteUrl + '" width="640" height="360" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">')
+                $element.find(".embed-div").append(embedEle);
+                setTimeout(function(){
+                    $(window).resize();
+                })
+            }else{
+                $element.find("iframe").attr("src", $scope.curRoom.url);
+            }
+
         };
 
-        if(!$scope.curRoom){
+        if(!$scope.curRoom || $scope.curRoom.id != $stateParams.roomId){
             $http({
                 url: window.ctx + "room/one",
                 params: {id: $stateParams.roomId}

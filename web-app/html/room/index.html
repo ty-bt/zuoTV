@@ -3,7 +3,7 @@
     <a ng-repeat="room in rooms"
        repeat-finish
        class="room trans2"
-       target="{{room.quoteUrl ? '_self' : '_blank'}}"
+       ng-click="openRoom(room)"
        ng-href="{{room.href}}"
        ng-style="roomSize">
         <table cellspacing="0" cellpadding="0">
@@ -15,7 +15,7 @@
                 <td colspan="2" class="photo"  ng-style="{height: roomSize.height - 50}">
                     <img ng-src="{{room.img}}"/>
                     <span class="pla-name">{{room.platform.name}}</span>
-                    <i class="fa fa-play-circle play" ng-class="{insert: room.quoteUrl}"></i>
+                    <i class="fa fa-play-circle play" ng-class="{insert: isInsert(room.platform.flag)}"></i>
                 </td>
             </tr>
             <tr class="top">
@@ -34,5 +34,6 @@
         </table>
     </a>
     <div ng-if="paginate" t-paginate="paginate"></div>
+    <div class="icp" ng-show="rooms"><a href="mailto:ty_bt@live.cn">ty_bt@live.cn</a> &copy;版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备16023346号-1</a></div>
 </div>
 <div ui-view class="detail-view"></div>

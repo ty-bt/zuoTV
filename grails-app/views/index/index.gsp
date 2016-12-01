@@ -11,11 +11,13 @@
 <head>
     <title>Zuo TV</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Zuo TV,一站聚合六个直播平台50万主播,不用一个一个平台去找喜爱的主播.." />
+    <meta name="keywords" content="聚合直播,nozuonodie,直播人数统计,直播平台统计,Zuo,Zuo TV,直播导航,直播推荐"/>
     %{--<link href="${resource(file: '/css/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" />--}%
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     %{--<link href="${resource(file: '/css/normalize.css')}" rel="stylesheet" />--}%
     <link href="http://cdn.bootcss.com/normalize/5.0.0/normalize.css" rel="stylesheet">
-    <link href="${resource(file: '/css/base.css')}" rel="stylesheet" />
+    <link href="${resource(file: '/css/base.css')}?v=20161201" rel="stylesheet" />
     <script type="text/javascript">window.ctx = "${createLink(uri:'/')}";</script>
     %{--<script type="text/javascript" src="${resource(file: '/js/jquery-3.1.0.min.js')}"></script>--}%
     <script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
@@ -23,10 +25,246 @@
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular.min.js')}"></script>--}%
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular-ui-router.min.js')}"></script>--}%
     <script type="text/javascript" src="http://cdn.bootcss.com/angular-ui-router/1.0.0-beta.3/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}?v=20161201"></script>
+    <script type="text/javascript" src="${resource(file: '/js/self/main.js')}?v=20161201"></script>
 
+    %{-- 所有分类页面 --}%
+    <script type="text/ng-template" id="type-tem">
+        <div class="types">
+            <div>
+                <h2>平台</h2>
+                <div class="t">
+                    <a ng-repeat="pla in $root.topData.platforms"
+                       ui-sref="room({page:1, platformName: pla.name})"
+                       ui-sref-opts="{reload: true, inherit: true}"
+                       ng-class="{selected: pla.name == $stateParams.platformName}">
+                        <span class="ellipsis">{{pla.name}}</span>
+                        <span class="min ellipsis"><i class="fa fa-child"></i>{{pla.onLineAd | wanNum}}</span>
+                        <span class="min ellipsis"><i class="fa fa-home"></i>{{pla.onLineRoom | wanNum}}</span>
+                    </a>
+                </div>
+            </div>
 
-    <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}"></script>
-    <script type="text/javascript" src="${resource(file: '/js/self/main.js')}"></script>
+            <div>
+                <h2>分类</h2>
+                <div class="t">
+                    <a ng-repeat="t in $root.topData.types"
+                       ui-sref="room({page:1, tag: t.name})"
+                       ui-sref-opts="{reload: true, inherit: true}"
+                       ng-class="{selected: t.name == $stateParams.tag}">
+                        <span class="ellipsis">{{t.name}}</span>
+                        <span class="min ellipsis"><i class="fa fa-child"></i>{{t.adSum | wanNum}}</span>
+                        <span class="min ellipsis"><i class="fa fa-home"></i>{{t.roomCount | wanNum}}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    %{-- 分页控件 --}%
+    <script type="text/ng-template" id="paginate-tem">
+        <div class="t-pagination" ng-if="config.pageCount" ng-init="tempCount = config.showCount; pCount = tempCount / 2">
+            <a href="{{createHref(config.current - 1)}}" class="pre page" ng-class="{disable: config.current == 1}">上一页</a>
+            <a href="{{createHref(1)}}" class="page" ng-class="{current: config.current == 1}">1</a>
+
+            <a class="sh" ng-if="config.current - config.leftCount > 2">...</a>
+            <a href="{{createHref(i)}}" class="page" ng-repeat="i in (config.current - config.leftCount | arr: config.leftCount)">{{i}}</a>
+            <a href="{{createHref(i)}}" class="page current" ng-if="config.leftCount || config.current == 2">{{config.current}}</a>
+
+            <a href="{{createHref(i)}}" class="page" ng-repeat="i in (config.current + 1 | arr: config.rightCount)" ng-if="i <= config.pageCount">{{i}}</a>
+            <a class="sh" ng-if="config.pageCount - config.rightCount != config.current">...</a>
+            <!--最后一页-->
+            <a href="{{createHref(config.pageCount)}}" class="page" ng-if="config.current + config.rightCount < config.pageCount">{{config.pageCount}}</a>
+            <a href="{{createHref(config.current + 1)}}" class="next page" ng-class="{disable: config.current == config.pageCount}">下一页</a>
+        </div>
+    </script>
+
+    %{-- 弹出窗口 模板--}%
+    <script type="text/ng-template" id="m-window-tem">
+        <div class="t-window">
+            <div class="show-window"
+                 ng-repeat="curWindow in config.windows"
+                 ng-show="!curWindow.hide"
+                 index="{{curWindow.index}}">
+                <i class="fa fa-close close" ng-class="{insert: room.quoteUrl}" ng-click="config.close(curWindow)"></i>
+                <div ng-include="curWindow.url" onload="config.resize(curWindow)">
+                </div>
+            </div>
+        </div>
+    </script>
+
+    %{--所有收藏页面--}%
+    <script type="text/ng-template" id="collect-tem">
+        <div class="collect">
+            <a ng-repeat="coll in $root.collects"
+               repeat-finish
+               ng-init="room = coll.room"
+               class="room trans2"
+               ng-click="openRoom(room)"
+               ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}"
+               ng-style="roomSize">
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td style="width:70%;"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="photo"  ng-style="{height: roomSize.height - 50}">
+                            <img ng-src="{{room.img}}"/>
+                            <span class="pla-name">{{room.platform.name}}</span>
+                            <i class="fa fa-play-circle play" ng-class="{insert: isInsert(room.platform.flag)}"></i>
+                        </td>
+                    </tr>
+                    <tr class="top">
+                        <td class="ellipsis title">{{room.name}}</td>
+                        <td class="t-r ellipsis tag">{{room.tag}}</td>
+                    </tr>
+                    <tr class="bottom">
+                        <td class="ellipsis anchor">
+                            <i title="关注" roomId="{{room.id}}"
+                               ng-click="$root.changeCollect($event, room);$event.stopPropagation();"
+                               ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
+                               class="fa heart"></i>{{room.anchor}}
+                        </td>
+                        <td class="t-r ellipsis num"><i class="fa fa-child"></i>{{room.adNum | wanNum}}</td>
+                    </tr>
+                </table>
+            </a>
+        </div>
+    </script>
+
+    %{--修改密码页面--}%
+    <script type="text/ng-template" id="update-pwd-tem">
+        <div class="login" ng-controller="updatePwd">
+            <h2>修改密码</h2>
+            <div>
+                <form ng-submit="submit($event)">
+                    <input type="text" ng-model="sData.oldPwd" placeholder="请输入当前密码"/><br/>
+                    <input type="password" ng-model="sData.password" placeholder="请输入密码"/><br/>
+                    <input type="password" ng-model="sData.rePassword" placeholder="再输一次密码"/><br/>
+                    <button type="submit">确认</button>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    %{--注册页面--}%
+    <script type="text/ng-template" id="register-tem">
+        <div class="login" ng-controller="register">
+            <h2>注册</h2>
+            <div>
+                <form ng-submit="registerSubmit($event)">
+                    <input type="text" ng-model="register.name" placeholder="请输入账户名称"/><br/>
+                    <input type="password" ng-model="register.password" placeholder="请输入密码"/><br/>
+                    <input type="password" ng-model="register.rePassword" placeholder="再输一次密码"/><br/>
+                    <button type="submit">注册</button>
+                </form>
+            </div>
+            <div style="text-align: right; margin-top:10px;"><a href="javascript:;" ng-click="$root.windows.close(curWindow);$root.login()">已有账号,点击登录</a></div>
+        </div>
+    </script>
+
+    %{--登录页面--}%
+    <script type="text/ng-template" id="login-tem">
+        <div class="login" ng-controller="login">
+            <h2>登录</h2>
+            <div>
+                <form ng-submit="loginSubmit($event)">
+                    <input type="text" ng-model="login.name" placeholder="请输入账户名称"/><br/>
+                    <input type="password" ng-model="login.password" placeholder="请输入密码"/><br/>
+                    <button type="submit">登录</button>
+                </form>
+            </div>
+            <div style="text-align: right; margin-top:10px;"><a href="javascript:;" ng-click="$root.windows.close(curWindow);$root.register()">还没有账号,点击注册</a></div>
+
+        </div>
+    </script>
+
+    %{--房间首页列表--}%
+    <script type="text/ng-template" id="index-tem">
+        <div class="body">
+            <h3 ng-if="rooms" class="show-tit" ng-show="!rooms.length">米有找到相应的房间...</h3>
+            <a ng-repeat="room in rooms"
+               repeat-finish
+               class="room trans2"
+               ng-click="openRoom(room)"
+               ng-href="{{room.href}}"
+               ng-style="roomSize">
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td style="width:70%;"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="photo"  ng-style="{height: roomSize.height - 50}">
+                            <img ng-src="{{room.img}}"/>
+                            <span class="pla-name">{{room.platform.name}}</span>
+                            <i class="fa fa-play-circle play" ng-class="{insert: isInsert(room.platform.flag)}"></i>
+                        </td>
+                    </tr>
+                    <tr class="top">
+                        <td class="ellipsis title">{{room.name}}</td>
+                        <td class="t-r ellipsis tag">{{room.tag}}</td>
+                    </tr>
+                    <tr class="bottom">
+                        <td class="ellipsis anchor">
+                            <i title="关注" roomId="{{room.id}}"
+                               ng-click="$root.changeCollect($event, room);$event.stopPropagation();"
+                               ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
+                               class="fa heart"></i>{{room.anchor}}
+                        </td>
+                        <td class="t-r ellipsis num"><i class="fa fa-child"></i>{{room.adNum | wanNum}}</td>
+                    </tr>
+                </table>
+            </a>
+            <div ng-if="paginate" t-paginate="paginate"></div>
+            <div class="icp" ng-show="rooms"><a href="mailto:ty_bt@live.cn">ty_bt@live.cn</a> &copy;版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备16023346号-1</a></div>
+        </div>
+        <div ui-view class="detail-view"></div>
+
+    </script>
+
+    %{--房间详情页--}%
+    <script type="text/ng-template" id="inset-detail-tem">
+        <div class="r-detail">
+            <!-- 背景 -->
+            <img ng-src="{{curRoom.img}}" class="back-img filter-blur" />
+            <!-- 内容 -->
+            <div class="d-content" ng-show="curRoom.quoteUrl">
+                <div class="top">
+                    <i class="fa fa-close" title="关闭" ng-click="$state.go('^')"></i>
+                </div>
+                <div class="cen">
+
+                    <h3 class="ellipsis">{{curRoom.name}}<span><i class="fa fa-child"></i>{{curRoom.adNum | wanNum}}</span></h3>
+
+                    <div class="embed-div">
+
+                    </div>
+                    <div class="bottom">
+                        <a ><i title="关注" roomId="{{room.id}}"
+                               ng-click="$root.changeCollect($event, curRoom);$event.stopPropagation();"
+                               ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
+                               class="fa heart"></i>{{curRoom.anchor}}</a>
+                        <a class="right" target="_blank" href="{{curRoom.url}}"><i class="fa fa-level-up"></i>跳转到{{curRoom.platform.name}}观看</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-content-i" ng-show="!curRoom.quoteUrl">
+                <i title="关注" roomId="{{room.id}}"
+                   ng-click="$root.changeCollect($event, curRoom);$event.stopPropagation();"
+                   ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
+                   class="fa heart"></i>
+                <i class="fa fa-close" title="关闭" ng-click="$state.go('^')"></i>
+                <a class="fa fa-level-up" target="_blank" title="新窗口打开{{curRoom.platform.name}}观看" href="{{curRoom.url}}"></a>
+
+                <iframe style="width:100%; height:100%; border:none;"></iframe>
+            </div>
+        </div>
+
+    </script>
 </head>
 
 <body style="overflow: hidden">
@@ -85,11 +323,12 @@
                             <h3 class="show-tit" ng-show="!$root.onLineCollects.length">你关注的房间都没上线,哈哈...</h3>
                             <h3 class="show-tit" ng-show="!$root.collects.length">额,原来你一个房间都没关注 -.-</h3>
                             <a ng-repeat="coll in $root.onLineCollects"
+                            %{--<a ng-repeat="coll in $root.collects"--}%
                                repeat-finish
                                ng-init="room = coll.room"
+                               ng-click="openRoom(coll.room)"
                                class="room2 trans2"
-                               target="{{room.quoteUrl ? '_self' : '_blank'}}"
-                               ng-href="{{room.quoteUrl ? $state.href('room.insetDetail', {roomId: room.id}, {inherit: true}) : room.url;}}">
+                               ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}">
                                 <img ng-src="{{room.img}}"/>
                                 <span class="ellipsis top pla-name">{{room.platform.name}}</span>
                                 <span class="ellipsis top anchor">

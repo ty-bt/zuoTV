@@ -3,8 +3,8 @@
        repeat-finish
        ng-init="room = coll.room"
        class="room trans2"
-       target="{{room.quoteUrl ? '_self' : '_blank'}}"
-       ng-href="{{room.quoteUrl ? $state.href('room.insetDetail', {roomId: room.id}, {inherit: true}) : room.url;}}"
+       ng-click="openRoom(room)"
+       ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}"
        ng-style="roomSize">
         <table cellspacing="0" cellpadding="0">
             <tr>
@@ -15,7 +15,7 @@
                 <td colspan="2" class="photo"  ng-style="{height: roomSize.height - 50}">
                     <img ng-src="{{room.img}}"/>
                     <span class="pla-name">{{room.platform.name}}</span>
-                    <i class="fa fa-play-circle play" ng-class="{insert: room.quoteUrl}"></i>
+                    <i class="fa fa-play-circle play" ng-class="{insert: isInsert(room.platform.flag)}"></i>
                 </td>
             </tr>
             <tr class="top">
