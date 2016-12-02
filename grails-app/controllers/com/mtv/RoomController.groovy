@@ -22,7 +22,7 @@ class RoomController {
         [room: Room.get(params.getLong("id"))]
     }
 
-    public List<Room> getRoom(Map limit){
+    public List<Room> getRoom(Object limit){
         return Room.createCriteria().list(limit){
             if(params.kw){
                 or{
