@@ -2,6 +2,14 @@ package com.mtv
 
 class User {
 
+    static{
+        grails.converters.JSON.registerObjectMarshaller(User){
+            return it.properties.findAll{k,v->
+                !(k in ['class', 'dateCreated', 'lastUpdated', 'password'])
+            }
+        }
+    }
+
     String name
 
     String password

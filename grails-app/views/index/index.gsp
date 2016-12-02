@@ -12,7 +12,7 @@
     <title>Zuo TV</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Zuo TV,一站聚合六个直播平台50万主播,不用一个一个平台去找喜爱的主播.." />
-    <meta name="keywords" content="聚合直播,nozuonodie,直播人数统计,直播平台统计,Zuo,Zuo TV,直播导航,直播推荐"/>
+    <meta name="keywords" content="直播导航,聚合直播,nozuonodie,直播人数统计,直播平台统计,Zuo,Zuo TV,直播导航,直播推荐"/>
     %{--<link href="${resource(file: '/css/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" />--}%
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     %{--<link href="${resource(file: '/css/normalize.css')}" rel="stylesheet" />--}%
@@ -30,7 +30,7 @@
 
     %{-- 所有分类页面 --}%
     <script type="text/ng-template" id="type-tem">
-        <div class="types">
+        <div class="types" ng-show="$root.topData.platforms">
             <div>
                 <h2>平台</h2>
                 <div class="t">
@@ -273,12 +273,14 @@
         <div class="content table">
             <div class="left trans2">
                 <h1>Zuo TV</h1>
+                %{--seo --}%
+                <a class="seco" href="${createLink(controller: 'room', action: 'list', params: [offset: 0, max: 120])}">主播列表</a>
                 <div class="m-search">
                     <div class="condition search-input">
                         <input type="text" placeholder="输入房间名或主播名搜索" ng-keyup="search.submit($event)" ng-model="search.kw" />
                         <i class="fa fa-search" ng-click="$state.go('room', {page:1, kw: search.kw}, {inherit: true})"></i>
                     </div>
-                    <div class="condition">
+                    <div class="condition" ng-show="topData.platforms">
                         <h2>平台</h2>
                         <div class="checkeds"> 
                             <a href="#" ng-class="{selected: !$stateParams.platformName}"
@@ -291,7 +293,7 @@
 
                         </div>
                     </div>
-                    <div class="condition">
+                    <div class="condition" ng-show="topData.types">
                         <h2>分类<a ui-sref="room.type"
                                  ui-sref-opts="{inherit: true}"
                                  ng-show="topData.types.length > 20">全部></a>

@@ -23,9 +23,14 @@ class ParamUtils {
      * @return
      */
     public static Map limit(def params) {
-        Integer max = params.int('max', 200)
-        Integer page = params.int('page', 1)
-        Integer offset = (page - 1) * max
+        Integer max = params.int('max', 120)
+
+        Integer offset = params.int('offset', 0)
+
+        if(params.page){
+            Integer page = params.int('page', 1)
+            offset = (page - 1) * max
+        }
         return [offset: offset, max: max]
     }
 

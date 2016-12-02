@@ -6,12 +6,24 @@ import org.springframework.util.Assert
 
 class RoomController {
 
+    /**
+     * 喂给搜索引擎
+     * @return
+     */
+    def list(){
+        [rooms: getRoom(ParamUtils.limit())]
+    }
+
+    /**
+     * 喂给搜索引擎
+     * @return
+     */
     def detail(){
         [room: Room.get(params.getLong("id"))]
     }
 
-    def page(){
-        def rooms = Room.createCriteria().list(ParamUtils.limit()){
+    public List<Room> getRoom(Map limit){
+        return Room.createCriteria().list(limit){
             if(params.kw){
                 or{
                     like('name', "%${StringUtils.escapeSql(params.kw)}%")
@@ -31,6 +43,10 @@ class RoomController {
             order('adNum', "desc")
 
         }
+    }
+
+    def page(){
+        def rooms = getRoom(ParamUtils.limit())
         render([rooms: rooms, total: rooms.totalCount] as JSON)
     }
 
