@@ -17,7 +17,7 @@
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     %{--<link href="${resource(file: '/css/normalize.css')}" rel="stylesheet" />--}%
     <link href="http://cdn.bootcss.com/normalize/5.0.0/normalize.css" rel="stylesheet">
-    <link href="${resource(file: '/css/base.css')}?v=20161201" rel="stylesheet" />
+    <link href="${resource(file: '/css/base.css')}?v=20161203" rel="stylesheet" />
     <script type="text/javascript">window.ctx = "${createLink(uri:'/')}";</script>
     %{--<script type="text/javascript" src="${resource(file: '/js/jquery-3.1.0.min.js')}"></script>--}%
     <script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular.min.js')}"></script>--}%
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular-ui-router.min.js')}"></script>--}%
     <script type="text/javascript" src="http://cdn.bootcss.com/angular-ui-router/1.0.0-beta.3/angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}?v=20161201"></script>
-    <script type="text/javascript" src="${resource(file: '/js/self/main.js')}?v=20161201"></script>
+    <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}?v=20161203"></script>
+    <script type="text/javascript" src="${resource(file: '/js/self/main.js')}?v=20161203"></script>
 
     %{-- 所有分类页面 --}%
     <script type="text/ng-template" id="type-tem">
@@ -166,17 +166,18 @@
 
     %{--登录页面--}%
     <script type="text/ng-template" id="login-tem">
+        <!-- 登录页面 -->
         <div class="login" ng-controller="login">
             <h2>登录</h2>
             <div>
                 <form ng-submit="loginSubmit($event)">
                     <input type="text" ng-model="login.name" placeholder="请输入账户名称"/><br/>
                     <input type="password" ng-model="login.password" placeholder="请输入密码"/><br/>
+                    <label><input name="keep" type="checkbox" value="true" ng-model="login.keep" checked/>记住登录状态</label>
                     <button type="submit">登录</button>
                 </form>
             </div>
             <div style="text-align: right; margin-top:10px;"><a href="javascript:;" ng-click="$root.windows.close(curWindow);$root.register()">还没有账号,点击注册</a></div>
-
         </div>
     </script>
 

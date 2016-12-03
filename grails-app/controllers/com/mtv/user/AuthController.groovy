@@ -12,7 +12,7 @@ class AuthController {
     }
 
     def login(){
-        User user = userService.login(params.name, params.password)
+        User user = userService.login(params.name, params.password, params.boolean('keep', false))
         render Response.success(user).toJSON()
     }
 

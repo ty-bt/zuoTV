@@ -5,6 +5,7 @@ import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.web.context.request.RequestContextHolder
 
 import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 /**
  * request工具类
@@ -62,5 +63,21 @@ class RequestUtils {
             return null
         }
     }
+
+    /**
+     * 获取当前response
+     * @return
+     */
+    public static HttpServletResponse getResponse() {
+        try {
+            GrailsWebRequest webRequest = (GrailsWebRequest) RequestContextHolder.currentRequestAttributes()
+            if (webRequest && webRequest.response) {
+                return webRequest.response
+            }
+        } catch (e) {
+            return null
+        }
+    }
+
 
 }
