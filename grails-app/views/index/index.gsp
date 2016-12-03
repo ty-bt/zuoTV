@@ -173,7 +173,7 @@
                 <form ng-submit="loginSubmit($event)">
                     <input type="text" ng-model="login.name" placeholder="请输入账户名称"/><br/>
                     <input type="password" ng-model="login.password" placeholder="请输入密码"/><br/>
-                    <label><input name="keep" type="checkbox" value="true" ng-model="login.keep" checked/>记住登录状态</label>
+                    <label ng-init="login={keep: true}"><input type="checkbox" ng-model="login.keep"/>记住登录状态</label>
                     <button type="submit">登录</button>
                 </form>
             </div>
