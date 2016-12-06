@@ -5,19 +5,20 @@
   Time: 20:00
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="grails.util.Metadata" contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE HTML>
 <html ng-app="main">
 <head>
     <title>Zuo TV</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Zuo TV,一站聚合六个直播平台50万主播,不用一个一个平台去找喜爱的主播.." />
+    <%String version = Metadata.getCurrent()[Metadata.APPLICATION_VERSION]%>
+    <meta name="description" content="Zuo TV,一站聚合六个直播平台60万主播,不用一个一个平台去找喜爱的主播.." />
     <meta name="keywords" content="直播导航,聚合直播,nozuonodie,直播人数统计,直播平台统计,Zuo,Zuo TV,直播导航,直播推荐"/>
     %{--<link href="${resource(file: '/css/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" />--}%
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     %{--<link href="${resource(file: '/css/normalize.css')}" rel="stylesheet" />--}%
     <link href="http://cdn.bootcss.com/normalize/5.0.0/normalize.css" rel="stylesheet">
-    <link href="${resource(file: '/css/base.css')}?v=20161203" rel="stylesheet" />
+    <link href="${resource(file: '/css/base.css')}?v=${version}" rel="stylesheet" />
     <script type="text/javascript">window.ctx = "${createLink(uri:'/')}";</script>
     %{--<script type="text/javascript" src="${resource(file: '/js/jquery-3.1.0.min.js')}"></script>--}%
     <script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
@@ -25,8 +26,8 @@
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular.min.js')}"></script>--}%
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular-ui-router.min.js')}"></script>--}%
     <script type="text/javascript" src="http://cdn.bootcss.com/angular-ui-router/1.0.0-beta.3/angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}?v=20161203"></script>
-    <script type="text/javascript" src="${resource(file: '/js/self/main.js')}?v=20161203"></script>
+    <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}?v=${version}"></script>
+    <script type="text/javascript" src="${resource(file: '/js/self/main.js')}?v=${version}"></script>
 
     %{-- 所有分类页面 --}%
     <script type="text/ng-template" id="type-tem">
@@ -275,7 +276,6 @@
             <div class="left trans2">
                 <h1>Zuo TV</h1>
                 %{--seo --}%
-                <a class="seco" href="${createLink(controller: 'room', action: 'list', params: [offset: 0, max: 120])}">主播列表</a>
                 <div class="m-search">
                     <div class="condition search-input">
                         <input type="text" placeholder="输入房间名或主播名搜索" ng-keyup="search.submit($event)" ng-model="search.kw" />
@@ -352,7 +352,7 @@
                 <div class="head trans2">
                     <div class="top-menu">
                         <a ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
-                           ui-sref-opts="{roload:true}">首页</a>
+                           ui-sref-opts="{roload:true}" href="${createLink(controller: 'room', action: 'list', params: [offset: 0, max: 120])}">首页</a>
                         <a ui-sref="room.type"
                            ui-sref-opts="{inherit: true}">分类</a>
                         <a ui-sref="room.collect"

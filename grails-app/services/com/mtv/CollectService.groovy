@@ -19,9 +19,16 @@ class CollectService {
 
         User user = User.get(userId)
         Assert.notNull(user, "用户不存在")
+        int count = Collect.countByUser(user)
+        Assert.isTrue(count <= 120, "收藏数量达到上限")
+
         Room room = Room.get(roomId)
         Assert.notNull(room, "房间不存在")
         CollectGroup group = groupId ? CollectGroup.get(groupId) : null
+        Collect old = Collect.findByUserAndRoom(user, room)
+        if(old){
+            return old
+        }
 
         Collect collect = new Collect()
         collect.user = user

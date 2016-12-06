@@ -172,7 +172,7 @@
 
         // 获取滚动条宽度
         $rootScope.scrollWidth = (function(){
-            var tempDiv = $('<div style="overflow: scroll; height: 1px"><div style="height: 100px;;"></div></div>');
+            var tempDiv = $('<div style="overflow: scroll; height: 101px; "><div style="height: 100px;;"></div></div>');
             $("body").append(tempDiv);
             var scrollWidth = tempDiv[0].offsetWidth - tempDiv[0].scrollWidth;
             tempDiv.remove();
