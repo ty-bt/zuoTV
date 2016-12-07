@@ -303,9 +303,10 @@
                             <a ui-sref="room({page:1, tag: ''})"
                                ui-sref-opts="{inherit: true}"
                                ng-class="{selected: !$stateParams.tag}">全部</a>
-                            <a ng-repeat="t in topData.types.slice(0,20)"
+                            <a ng-repeat="t in topData.types"
                                ui-sref="room({page:1, tag: t.name})"
                                ui-sref-opts="{inherit: true}"
+                               ng-if="$index < 20 || t.name == $stateParams.tag"
                                ng-class="{selected: t.name == $stateParams.tag}">{{t.name}}</a>
 
                         </div>
