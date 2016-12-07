@@ -9,6 +9,8 @@ import org.springframework.util.Assert
 @Transactional
 class RoomService {
 
+    def typeContrastService
+
     /**
      * 重新加载指定平台数据
      * @param platform
@@ -56,6 +58,9 @@ class RoomService {
         Map dataMap = [:]
         // 线程
         Map<String, Thread> threadList = [:]
+        // 刷新类型对照表
+        typeContrastService.reload()
+
         Platform.createCriteria().list({
             order('onLineRoom')
         }).each {

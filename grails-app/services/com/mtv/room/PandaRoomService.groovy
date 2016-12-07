@@ -11,6 +11,8 @@ import org.springframework.util.Assert
 @Transactional
 class PandaRoomService extends SupportLoadRoom {
 
+    def typeContrastService
+
     /**
      *
      * @param platformFlag 平台标识
@@ -67,7 +69,7 @@ class PandaRoomService extends SupportLoadRoom {
                 room.isOnLine = true
                 room.name = it.name
                 room.img = it.pictures.img
-                room.tag = it.classification.cname
+                room.tag = typeContrastService.getTypeName(it.classification.cname)
                 room.adNum = Long.parseLong(it.person_num)
                 room.anchor = it.userinfo.nickName
                 room.url = "http://www.panda.tv/" + it.id

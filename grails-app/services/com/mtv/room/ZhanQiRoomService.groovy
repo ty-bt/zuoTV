@@ -9,6 +9,8 @@ import org.jsoup.Jsoup
 @Transactional
 class ZhanQiRoomService extends SupportLoadRoom {
 
+    def typeContrastService
+
     /**
      *
      * @param platformFlag 平台标识
@@ -55,7 +57,7 @@ class ZhanQiRoomService extends SupportLoadRoom {
                 room.isOnLine = true
                 room.name = it.title
                 room.img = it.bpic
-                room.tag = it.gameName
+                room.tag = typeContrastService.getTypeName(it.gameName)
                 room.adNum = Long.parseLong(it.online)
                 room.anchor = it.nickname
                 room.url = "https://www.zhanqi.tv" + it.url

@@ -13,6 +13,7 @@ import org.jsoup.select.Elements
 @Transactional
 class DouyuRoomService extends SupportLoadRoom {
 
+    def typeContrastService
 
     public DouyuRoomService() {
         super("douyu")
@@ -48,7 +49,7 @@ class DouyuRoomService extends SupportLoadRoom {
                 room.isOnLine = true
                 room.name = ele.select("h3.ellipsis").text()
                 room.img = ele.select(".imgbox img").attr("data-original")
-                room.tag = ele.select(".tag").text()
+                room.tag = typeContrastService.getTypeName(ele.select(".tag").text())
                 room.adNum = StringUtils.parseNum(ele.select(".dy-num").text())
                 room.anchor = ele.select(".dy-name").text()
                 room.url = "http://www.douyu.com" + ele.select("a").attr("href")

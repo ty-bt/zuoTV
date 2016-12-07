@@ -11,6 +11,8 @@ import org.springframework.util.Assert
 @Transactional
 class QuanMinRoomService extends SupportLoadRoom {
 
+    def typeContrastService
+
     /**
      *
      * @param platformFlag 平台标识
@@ -57,7 +59,7 @@ class QuanMinRoomService extends SupportLoadRoom {
                 room.isOnLine = true
                 room.name = it.title
                 room.img = it.thumb
-                room.tag = it.category_name
+                room.tag = typeContrastService.getTypeName(it.category_name)
                 room.adNum = Long.parseLong(it.view)
                 room.anchor = it.nick
                 room.url = "http://www.quanmin.tv/v/" + roomId

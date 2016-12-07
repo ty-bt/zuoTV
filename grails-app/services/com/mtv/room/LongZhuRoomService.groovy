@@ -9,6 +9,8 @@ import org.jsoup.Jsoup
 @Transactional
 class LongZhuRoomService extends SupportLoadRoom {
 
+    def typeContrastService
+
     /**
      *
      * @param platformFlag 平台标识
@@ -54,7 +56,7 @@ class LongZhuRoomService extends SupportLoadRoom {
                 room.isOnLine = true
                 room.name = it.channel.status
                 room.img = it.preview
-                room.tag = it.game ? it.game[0].name : ""
+                room.tag = typeContrastService.getTypeName(it.game ? it.game[0].name : "")
                 room.adNum = Long.parseLong(it.viewers)
                 room.anchor = it.channel.name
                 room.url = it.channel.url

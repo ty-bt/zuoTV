@@ -24,7 +24,7 @@ class Room {
     /* 图片 */
     String img
 
-    /* 标签*/
+    /* 标签 类型*/
     String tag
 
     /* 人数 */

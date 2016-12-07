@@ -9,6 +9,8 @@ import org.jsoup.Jsoup
 @Transactional
 class HuYaRoomService extends SupportLoadRoom {
 
+    def typeContrastService
+
     /**
      *
      * @param platformFlag 平台标识
@@ -54,7 +56,7 @@ class HuYaRoomService extends SupportLoadRoom {
                 room.isOnLine = true
                 room.name = it.introduction
                 room.img = it.screenshot
-                room.tag = it.gameFullName
+                room.tag = typeContrastService.getTypeName(it.gameFullName)
                 room.adNum = Long.parseLong(it.totalCount)
                 room.anchor = it.nick
                 room.url = "http://www.huya.com/" + it.privateHost
