@@ -114,7 +114,7 @@
             };
             // 三分钟刷新一次
             setTimeout(function(){
-                if($rootScope.browserHidden){
+                if(!$rootScope.browserHidden){
                     $rootScope.loadCollect();
                 }
                 setTimeout(arguments.callee, 60000 * 3);
