@@ -12,8 +12,8 @@
     <title>Zuo TV</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <%String version = Metadata.getCurrent()[Metadata.APPLICATION_VERSION]%>
-    <meta name="description" content="Zuo TV,一站聚合六个直播平台60万主播,不用一个一个平台去找喜爱的主播.." />
-    <meta name="keywords" content="直播导航,聚合直播,nozuonodie,直播人数统计,直播平台统计,Zuo,Zuo TV,直播导航,直播推荐"/>
+    <meta name="description" content="zuo TV,一站聚合六个直播平台60万主播,不用一个一个平台去找喜爱的主播.." />
+    <meta name="keywords" content="zuotv,聚合直播,作TV,nozuonodie,直播人数统计,直播平台统计,Zuo,Zuo TV,直播导航,直播推荐"/>
     %{--<link href="${resource(file: '/css/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" />--}%
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     %{--<link href="${resource(file: '/css/normalize.css')}" rel="stylesheet" />--}%
@@ -33,7 +33,7 @@
     <script type="text/ng-template" id="type-tem">
         <div class="types" ng-show="$root.topData.platforms">
             <div>
-                <h2>平台</h2>
+                <h2 class="show-params"><span><i class="fa fa-ship"></i>平台</span></h2>
                 <div class="t">
                     <a ng-repeat="pla in $root.topData.platforms"
                        ui-sref="room({page:1, platformName: pla.name})"
@@ -47,7 +47,7 @@
             </div>
 
             <div>
-                <h2>分类</h2>
+                <h2 class="show-params"><span><i class="fa fa-anchor"></i>分类</span></h2>
                 <div class="t">
                     <a ng-repeat="t in $root.topData.types"
                        ui-sref="room({page:1, tag: t.name})"
@@ -94,43 +94,59 @@
         </div>
     </script>
 
-    %{--所有收藏页面--}%
+    %{-- 房间显示模板 --}%
+    <script type="text/ng-template" id="room-show-tem">
+        <a class="room trans2"
+           ng-click="$root.openRoom(room)"
+           ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}"
+           ng-style="roomSize">
+            <table cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="width:70%;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="photo"  ng-style="{height: $root.roomSize.height - 50}">
+                        <img ng-src="{{room.img}}"/>
+                        <span class="pla-name">{{room.platform.name}}</span>
+                        <i class="fa fa-play-circle play" ng-class="{insert: $root.isInsert(room.platform.flag)}"></i>
+                    </td>
+                </tr>
+                <tr class="top">
+                    <td class="ellipsis title">{{room.name}}</td>
+                    <td class="t-r ellipsis tag">{{room.tag}}</td>
+                </tr>
+                <tr class="bottom">
+                    <td class="ellipsis anchor">
+                        <i title="关注" roomId="{{room.id}}"
+                           ng-click="$root.changeCollect($event, room);$event.stopPropagation();"
+                           ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
+                           class="fa heart"></i>{{room.anchor}}
+                    </td>
+                    <td class="t-r ellipsis num"><i class="fa fa-child"></i>{{room.adNum | wanNum}}</td>
+                </tr>
+            </table>
+        </a>
+    </script>
+
+    %{--我的关注页面--}%
     <script type="text/ng-template" id="collect-tem">
         <div class="collect">
-            <a ng-repeat="coll in $root.collects"
-               repeat-finish
-               ng-init="room = coll.room"
-               class="room trans2"
-               ng-click="openRoom(room)"
-               ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}"
-               ng-style="roomSize">
-                <table cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td style="width:70%;"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="photo"  ng-style="{height: roomSize.height - 50}">
-                            <img ng-src="{{room.img}}"/>
-                            <span class="pla-name">{{room.platform.name}}</span>
-                            <i class="fa fa-play-circle play" ng-class="{insert: isInsert(room.platform.flag)}"></i>
-                        </td>
-                    </tr>
-                    <tr class="top">
-                        <td class="ellipsis title">{{room.name}}</td>
-                        <td class="t-r ellipsis tag">{{room.tag}}</td>
-                    </tr>
-                    <tr class="bottom">
-                        <td class="ellipsis anchor">
-                            <i title="关注" roomId="{{room.id}}"
-                               ng-click="$root.changeCollect($event, room);$event.stopPropagation();"
-                               ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
-                               class="fa heart"></i>{{room.anchor}}
-                        </td>
-                        <td class="t-r ellipsis num"><i class="fa fa-child"></i>{{room.adNum | wanNum}}</td>
-                    </tr>
-                </table>
-            </a>
+            <h2 class="show-params">
+                <span><i class="fa fa-heart"></i>我的关注</span>
+            </h2>
+            <a ng-repeat="coll in $root.collects" repeat-finish ng-init="room=coll.room" room-show></a>
+        </div>
+    </script>
+
+    %{--推荐页面--}%
+    <script type="text/ng-template" id="recommend-tem">
+        <div class="collect">
+            <h2 class="show-params">
+                <span><i class="fa fa-rocket"></i>精彩推荐</span>
+            </h2>
+            <a ng-repeat="room in rooms" repeat-finish room-show></a>
+            <div ng-if="paginate" t-paginate="paginate"></div>
         </div>
     </script>
 
@@ -185,40 +201,14 @@
     %{--房间首页列表--}%
     <script type="text/ng-template" id="index-tem">
         <div class="body">
+            <h2 class="show-params">
+                <span><i class="fa fa-youtube-play"></i>在线直播</span>
+                <span ng-if="$stateParams.platformName">{{$stateParams.platformName}}</span>
+                <span ng-if="$stateParams.tag">{{$stateParams.tag}}</span>
+                <span ng-if="$stateParams.kw">包含'{{$stateParams.kw}}'</span>
+            </h2>
             <h3 ng-if="rooms" class="show-tit" ng-show="!rooms.length">米有找到相应的房间...</h3>
-            <a ng-repeat="room in rooms"
-               repeat-finish
-               class="room trans2"
-               ng-click="openRoom(room)"
-               ng-href="{{room.href}}"
-               ng-style="roomSize">
-                <table cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td style="width:70%;"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="photo"  ng-style="{height: roomSize.height - 50}">
-                            <img ng-src="{{room.img}}"/>
-                            <span class="pla-name">{{room.platform.name}}</span>
-                            <i class="fa fa-play-circle play" ng-class="{insert: isInsert(room.platform.flag)}"></i>
-                        </td>
-                    </tr>
-                    <tr class="top">
-                        <td class="ellipsis title">{{room.name}}</td>
-                        <td class="t-r ellipsis tag">{{room.tag}}</td>
-                    </tr>
-                    <tr class="bottom">
-                        <td class="ellipsis anchor">
-                            <i title="关注" roomId="{{room.id}}"
-                               ng-click="$root.changeCollect($event, room);$event.stopPropagation();"
-                               ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
-                               class="fa heart"></i>{{room.anchor}}
-                        </td>
-                        <td class="t-r ellipsis num"><i class="fa fa-child"></i>{{room.adNum | wanNum}}</td>
-                    </tr>
-                </table>
-            </a>
+            <a ng-repeat="room in rooms" repeat-finish room-show></a>
             <div ng-if="paginate" t-paginate="paginate"></div>
             <div class="icp" ng-show="rooms"><a href="mailto:ty_bt@live.cn">ty_bt@live.cn</a> &copy;版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备16023346号-1</a></div>
         </div>
@@ -357,6 +347,8 @@
                            ui-sref-opts="{roload:true}" href="${createLink(controller: 'room', action: 'list', params: [offset: 0, max: 120])}">首页</a>
                         <a ui-sref="room.type"
                            ui-sref-opts="{inherit: true}">分类</a>
+                        <a ui-sref="room.recommend({rPage:1})"
+                           ui-sref-opts="{inherit: true}">推荐</a>
                         <a ui-sref="room.collect"
                            ui-sref-opts="{inherit: true}"
                            ng-show="$root.curUser">我的关注</a>
@@ -367,7 +359,7 @@
                         <div class="cur-user" ng-class="{'login-user': curUser}">
 
                             <div class="user-o">
-                                <i class="fa fa-user" style="cursor: default">&nbsp;{{curUser.name}}</i>
+                                <i style="cursor: default"><span class="fa fa-user"></span>&nbsp;{{curUser.name}}</i>
                                 <i class="fa fa-key" ng-click="windows.add({url: '${resource(file: 'html/user/update-pwd.html')}'})" title="修改密码"></i>
                                 <i class="fa fa-power-off" ng-click="$root.logout()" title="退出"></i>
                             </div>

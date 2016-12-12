@@ -50,6 +50,23 @@ window.tool = {
         };
     });
 
+
+    /**
+     * 房间显示指令 外部scope必须有名字为room的对象
+     */
+    tools.directive('roomShow', function ($timeout) {
+        return {
+            restrict: 'A',
+            templateUrl: 'room-show-tem',
+            replace: true,
+            // scope: {
+            //     room: '=roomShow'
+            // },
+            link: function(scope, element, attr) {
+            }
+        };
+    });
+
     /**
      * 分页指令
      */

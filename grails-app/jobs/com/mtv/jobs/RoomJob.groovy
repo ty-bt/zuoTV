@@ -1,5 +1,6 @@
 package com.mtv.jobs
 
+import grails.util.Environment
 
 
 class RoomJob {
@@ -16,9 +17,12 @@ class RoomJob {
     def execute() {
         Long start = System.currentTimeMillis()
         println "定时任务执行 " + new Date()
-        roomService.loadAllT()
-        typeService.reloadAll()
-        platformService.statistics()
+        // 只有生产环境开启
+        if(Environment.current == Environment.PRODUCTION){
+            roomService.loadAllT()
+            typeService.reloadAll()
+            platformService.statistics()
+        }
         println "定时任务执行完成,用时" + (System.currentTimeMillis() - start) + "ms"
 
     }

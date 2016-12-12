@@ -45,6 +45,19 @@ class RoomController {
         }
     }
 
+    def getRecommend(){
+
+        def recommendList = Collect.createCriteria().list(ParamUtils.limit()){
+            groupProperty('room')
+            count("room", "collectCount")
+            order("collectCount", "desc")
+        }
+        def recommends = recommendList.collect {
+            return it[0]
+        }
+        render([recommends: recommends, total: recommendList.totalCount] as JSON)
+    }
+
     def page(){
         def rooms = getRoom(ParamUtils.limit())
         render([rooms: rooms, total: rooms.totalCount] as JSON)

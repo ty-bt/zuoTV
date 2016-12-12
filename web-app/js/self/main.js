@@ -218,7 +218,7 @@
             leftMousewheel(0);
 
             // 计算房间块大小
-            var bodyWidth = viewDiv.width() - $rootScope.scrollWidth - 10;
+            var bodyWidth = viewDiv.width() - $rootScope.scrollWidth;
             var size = Math.ceil(bodyWidth / (initWidth + 10));
             var width = Math.floor(bodyWidth / size - 10);
             $rootScope.roomSize = {width: width, height: width / ratio};
@@ -272,6 +272,10 @@
         }).state('room.type', {
             url: '/type',
             templateUrl: 'type-tem'
+        }).state('room.recommend', {
+            url: '/recommend/:rPage',
+            templateUrl: 'recommend-tem',
+            controller: "recommend"
         });
         // 改变post提交方式 data所在位置
         $httpProvider.defaults.headers.post = {
@@ -285,34 +289,43 @@
      * 显示所有房间
      */
     main.controller('room.index', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
+        $scope.$stateParams = $stateParams;
         $scope.$root.search.kw = $stateParams.kw;
         // 每页显示
         var max = 120;
         var page = parseInt($stateParams.page) || 1;
-        $http({
-            url: window.ctx + "room/page",
-            params: {
-                max: max,
-                page: page,
-                tag: $stateParams.tag,
-                kw: $stateParams.kw,
-                platformName: $stateParams.platformName
-            }
-        }).success(function(data){
-            $(data.rooms).each(function(){
-                this.href = $state.href("room.insetDetail", {roomId: this.id}, {inherit: true});
+        // 加载数据方法
+        var loadRoom = function(){
+            $http({
+                url: window.ctx + "room/page",
+                params: {
+                    max: max,
+                    page: page,
+                    tag: $stateParams.tag,
+                    kw: $stateParams.kw,
+                    platformName: $stateParams.platformName
+                }
+            }).success(function(data){
+                $scope.rooms = data.rooms;
+                // 分页
+                $scope.paginate = {
+                    pageSize: max,
+                    total: data.total,
+                    current: page,
+                    href: function(cur){
+                        return $state.href("room", {page: cur}, {inherit: true});
+                    }
+                }
             });
-            $scope.rooms = data.rooms;
-            // 分页
-            $scope.paginate = {
-                pageSize: max,
-                total: data.total,
-                current: page,
-                href: function(cur){
-                    return $state.href("room", {page: cur}, {inherit: true});
-                } 
-            }
-        });
+        };
+        // 如果是子页面则 延迟加载该页面数据
+        if($state.current.name != "room"){
+            setTimeout(function(){
+                loadRoom();
+            }, 500)
+        }else{
+            loadRoom()
+        }
 
         $scope.$on("onRepeatFinish", function(){
             $(window).resize();
@@ -385,11 +398,43 @@
         }
     }]);
 
+    /**
+     * 推荐
+     */
+    main.controller('recommend', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
+        $scope.$stateParams = $stateParams;
+        // 每页显示
+        var max = 120;
+        var page = parseInt($stateParams.rPage) || 1;
+        $http({
+            url: window.ctx + "room/getRecommend",
+            params: {
+                max: max,
+                page: page
+            }
+        }).success(function(data){
+            $scope.rooms = data.recommends;
+            // 分页
+            $scope.paginate = {
+                pageSize: max,
+                total: data.total,
+                current: page,
+                href: function(cur){
+                    return $state.href("room.recommend", {rPage: cur}, {inherit: true});
+                }
+            }
+        });
+
+        $scope.$on("onRepeatFinish", function(){
+            $(window).resize();
+        });
+    }]);
+
     main.controller('login', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
         $scope.loginSubmit = function(){
             $http.post(window.ctx + "auth/login", $.param($scope.login)).success(function(data){
                 if(data.success){
-                    $scope.$root.loadLogin();
+                    $scope.$root.loadLogin()
                     $scope.$root.windows.close($scope.curWindow);
                 }else{
                     alert(data.message || "系统错误")
