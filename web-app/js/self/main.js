@@ -413,9 +413,9 @@
                 page: page
             }
         }).success(function(data){
-            $scope.rooms = data.recommends;
+            $scope.recommends = data.recommends;
             // 分页
-            $scope.paginate = {
+            $scope.rPaginate = {
                 pageSize: max,
                 total: data.total,
                 current: page,

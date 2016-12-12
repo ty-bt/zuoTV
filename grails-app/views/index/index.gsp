@@ -145,8 +145,8 @@
             <h2 class="show-params">
                 <span><i class="fa fa-rocket"></i>精彩推荐</span>
             </h2>
-            <a ng-repeat="room in rooms" repeat-finish room-show></a>
-            <div ng-if="paginate" t-paginate="paginate"></div>
+            <a ng-repeat="room in recommends" repeat-finish room-show></a>
+            <div ng-if="rPaginate" t-paginate="rPaginate"></div>
         </div>
     </script>
 

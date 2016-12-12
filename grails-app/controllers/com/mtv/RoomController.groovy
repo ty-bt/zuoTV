@@ -51,6 +51,11 @@ class RoomController {
             groupProperty('room')
             count("room", "collectCount")
             order("collectCount", "desc")
+            room{
+                eq('isOnLine', true)
+                order('adNum', "desc")
+            }
+
         }
         def recommends = recommendList.collect {
             return it[0]
