@@ -48,7 +48,9 @@ class DouyuRoomService extends SupportLoadRoom {
                 Map room = [platform: platform, flag: flag, quoteUrl: "http://staticlive.douyutv.com/common/share/play.swf?room_id=${flag}"]
                 room.isOnLine = true
                 room.name = ele.select("h3.ellipsis").text()
-                room.img = ele.select(".imgbox img").attr("data-original")
+                // 斗鱼可能有两个图片 取最后面那张
+                Elements imgs = ele.select(".imgbox img")
+                room.img = imgs.get(imgs.size() - 1).attr("data-original")
                 room.tag = typeContrastService.getTypeName(ele.select(".tag").text())
                 room.adNum = StringUtils.parseNum(ele.select(".dy-num").text())
                 room.anchor = ele.select(".dy-name").text()

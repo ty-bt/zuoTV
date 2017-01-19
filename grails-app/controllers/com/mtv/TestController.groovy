@@ -21,27 +21,27 @@ class TestController {
 //        }
     }
 
-    def start(){
-        roomService.loadRoom(Platform.findByFlag("douyu"))
-        render "success"
-    }
-
-    def start1(){
-        roomService.loadRoom(Platform.findByFlag("panda"))
-        render "success"
-    }
-
-    def loadAll(){
-        render(new Date())
-        roomService.loadAll()
-        render(new Date())
-        render "success"
-    }
-
-    def loadAllT(){
-        render(new Date())
-        roomService.loadAllT()
-        render(new Date())
-        render "success"
-    }
+//    def start(){
+//        roomService.loadRoom(Platform.findByFlag("douyu"))
+//        render "success"
+//    }
+//
+//    def start1(){
+//        roomService.loadRoom(Platform.findByFlag("panda"))
+//        render "success"
+//    }
+//
+//    def loadAll(){
+//        render(new Date())
+//        roomService.loadAll()
+//        render(new Date())
+//        render "success"
+//    }
+//
+//    def loadAllT(){
+//        render(new Date())
+//        roomService.loadAllT()
+//        render(new Date())
+//        render "success"
+//    }
 }
