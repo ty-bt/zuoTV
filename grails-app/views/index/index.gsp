@@ -225,7 +225,7 @@
             <!-- 内容 -->
             <div class="d-content" ng-show="curRoom.quoteUrl">
                 <div class="top">
-                    <i class="fa fa-close" title="关闭" ng-click="$state.go('^')"></i>
+                    <i class="fa fa-close" title="关闭" ng-click="close()"></i>
                 </div>
                 <div class="cen">
 
@@ -250,7 +250,7 @@
                    ng-click="$root.changeCollect($event, curRoom);$event.stopPropagation();"
                    ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
                    class="fa heart"></i>
-                <i class="fa fa-close" title="关闭" ng-click="$state.go('^')"></i>
+                <i class="fa fa-close" title="关闭" ng-click="close()"></i>
                 <a class="fa fa-level-up" target="_blank" title="新窗口打开{{curRoom.platform.name}}观看" href="{{curRoom.url}}"></a>
 
                 <iframe style="width:100%; height:100%; border:none;"></iframe>

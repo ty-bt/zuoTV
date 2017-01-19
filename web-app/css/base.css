@@ -89,7 +89,7 @@ a{text-decoration: none; color: #313131}
 .room .bottom .fa{font-size: 15px;color: #52c3dd;margin-right: 3px;}
 .room .bottom .fa.fa-heart{color:#c0392b}
 .room .top{height: 25px;}
-.room.off-line img{filter: Gray;-webkit-filter: grayscale(100%);}
+.room.off-line img{filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter: grayscale(100%);}
 
 .show-params{
     border-bottom: 1px solid #ddd;

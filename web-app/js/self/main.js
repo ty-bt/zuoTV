@@ -373,7 +373,7 @@
         var loadEmbed = function(){
             if(!$scope.$root.isInsert($scope.curRoom.platform.flag)){
                 window.open($scope.curRoom.url, "_blank");
-                $state.go('^');
+                $scope.close();
                 return;
             }
             if($scope.curRoom.quoteUrl){
@@ -387,8 +387,19 @@
             }
 
         };
+        // 关闭方法 回到上一个页面
+        $scope.close = function(){
+            // 如果是ajax加载就不是从页面中点击过来的 回到首页就行
+            if($scope.isAjax){
+                $state.go('^');
+            }else{
+                // 如果是页内操作 回退路由
+                window.history.back();
+            }
+        };
 
-        if(!$scope.curRoom || $scope.curRoom.id != $stateParams.roomId){
+        $scope.isAjax = !$scope.curRoom || $scope.curRoom.id != $stateParams.roomId;
+        if($scope.isAjax){
             $http({
                 url: window.ctx + "room/one",
                 params: {id: $stateParams.roomId}
