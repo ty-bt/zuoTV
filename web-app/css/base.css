@@ -74,7 +74,7 @@ a{text-decoration: none; color: #313131}
 .room tr td+td{width: 30%;}
 .room .ellipsis{padding: 0 5px;}
 .room .photo{width: 100%;position: relative;display: table-cell;}
-.room .photo img{width: 100%; height: 100%; overflow: hidden; -webkit-filter: blur(0px);}
+.room .photo img{width: 100%;height: 100%;overflow: hidden;-webkit-filter: blur(0px);}
 /*.room:hover .photo img{-webkit-filter: blur(5px); -moz-filter: blur(5px); -ms-filter: blur(5px); -o-filter: blur(5px); filter: blur(5px); filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=4, MakeShadow=false);   }*/
 /* 播放图标 */
 .room .photo .pla-name{position: absolute;top: 0;right: 0;color: #fff;font-size: 13px;line-height: 18px;padding: 0 4px;text-shadow: 0 0 8px #000;border: 1px solid #fff;border-radius: 4px;margin: 5px;opacity: 0.5;}
@@ -89,6 +89,7 @@ a{text-decoration: none; color: #313131}
 .room .bottom .fa{font-size: 15px;color: #52c3dd;margin-right: 3px;}
 .room .bottom .fa.fa-heart{color:#c0392b}
 .room .top{height: 25px;}
+.room.off-line img{filter: Gray;-webkit-filter: grayscale(100%);}
 
 .show-params{
     border-bottom: 1px solid #ddd;

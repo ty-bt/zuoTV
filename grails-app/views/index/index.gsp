@@ -99,6 +99,7 @@
         <a class="room trans2"
            ng-click="$root.openRoom(room)"
            ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}"
+           ng-class="{'off-line': !room.isOnLine}"
            ng-style="roomSize">
             <table cellspacing="0" cellpadding="0">
                 <tr>
