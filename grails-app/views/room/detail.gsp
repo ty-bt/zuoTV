@@ -11,7 +11,7 @@
 <head>
     <title>${room.name}-Zuo TV</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="keywords" content="${room.name},${room.anchor},直播导航,聚合直播,Zuo,Zuo TV"/>
+    <meta name="keywords" content="${room.name},${room.anchor},zuotv,聚合直播,作TV,nozuonodie,直播人数统计,直播平台统计,Zuo,Zuo TV,直播导航,直播推荐,妹纸直播,星秀,一起看电影"/>
     <script type="text/javascript">
         location.href = "${g.createLink(uri:'/')}#/1////inset-detail/${room.id}";
     </script>
