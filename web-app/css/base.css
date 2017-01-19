@@ -115,7 +115,7 @@ a{text-decoration: none; color: #313131}
 .t-pagination .page.disable, .t-pagination .page.disable:hover{border-color: #ccc;color: #ccc;cursor: default;}
 
 .detail-view{width: 100%; height: 100%;}
-.r-detail, .r-detail>*{position: absolute;width: 100%;height: 100%;top: 0;left: 0;overflow: hidden;}
+.r-detail, .r-detail>*{position: absolute;width: 100%;height: 100%;top: 0;left: 0;overflow: hidden;background: rgba(0,0,0,0.6);}
 .r-detail .back-img{}
 .r-detail .d-content{}
 .r-detail .d-content .top{text-align: right;font-size: 24px;width: auto;color: #fff;text-shadow: 0 0 5px #000;padding-right: 15px;line-height: 40px;margin-bottom: -20px;}
