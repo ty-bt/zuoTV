@@ -193,18 +193,22 @@
         var leftMousewheel = function(delta){
             var leftEle = $('.m-search');
             var moveEle = leftEle.find(">div:eq(0)");
-            var curMar = parseInt(moveEle.css("margin-top")) || 0;
-            var height = leftEle.height() - curMar;
-            var targetMar = curMar + delta * 100;
+            // 实际的位置 直接取可能因为动画效果有延迟
+            var curMar = moveEle.data("realTop") || 0;
+            // 因为有动画延迟 需要取实时的 计算误差1px以内
+            var height = leftEle.height() - parseFloat(moveEle.css("margin-top"));
+
+            var targetMar = curMar + delta * 150;
             // 最小上边距
             var minMar = $(window).height() - leftEle.offset().top - height;
+            // console.log(targetMar + "-" + minMar + "-" + height);
             if(targetMar < minMar){
                 targetMar = minMar
             }
             if(targetMar > 0){
                 targetMar = 0;
             }
-            moveEle.css("margin-top", targetMar);
+            moveEle.data("realTop", targetMar).css("margin-top", targetMar);
         };
         var resizeIsInit = true;
         $(window).resize(function(){
@@ -238,7 +242,7 @@
                     leftMousewheel(delta);
                 });
             });
-
+            
             // google跟踪代码
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -247,11 +251,11 @@
 
             ga('create', 'UA-88253768-1', 'auto');
             ga('send', 'pageview');
-
+            
         }, 500);
-
+        
     }]);
-
+    
     // 路由配置
     main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
         // 无效链接全部转向首页
