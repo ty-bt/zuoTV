@@ -5,10 +5,6 @@ import grails.transaction.Transactional
 @Transactional
 class TypeService {
 
-    def serviceMethod() {
-
-    }
-
     /**
      * 重新统计所有类型
      */
