@@ -10,7 +10,9 @@ class PlatformService {
     }
 
     public void statistics(){
-        List list = Platform.executeQuery("select p.id, count(r.id), sum(r.adNum) from Room r join r.platform p where r.isOnLine = true group by p.id")
+        def startDate = System.currentTimeMillis()
+        log.info("平台在线数据统计开始")
+        List list = Platform.executeQuery("select p.id, count(r.id), sum(r.adNum) from OnLineRoom r join r.platform p group by p.id")
         // 插入
         list.each {
             Platform platform = Platform.get(it[0])
@@ -18,5 +20,7 @@ class PlatformService {
             platform.onLineAd = it[2]
             platform.save()
         }
+        log.info("平台在线数据统计, 用时${System.currentTimeMillis() - startDate}ms")
+
     }
 }

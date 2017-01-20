@@ -1,5 +1,6 @@
 package com.mtv.room
 
+import com.mtv.OnLineRoom
 import com.mtv.Platform
 import com.mtv.utils.BeanLookup
 import grails.transaction.Transactional
@@ -97,6 +98,14 @@ class RoomService {
             this.saveRoom(serverMap[k], dataMap[k])
             log.info("保存${k}完成, 用时${System.currentTimeMillis() - startDate}ms")
         }
-
+        Long olDate = System.currentTimeMillis()
+        log.info("在线房间表更新开始")
+        // 清空在线房间数据库 重新插入
+        OnLineRoom.executeUpdate("delete OnLineRoom")
+        log.info("清空完成, 用时${System.currentTimeMillis() - olDate}ms")
+        OnLineRoom.executeUpdate("""insert into
+            OnLineRoom(id, platform, isOnLine, flag, name, img, tag, adNum, anchor, url, quoteUrl)
+            select r.id, r.platform, r.isOnLine, r.flag, r.name, r.img, r.tag, r.adNum, r.anchor, r.url, r.quoteUrl from Room r where r.isOnLine = true order by r.adNum desc""");
+        log.info("在线房间表更新完成, 用时${System.currentTimeMillis() - olDate}ms")
     }
 }

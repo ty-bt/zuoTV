@@ -22,8 +22,8 @@ class RoomController {
         [room: Room.get(params.getLong("id"))]
     }
 
-    public List<Room> getRoom(Object limit){
-        return Room.createCriteria().list(limit){
+    public List<OnLineRoom> getRoom(Object limit){
+        return OnLineRoom.createCriteria().list(limit){
             if(params.kw){
                 or{
                     like('name', "%${StringUtils.escapeSql(params.kw)}%")
@@ -39,8 +39,8 @@ class RoomController {
                 Assert.notNull(platform, "找不到对应的平台")
                 eq('platform', platform)
             }
-            eq('isOnLine', true)
-            order('adNum', "desc")
+//            eq('isOnLine', true)
+//            order('adNum', "desc")
 
         }
     }
