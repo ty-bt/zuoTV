@@ -6,7 +6,7 @@ package com.mtv
 class OnLineRoom {
 
     static{
-        grails.converters.JSON.registerObjectMarshaller(Room){
+        grails.converters.JSON.registerObjectMarshaller(OnLineRoom){
             return it.properties.findAll{k,v->
                 !(k in ['class', 'dateCreated', 'lastUpdated'])
             } + [id:it.id]

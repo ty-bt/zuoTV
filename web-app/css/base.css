@@ -80,7 +80,7 @@ a{text-decoration: none; color: #313131}
 .room .photo .pla-name{position: absolute;top: 0;right: 0;color: #fff;font-size: 13px;line-height: 18px;padding: 0 4px;text-shadow: 0 0 8px #000;border: 1px solid #fff;border-radius: 4px;margin: 5px;opacity: 0.5;}
 /*.room .photo .play:before{font-size: 77px;display: inline-block;width: 30%;text-align: center;left: 35%;line-height: 100%;height: 50%;top: -50%}*/
 .room .photo .play{position: absolute;display: inline-block;font-size: 77px;width: 30%;text-align: center;left: 35%;line-height: 100%;height: 50%;top: -78px;color: #7f8c8d;text-shadow: 0 0 0 #000;/* overflow: hidden; */}
-.room .photo .play.insert{color: #fff;text-shadow: 0 0 20px #000;}
+.room .photo .play.insert{color: #fff;/* text-shadow: 0 0 20px #000; */}
 .room:hover .photo .play{top: 25%;/* overflow: visible */text-shadow: 0 0 10px #000;}
 .room .title{font-size: 14px;}
 .room .tag{color: #f60;}
