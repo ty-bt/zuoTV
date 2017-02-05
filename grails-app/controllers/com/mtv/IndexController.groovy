@@ -4,6 +4,8 @@ class IndexController {
 
     def typeService
 
+    def recommendService
+
     def index() {
 
     }
@@ -19,4 +21,8 @@ class IndexController {
 //    def reloadType(){
 //        typeService.reloadAll()
 //    }
+
+    def reloadRecommon(){
+        recommendService.reload()
+    }
 }

@@ -8,6 +8,7 @@ class RoomJob {
     def roomService
     def typeService
     def platformService
+    def recommendService
 
     static triggers = {
         // 10分钟刷新一次
@@ -22,6 +23,7 @@ class RoomJob {
             roomService.loadAllT()
             typeService.reloadAll()
             platformService.statistics()
+            recommendService.reload()
         }
         println "定时任务执行完成,用时" + (System.currentTimeMillis() - start) + "ms"
 

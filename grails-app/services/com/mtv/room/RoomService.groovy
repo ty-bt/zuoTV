@@ -2,6 +2,7 @@ package com.mtv.room
 
 import com.mtv.OnLineRoom
 import com.mtv.Platform
+import com.mtv.Recommend
 import com.mtv.utils.BeanLookup
 import grails.transaction.Transactional
 import org.springframework.transaction.annotation.Propagation
@@ -101,6 +102,7 @@ class RoomService {
         Long olDate = System.currentTimeMillis()
         log.info("在线房间表更新开始")
         // 清空在线房间数据库 重新插入
+        Recommend.executeUpdate("delete Recommend ")
         OnLineRoom.executeUpdate("delete OnLineRoom")
         log.info("清空完成, 用时${System.currentTimeMillis() - olDate}ms")
         OnLineRoom.executeUpdate("""insert into

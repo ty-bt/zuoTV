@@ -45,20 +45,33 @@ class RoomController {
         }
     }
 
+//    def getRecommend(){
+//
+//        def recommendList = Collect.createCriteria().list(ParamUtils.limit()){
+//            groupProperty('room')
+//            count("room", "collectCount")
+//            order("collectCount", "desc")
+//            room{
+//                eq('isOnLine', true)
+//                order('adNum', "desc")
+//            }
+//
+//        }
+//        def recommends = recommendList.collect {
+//            return it[0]
+//        }
+//        render([recommends: recommends, total: recommendList.totalCount] as JSON)
+//    }
+
     def getRecommend(){
 
-        def recommendList = Collect.createCriteria().list(ParamUtils.limit()){
-            groupProperty('room')
-            count("room", "collectCount")
-            order("collectCount", "desc")
-            room{
-                eq('isOnLine', true)
-                order('adNum', "desc")
-            }
 
+        def recommendList = Recommend.createCriteria().list(ParamUtils.limit()){
+            order("level", "desc")
+            order("sort", "desc")
         }
         def recommends = recommendList.collect {
-            return it[0]
+            return it.onLineRoom
         }
         render([recommends: recommends, total: recommendList.totalCount] as JSON)
     }
