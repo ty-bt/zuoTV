@@ -251,6 +251,15 @@
 
             ga('create', 'UA-88253768-1', 'auto');
             ga('send', 'pageview');
+
+            // baidu跟踪代码
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?ef1feae8cc0e92928cabf9ef9c690893";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
             
         }, 500);
         
