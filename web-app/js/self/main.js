@@ -5,6 +5,20 @@
     var main = angular.module("main", ['tools', 'ui.router']);
     main.run(['$rootScope', function($rootScope){
         $rootScope.ctx = window.ctx;
+        $rootScope.webName = "zuoTV";
+        var defaultTitle = $rootScope.webName + " - 聚合全网直播";
+        $rootScope.title = defaultTitle;
+        $rootScope.$root.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+            var title = "";
+            if(toState.title){
+                if($.isFunction(toState.title)){
+                    title = toState.title.apply(this, arguments);
+                }else{
+                    title = toState.title;
+                }
+            }
+            $rootScope.title = title ? title + " - " + $rootScope.webName : defaultTitle;
+        })
     }]);
 
     main.run(['$rootScope', '$state', '$stateParams', '$log', '$http', '$window', function($rootScope, $state, $stateParams, $log, $http, $window) {
@@ -274,21 +288,40 @@
         $stateProvider.state('room', {
             url: '/:page/:kw/:platformName/:tag',
             templateUrl: "index-tem",
-            controller: 'room.index'
+            controller: 'room.index',
+            title: function(event, toState, toParams, fromState, fromParams){
+                var title = "";
+                if(toParams.platformName){
+                    title += "/" + toParams.platformName;
+                }
+                if(toParams.tag){
+                    title += "/" + toParams.tag;
+                }
+                if(toParams.kw){
+                    title += "/包含'" + toParams.kw + "'";
+                }
+                if(title){
+                    title = title.substr(1);
+                }
+                return title;
+            }
         }).state('room.insetDetail', {
             url: '/inset-detail/:roomId',
             templateUrl: 'inset-detail-tem',
             controller: "room.insetDetail"
         }).state('room.collect', {
             url: '/collect',
-            templateUrl: 'collect-tem'
+            templateUrl: 'collect-tem',
+            title: "我的关注"
         }).state('room.type', {
             url: '/type',
-            templateUrl: 'type-tem'
+            templateUrl: 'type-tem',
+            title: "所有分类"
         }).state('room.recommend', {
             url: '/recommend/:rPage',
             templateUrl: 'recommend-tem',
-            controller: "recommend"
+            controller: "recommend",
+            title: "精彩推荐"
         });
         // 改变post提交方式 data所在位置
         $httpProvider.defaults.headers.post = {
@@ -385,6 +418,7 @@
                 $scope.close();
                 return;
             }
+            $scope.$root.title = $scope.curRoom.name + " - " + $scope.$root.webName;
             if($scope.curRoom.quoteUrl){
                 var embedEle = $('<embed src="' + $scope.curRoom.quoteUrl + '" width="640" height="360" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">')
                 $element.find(".embed-div").append(embedEle);

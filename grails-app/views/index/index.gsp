@@ -9,7 +9,7 @@
 <!DOCTYPE HTML>
 <html ng-app="main">
 <head>
-    <title>Zuo TV</title>
+    <title ng-bind="title">zuoTV - 聚合全网直播</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <%String version = Metadata.getCurrent()[Metadata.APPLICATION_VERSION]%>
     <meta name="description" content="zuo TV,一站聚合六个直播平台百万主播,不用一个一个平台去找喜爱的主播. 包含妹纸直播(星秀),LOL直播,户外直播,一起看电影(放映室), 现已收录斗鱼,龙珠,虎牙,全民,战旗,熊猫平台..." />
@@ -203,7 +203,7 @@
     <script type="text/ng-template" id="index-tem">
         <div class="body">
             <h2 class="show-params">
-                <span><i class="fa fa-youtube-play"></i>在线直播</span>
+                <span><i class="fa fa-youtube-play"></i>全部直播</span>
                 <span ng-if="$stateParams.platformName">{{$stateParams.platformName}}</span>
                 <span ng-if="$stateParams.tag">{{$stateParams.tag}}</span>
                 <span ng-if="$stateParams.kw">包含'{{$stateParams.kw}}'</span>
@@ -264,10 +264,10 @@
     <div class="main" ng-cloak>
 
         <div class="content table">
-            <div class="left trans2">
-                <h1>Zuo TV</h1>
+            <div class="left">
+                <h1><span>zuo</span> TV</h1>
                 %{--seo --}%
-                <div class="m-search">
+                <div class="m-search trans2">
                     <div class="condition search-input">
                         <input type="text" placeholder="输入房间名或主播名搜索" ng-keyup="search.submit($event)" ng-model="search.kw" />
                         <i class="fa fa-search" ng-click="$state.go('room', {page:1, kw: search.kw}, {inherit: true})"></i>
