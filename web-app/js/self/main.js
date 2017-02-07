@@ -9,6 +9,18 @@
         var defaultTitle = $rootScope.webName + " - 聚合全网直播";
         $rootScope.title = defaultTitle;
         $rootScope.$root.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+            // 统计代码
+            if(window._hmt && location.hash){
+                _hmt.push(['_trackPageview', location.hash.substr(1)]);
+            }
+            // google
+            if(window.ga && location.hash){
+                ga('set', 'page', location.hash.substr(1));
+                ga('send', 'pageview');
+            }
+
+
+
             var title = "";
             if(toState.title){
                 if($.isFunction(toState.title)){

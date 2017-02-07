@@ -19,7 +19,7 @@ class RecommendService {
 
         // 分类前20个各取出1个房间
         List<Type> types = Type.createCriteria().list{
-            setMaxResults(20)
+            setMaxResults(25)
             order("adSum", "desc")
         }
         types.each {
