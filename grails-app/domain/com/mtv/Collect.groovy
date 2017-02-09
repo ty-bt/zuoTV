@@ -28,4 +28,8 @@ class Collect {
     static constraints = {
         collectGroup nullable: true
     }
+
+    static mapping = {
+        cache usage: 'read-only',include: 'all'
+    }
 }

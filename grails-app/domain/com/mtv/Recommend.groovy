@@ -11,5 +11,10 @@ class Recommend {
     Integer sort
 
     static constraints = {
+
+    }
+
+    static mapping = {
+        cache usage: 'read-only',include: 'all'
     }
 }

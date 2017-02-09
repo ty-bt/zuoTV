@@ -45,6 +45,7 @@ class OnLineRoom {
 
     static mapping = {
         generator:'assigned'
+        cache true
     }
 
     static constraints = {

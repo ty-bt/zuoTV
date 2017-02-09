@@ -39,4 +39,8 @@ class Platform {
 
     static constraints = {
     }
+
+    static mapping = {
+        cache true
+    }
 }

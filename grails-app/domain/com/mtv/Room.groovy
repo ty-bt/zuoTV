@@ -48,6 +48,7 @@ class Room {
     static mapping = {
         // 更新的时候会自动更新lastUpdated 所以这个不用自动更新时间
         autoTimestamp false
+        cache true
     }
 
     static constraints = {
