@@ -81,7 +81,7 @@ class RoomController {
         def rooms = getRoom(ParamUtils.limit())
         // 增加5个推荐
         def recommends = []
-        if(!params.kw){
+        if(!params.kw && !params.tag){
             int rCount = Recommend.count()
             RandomUtils.nextInt(rCount)
             recommends = Recommend.createCriteria().list(max: 5, offset: RandomUtils.nextInt(rCount - 6)){
