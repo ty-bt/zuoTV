@@ -365,6 +365,7 @@
                 }
             }).success(function(data){
                 $scope.rooms = data.rooms;
+                $scope.recommends = data.recommends;
                 // 分页
                 $scope.paginate = {
                     pageSize: max,

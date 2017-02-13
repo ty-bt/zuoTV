@@ -2,6 +2,7 @@ package com.mtv
 
 import grails.converters.JSON
 import org.apache.commons.lang.StringEscapeUtils
+import org.apache.commons.lang.math.RandomUtils
 import org.springframework.util.Assert
 
 class RoomController {
@@ -78,7 +79,20 @@ class RoomController {
 
     def page(){
         def rooms = getRoom(ParamUtils.limit())
-        render([rooms: rooms, total: rooms.totalCount] as JSON)
+        // 增加5个推荐
+        def recommends = []
+        if(!params.kw){
+            int rCount = Recommend.count()
+            RandomUtils.nextInt(rCount)
+            recommends = Recommend.createCriteria().list(max: 5, offset: RandomUtils.nextInt(rCount - 6)){
+                setMaxResults(5)
+                order("sort", "desc")
+            }.collect {
+                return it.onLineRoom
+            }
+        }
+
+        render([rooms: rooms, total: rooms.totalCount, recommends: recommends] as JSON)
     }
 
     def one(){

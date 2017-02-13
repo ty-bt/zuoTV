@@ -202,6 +202,18 @@
     %{--房间首页列表--}%
     <script type="text/ng-template" id="index-tem">
         <div class="body">
+            <div ng-if="recommends.length">
+                <h2 class="show-params">
+                    <span><i class="fa fa-hand-o-right"></i>瞎推荐</span>
+                    <a ui-sref="room.recommend({rPage:1})"
+                       ui-sref-opts="{inherit: true}" class="more">更多></a>
+                </h2>
+                <div style="overflow: hidden; width: 100%;">
+                    <div style="width: 1920px;">
+                        <a ng-repeat="room in recommends" repeat-finish room-show></a>
+                    </div>
+                </div>
+            </div>
             <h2 class="show-params">
                 <span><i class="fa fa-youtube-play"></i>全部直播</span>
                 <span ng-if="$stateParams.platformName">{{$stateParams.platformName}}</span>

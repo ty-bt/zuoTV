@@ -156,12 +156,14 @@ a{text-decoration: none; color: #313131}
     line-height: 40px;
     margin: 12px 0;
     margin-left: 10px;
+    position: relative;
 }
 .show-params .fa{margin-right: 10px;color: #3498db;line-height: 40px;border-bottom: 1px solid #3498db;margin-bottom: -1px;}
 .show-params span{
     line-height: 40px;
     display: inline-block;
 }
+.show-params .more{font-size: 13px;font-family: 微软雅黑;color: #2980b9;position: absolute;right: 0px;bottom: -4px;}
 .show-params span+span:before{content: '>';margin-right: 6px;}
 
 /* 分页样式 */
