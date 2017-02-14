@@ -249,3 +249,22 @@ a{text-decoration: none; color: #313131}
 .icp{line-height: 30px;text-align: center;margin-top: 20px;background: #3f3f3f;color: #979797;}
 .icp a{color: #979797;}
 
+
+/* 模糊效果 */
+.trans10{transition: all 10s;
+    -moz-transition: all 10s;
+    -webkit-transition: all 10s;
+    -o-transition: all 10s;}
+.mohu{
+    webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -ms-filter: blur(5px);
+    -o-filter: blur(5px);
+    filter: blur(5px);
+}
+/* 节日*/
+.jieri{padding: 20px 10px; text-align: center;}
+.jieri button{background: #3498db; border: none; border-radius: 4px; padding: 5px 10px; margin: 0 auto; cursor: pointer}
+
+.vip{border: 2px solid; border-radius: 50%; display: inline-block; width: 19px; height: 18px; vertical-align: middle; line-height: 18px; text-align: center; margin-left: 5px; color: black;}
+

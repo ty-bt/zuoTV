@@ -22,13 +22,13 @@
     <script type="text/javascript">window.ctx = "${createLink(uri:'/')}";</script>
     %{--<script type="text/javascript" src="${resource(file: '/js/jquery-3.1.0.min.js')}"></script>--}%
     <script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script type="text/javascript" src="http://cdn.bootcss.com/angular.js/1.5.6/angular.min.js"></script>
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular.min.js')}"></script>--}%
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular-ui-router.min.js')}"></script>--}%
     <script src="http://cdn.bootcss.com/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}?v=${version}"></script>
     <script type="text/javascript" src="${resource(file: '/js/self/main.js')}?v=${version}"></script>
-
     %{-- 所有分类页面 --}%
     <script type="text/ng-template" id="type-tem">
         <div class="types" ng-show="$root.topData.platforms">
@@ -87,7 +87,7 @@
                  ng-repeat="curWindow in config.windows"
                  ng-show="!curWindow.hide"
                  index="{{curWindow.index}}">
-                <i class="fa fa-close close" ng-class="{insert: room.quoteUrl}" ng-click="config.close(curWindow)"></i>
+                <i class="fa fa-close close" ng-show="curWindow.closeBtn!==false" ng-class="{insert: room.quoteUrl}" ng-click="config.close(curWindow)"></i>
                 <div ng-include="curWindow.url" onload="config.resize(curWindow)">
                 </div>
             </div>
@@ -197,6 +197,19 @@
             </div>
             <div style="text-align: right; margin-top:10px;"><a href="javascript:;" ng-click="$root.windows.close(curWindow);$root.register()">还没有账号,点击注册</a></div>
         </div>
+    </script>
+
+    %{--情人节--}%
+    <script type="text/ng-template" id="jieri-tem">
+    <div class="jieri" ng-controller="jieri214">
+        <h1>是不是感觉视线越来越模糊</h1>
+        <h2>是不是感觉身体被掏空</h2>
+        <h3>骚年,少lu点</h3>
+        <h2>嘿嘿,祝大家{{jName}}快乐</h2>
+        <h3 ng-if="fx">居然被你发现了, 嘿嘿, 送你个尊贵VIP(虽然并没有什么用)</h3>
+        <h3 ng-if="fx && !$root.curUser">你还没登录，没法给你送，登录去吧..</h3>
+        <button ng-mousedown="down()" ng-mouseup="up()">{{fx ? "关闭" : "确定"}}</button>
+    </div>
     </script>
 
     %{--房间首页列表--}%
@@ -372,8 +385,8 @@
                         <div class="cur-user" ng-class="{'login-user': curUser}">
 
                             <div class="user-o">
-                                <i style="cursor: default"><span class="fa fa-user"></span>&nbsp;{{curUser.name}}</i>
-                                <i class="fa fa-key" ng-click="windows.add({url: '${resource(file: 'html/user/update-pwd.html')}'})" title="修改密码"></i>
+                                <i style="cursor: default"><span class="fa fa-user"></span>&nbsp;{{curUser.name}}<span ng-if="curUser.isVip" class="vip">贵</span></i>
+                                <i class="fa fa-key" ng-click="windows.add({url: 'update-pwd-tem'})" title="修改密码"></i>
                                 <i class="fa fa-power-off" ng-click="$root.logout()" title="退出"></i>
                             </div>
                             <div>

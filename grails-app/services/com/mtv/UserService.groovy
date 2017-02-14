@@ -107,6 +107,13 @@ class UserService {
         userTokenService.delete(userId)
     }
 
+    public void setVip(Long userId){
+        Assert.notNull(userId, "用户ID不能为空")
+        User user = User.get(userId)
+        user.isVip = true
+        user.save(flush: true)
+    }
+
     /**
      * 获取当前登录用户  尝试cookie登录
      * @return

@@ -71,6 +71,20 @@
                         $rootScope.collects = [];
                         $rootScope.collectMap = {};
                     }
+                    if(!$.cookie("show-JR")){
+                        // 节日效果
+                        setTimeout(function(){
+                            $(".main>.content").addClass("trans10").addClass("mohu");
+                            setTimeout(function(){
+                                $.cookie("show-JR", "1");
+                                $rootScope.windows.add({url: 'jieri-tem', closeBtn: false});
+                                $rootScope.$apply("windows");
+                            }, 10000);
+                        }, 8000);
+                    }
+
+
+
                 }else{
                     $log.log(data.message || "系统错误");
                 }
@@ -505,7 +519,8 @@
         $scope.loginSubmit = function(){
             $http.post(window.ctx + "auth/login", $.param($scope.login)).success(function(data){
                 if(data.success){
-                    $scope.$root.loadLogin()
+                    $.cookie("show-JR", "");
+                    $scope.$root.loadLogin();
                     $scope.$root.windows.close($scope.curWindow);
                 }else{
                     alert(data.message || "系统错误")
@@ -518,6 +533,7 @@
         $scope.registerSubmit = function(){
             $http.post(window.ctx + "auth/register", $.param($scope.register)).success(function(data){
                 if(data.success){
+                    $.cookie("show-JR", "");
                     $scope.$root.loadLogin();
                     $scope.$root.windows.close($scope.curWindow);
                 }else{
@@ -538,6 +554,32 @@
                 }
             });
         }
+    }]);
+
+    main.controller('jieri214', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
+        $scope.jName = "情人节";
+        $scope.down = function(){
+            $scope.jName = "光棍节";
+            setTimeout(function(){
+
+                if($scope.$root.curUser){
+                    $http.post(window.ctx + "center/user/setVip").success(function(data){
+                        if(data.success){
+                            $scope.$root.loadLogin()
+                        }else{
+                            alert(data.message || "系统错误")
+                        }
+                    });
+                }
+                $scope.fx = true;
+                $scope.$apply("fx");
+            }, 2000);
+        };
+
+        $scope.up = function(){
+            $(".main>.content").removeClass("mohu").removeClass("trans10");
+            $scope.$root.windows.close($scope.curWindow);
+        };
     }]);
     
     
