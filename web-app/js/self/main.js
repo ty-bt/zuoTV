@@ -71,7 +71,8 @@
                         $rootScope.collects = [];
                         $rootScope.collectMap = {};
                     }
-                    if(!$.cookie("show-JR")){
+                    var curDate = new Date().getTime();
+                    if(!$.cookie("show-JR") && new Date("2017/02/14").getTime() < curDate && new Date("2017/02/15").getTime() > curDate){
                         // 节日效果
                         setTimeout(function(){
                             $(".main>.content").addClass("trans10").addClass("mohu");
