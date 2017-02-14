@@ -21,6 +21,9 @@ class User {
     /* 是否启用 */
     Boolean enable = true
 
+    /* 性颜色 */
+    String color
+
     /*创建时间*/
     Date dateCreated
 
@@ -30,6 +33,7 @@ class User {
     static constraints = {
         email nullable: true
         name unique: true
+        color nullable: true
     }
 
 }

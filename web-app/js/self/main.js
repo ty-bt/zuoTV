@@ -61,10 +61,15 @@
 
         // 刷新登录状态
         $rootScope.loadLogin = function(){
+            var colorArr = ["#1abc9c", "#16a085", "##2ecc71", "#27ae60", "#9b59b6", "#8e44ad", "#34495e", "#2c3e50", "#f1c40f", "#f39c12", "#e67e22", "#d35400", "#e74c3c", "#c0392b", "#ecf0f1", "#bdc3c7", "#95a5a6", "#7f8c8d"];
             $http.post(window.ctx + "auth/getCurrentUser").success(function(data){
                 if(data.success){
                     $rootScope.curUser = data.data;
                     if($rootScope.curUser){
+                        // 随机个性颜色
+                        // if(!$rootScope.curUser.color){
+                        //     $rootScope.curUser.color = colorArr[parseInt(Math.random() * 100) % colorArr.length]
+                        // }
                         $rootScope.loadCollect();
                     }else{
                         // 清空我的关注

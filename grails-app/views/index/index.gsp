@@ -386,7 +386,7 @@
                         <div class="cur-user" ng-class="{'login-user': curUser}">
 
                             <div class="user-o">
-                                <i style="cursor: default"><span class="fa fa-user"></span>&nbsp;{{curUser.name}}<span ng-if="curUser.isVip" class="vip">贵</span></i>
+                                <i style="cursor: default"><span class="fa fa-user"></span>&nbsp;{{curUser.name}}<span ng-if="curUser.isVip" class="vip" title="传说中尊贵的SVIP" ng-style="{color: curUser.color}">贵</span></i>
                                 <i class="fa fa-key" ng-click="windows.add({url: 'update-pwd-tem'})" title="修改密码"></i>
                                 <i class="fa fa-power-off" ng-click="$root.logout()" title="退出"></i>
                             </div>
