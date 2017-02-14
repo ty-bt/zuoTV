@@ -23,6 +23,7 @@
     %{--<script type="text/javascript" src="${resource(file: '/js/jquery-3.1.0.min.js')}"></script>--}%
     <script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
     <script type="text/javascript" src="http://cdn.bootcss.com/angular.js/1.5.6/angular.min.js"></script>
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular.min.js')}"></script>--}%
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular-ui-router.min.js')}"></script>--}%
@@ -302,26 +303,26 @@
                         <div class="checkeds"> 
                             <a href="#" ng-class="{selected: !$stateParams.platformName}"
                                ui-sref="room({page:1, platformName: ''})"
-                               ui-sref-opts="{inherit: true}">全部</a>
+                               ui-sref-opts="{inherit: true, reload:true}">全部</a>
                             <a ng-repeat="pla in topData.platforms"
                                ui-sref="room({page:1, platformName: pla.name})"
-                               ui-sref-opts="{inherit: true}"
+                               ui-sref-opts="{inherit: true, reload:true}"
                                ng-class="{selected: pla.name == $stateParams.platformName}">{{pla.name}}</a>
 
                         </div>
                     </div>
                     <div class="condition" ng-show="topData.types">
                         <h2>分类<a ui-sref="room.type"
-                                 ui-sref-opts="{inherit: true}"
+                                 ui-sref-opts="{inherit: true, reload:true}"
                                  ng-show="topData.types.length > 20">全部></a>
                         </h2>
                         <div class="checkeds">
                             <a ui-sref="room({page:1, tag: ''})"
-                               ui-sref-opts="{inherit: true}"
+                               ui-sref-opts="{inherit: true, reload:true}"
                                ng-class="{selected: !$stateParams.tag}">全部</a>
                             <a ng-repeat="t in topData.types"
                                ui-sref="room({page:1, tag: t.name})"
-                               ui-sref-opts="{inherit: true}"
+                               ui-sref-opts="{inherit: true, reload:true}"
                                ng-if="$index < 20 || t.name == $stateParams.tag"
                                ng-class="{selected: t.name == $stateParams.tag}">{{t.name}}</a>
 
@@ -330,7 +331,7 @@
                     <div class="condition">
                         <h2>我的关注&nbsp;<span style="font-size: 13px;" ng-show="$root.collects.length">{{$root.onLineCollects.length}}/{{$root.collects.length}}</span>
                             <a ui-sref="room.collect"
-                               ui-sref-opts="{inherit: true}" ng-show="$root.curUser && $root.collects.length">全部></a>
+                               ui-sref-opts="{inherit: true, reload:true}" ng-show="$root.curUser && $root.collects.length">全部></a>
                         </h2>
                         %{-- 未登录 --}%
                         <div ng-if="!$root.curUser" class="collect-login">
@@ -370,13 +371,13 @@
                 <div class="head trans2">
                     <div class="top-menu">
                         <a ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
-                           ui-sref-opts="{roload:true}" href="${createLink(controller: 'room', action: 'list', params: [offset: 0, max: 120])}">首页</a>
+                           ui-sref-opts="{reload:true}" href="${createLink(controller: 'room', action: 'list', params: [offset: 0, max: 120])}">首页</a>
                         <a ui-sref="room.type"
-                           ui-sref-opts="{inherit: true}">分类</a>
+                           ui-sref-opts="{inherit: true, reload:true}">分类</a>
                         <a ui-sref="room.recommend({rPage:1})"
-                           ui-sref-opts="{inherit: true}">推荐</a>
+                           ui-sref-opts="{inherit: true, reload:true}">推荐</a>
                         <a ui-sref="room.collect"
-                           ui-sref-opts="{inherit: true}"
+                           ui-sref-opts="{inherit: true, reload:true}"
                            ng-show="$root.curUser">我的关注</a>
                     </div>
                     %{--<div style="float: right; height: 45px; overflow: hidden; text-align: right">--}%
@@ -411,4 +412,23 @@
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    // google跟踪代码
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-88253768-1', 'auto');
+    ga('send', 'pageview');
+
+    // baidu跟踪代码
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?ef1feae8cc0e92928cabf9ef9c690893";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 </html>

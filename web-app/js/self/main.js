@@ -276,34 +276,9 @@
         }).resize();
 
         // 加载左侧滚轮事件
-        // http://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js
-        setTimeout(function(){
-            $.getScript('http://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js', function(){
-                $('.m-search').mousewheel(function(event, delta) {
-                    leftMousewheel(delta);
-                });
-            });
-            
-            // google跟踪代码
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-            ga('create', 'UA-88253768-1', 'auto');
-            ga('send', 'pageview');
-
-            // baidu跟踪代码
-            var _hmt = _hmt || [];
-            (function() {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?ef1feae8cc0e92928cabf9ef9c690893";
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(hm, s);
-            })();
-            
-        }, 500);
-        
+        $('.m-search').mousewheel(function(event, delta) {
+            leftMousewheel(delta);
+        });
     }]);
     
     // 路由配置
