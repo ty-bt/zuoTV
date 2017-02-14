@@ -16,7 +16,7 @@ class User {
 
     String email
 
-    Boolean isVip
+    Boolean isVip = false
 
     /* 是否启用 */
     Boolean enable = true
