@@ -216,8 +216,6 @@
             <div ng-if="recommends.length">
                 <h2 class="show-params">
                     <span><i class="fa fa-hand-o-right"></i>推荐</span>
-                    <a class="btn" ui-sref="room.recommend({rPage:1})"
-                       ui-sref-opts="{inherit: true, reload:true}">全部推荐</a>
                     <a class="btn" ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
                        ui-sref-opts="{reload:true}" title="其实点击logo位置也可以&#13;返回上一页点击浏览器后退就可以了&#13;介个按钮随时会删掉">刷新首页</a>
                     %{--<a ui-sref="room.recommend({rPage:1})"--}%
