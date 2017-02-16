@@ -327,7 +327,7 @@
                     <div class="condition" ng-show="topData.types">
                         <h2>分类<a ui-sref="room.type"
                                  ui-sref-opts="{inherit: true, reload:true}"
-                                 ng-show="topData.types.length > 20">全部></a>
+                                 ng-show="topData.types.length > 20">全部排名></a>
                         </h2>
                         <div class="checkeds">
                             <a ui-sref="room({page:1, tag: ''})"
