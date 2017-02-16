@@ -28,13 +28,18 @@
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular.min.js')}"></script>--}%
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular-ui-router.min.js')}"></script>--}%
     <script src="http://cdn.bootcss.com/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
+    <script src="http://cdn.bootcss.com/d3/4.5.0/d3.min.js"></script>
+    <script src="http://cdn.bootcss.com/trianglify/1.0.1/trianglify.min.js"></script>
     <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}?v=${version}"></script>
     <script type="text/javascript" src="${resource(file: '/js/self/main.js')}?v=${version}"></script>
     %{-- 所有分类页面 --}%
     <script type="text/ng-template" id="type-tem">
         <div class="types" ng-show="$root.topData.platforms">
             <div>
-                <h2 class="show-params"><span><i class="fa fa-ship"></i>平台</span></h2>
+                <h2 class="show-params"><span><i class="fa fa-ship"></i>平台</span>
+                    <a class="btn" ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
+                       ui-sref-opts="{reload:true}" title="其实点击logo位置也可以回&#13;也可以直接使用浏览器的前进后退&#13;如果你的鼠标有侧键也是可以前进后退的&#13;介个按钮随时会删掉">回首页</a>
+                </h2>
                 <div class="t">
                     <a ng-repeat="pla in $root.topData.platforms"
                        ui-sref="room({page:1, platformName: pla.name})"
@@ -97,10 +102,10 @@
 
     %{-- 房间显示模板 --}%
     <script type="text/ng-template" id="room-show-tem">
-        <a class="room trans2"
+        <a class="room"
            ng-click="$root.openRoom(room)"
            ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}"
-           ng-class="{'off-line': !room.isOnLine}"
+           ng-class="{'off-line': !room.isOnLine, 'trans2': $root.roomShowTrans}"
            ng-style="roomSize">
             <table cellspacing="0" cellpadding="0">
                 <tr>
@@ -136,6 +141,8 @@
         <div class="collect">
             <h2 class="show-params">
                 <span><i class="fa fa-heart"></i>我的关注</span>
+                <a class="btn" ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
+                   ui-sref-opts="{reload:true}" title="其实点击logo位置也可以回&#13;也可以直接使用浏览器的前进后退&#13;如果你的鼠标有侧键也是可以前进后退的&#13;介个按钮随时会删掉">回首页</a>
             </h2>
             <a ng-repeat="coll in $root.collects" repeat-finish ng-init="room=coll.room" room-show></a>
         </div>
@@ -146,6 +153,8 @@
         <div class="collect">
             <h2 class="show-params">
                 <span><i class="fa fa-rocket"></i>精彩推荐</span>
+                <a class="btn" ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
+                   ui-sref-opts="{reload:true}" title="其实点击logo位置也可以回&#13;也可以直接使用浏览器的前进后退&#13;如果你的鼠标有侧键也是可以前进后退的&#13;介个按钮随时会删掉">回首页</a>
             </h2>
             <a ng-repeat="room in recommends" repeat-finish room-show></a>
             <div ng-if="rPaginate" t-paginate="rPaginate"></div>
@@ -200,27 +209,19 @@
         </div>
     </script>
 
-    %{--情人节--}%
-    <script type="text/ng-template" id="jieri-tem">
-    <div class="jieri" ng-controller="jieri214">
-        <h1>是不是感觉视线越来越模糊</h1>
-        <h2>是不是感觉身体被掏空</h2>
-        <h3>骚年,少lu点</h3>
-        <h2>嘿嘿,祝大家{{jName}}快乐</h2>
-        <h3 ng-if="fx">居然被你发现了, 嘿嘿, 送你个尊贵VIP(虽然并没有什么用)</h3>
-        <h3 ng-if="fx && !$root.curUser">你还没登录，没法给你送，登录去吧..</h3>
-        <button ng-mousedown="down()" ng-mouseup="up()">{{fx ? "关闭" : "确定"}}</button>
-    </div>
-    </script>
 
     %{--房间首页列表--}%
     <script type="text/ng-template" id="index-tem">
         <div class="body">
             <div ng-if="recommends.length">
                 <h2 class="show-params">
-                    <span><i class="fa fa-hand-o-right"></i>瞎推荐</span>
-                    <a ui-sref="room.recommend({rPage:1})"
-                       ui-sref-opts="{inherit: true}" class="more">更多></a>
+                    <span><i class="fa fa-hand-o-right"></i>推荐</span>
+                    <a class="btn" ui-sref="room.recommend({rPage:1})"
+                       ui-sref-opts="{inherit: true, reload:true}">全部推荐</a>
+                    <a class="btn" ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
+                       ui-sref-opts="{reload:true}" title="其实点击logo位置也可以&#13;返回上一页点击浏览器后退就可以了&#13;介个按钮随时会删掉">刷新首页</a>
+                    %{--<a ui-sref="room.recommend({rPage:1})"--}%
+                       %{--ui-sref-opts="{inherit: true}" class="more">更多></a>--}%
                 </h2>
                 <div style="overflow: hidden; width: 100%;">
                     <div style="width: 1920px;">
@@ -237,7 +238,7 @@
             <h3 ng-if="rooms" class="show-tit" ng-show="!rooms.length">米有找到相应的房间...</h3>
             <a ng-repeat="room in rooms" repeat-finish room-show></a>
             <div ng-if="paginate" t-paginate="paginate"></div>
-            <div class="icp" ng-show="rooms"><a href="mailto:ty_bt@live.cn">ty_bt@live.cn</a> &copy;版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备16023346号-1</a></div>
+            <div class="icp" ng-show="rooms"><a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备16023346号-1</a></div>
         </div>
         <div ui-view class="detail-view"></div>
 
@@ -288,10 +289,23 @@
 
 <body style="overflow: hidden">
     <div class="main" ng-cloak>
-
+        <div class="f-user trans2">
+            <div class="no-login" ng-if="curUser">
+                <i style="cursor: default"><span class="fa fa-user"></span>&nbsp;{{curUser.name}}<span ng-if="curUser.isVip" class="vip" title="传说中尊贵的SVIP" ng-style="{color: curUser.color}">贵</span></i>
+                <i class="fa fa-key" ng-click="windows.add({url: 'update-pwd-tem'})" title="修改密码"></i>
+                <i class="fa fa-power-off" ng-click="$root.logout()" title="退出"></i>
+            </div>
+            <div class="login-in" ng-if="!curUser">
+                <a class="login-btn" ng-click="$root.login()">登录</a>|<a class="register-btn" ng-click="$root.register()">注册</a>
+            </div>
+            <a href="mailto:ty_bt@live.cn" style="color:#797979; line-height: 20px; margin-top:6px;">站务与建议:ty_bt@live.cn</a>
+        </div>
         <div class="content table">
             <div class="left">
-                <h1><span>zuo</span> TV</h1>
+                <a ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
+                   ui-sref-opts="{reload:true}" title="首页" href="${createLink(controller: 'room', action: 'list', params: [offset: 0, max: 120])}">
+                    <h1><span>zuo</span> TV</h1>
+                </a>
                 %{--seo --}%
                 <div class="m-search trans2">
                     <div class="condition search-input">
@@ -299,7 +313,8 @@
                         <i class="fa fa-search" ng-click="$state.go('room', {page:1, kw: search.kw}, {inherit: true})"></i>
                     </div>
                     <div class="condition" ng-show="topData.platforms">
-                        <h2>平台</h2>
+                        <h2>平台<a ui-sref="room.recommend({rPage:1})"
+                                 ui-sref-opts="{inherit: true, reload:true}">精彩推荐></a></h2>
                         <div class="checkeds"> 
                             <a href="#" ng-class="{selected: !$stateParams.platformName}"
                                ui-sref="room({page:1, platformName: ''})"
@@ -364,14 +379,14 @@
                             </a>
                         </div>
                     </div>
-                    <div style="height: 20px;"></div>
+                    <div style="height: 60px;"></div>
                 </div>
             </div>
             <div class="right">
                 <div class="head trans2">
                     <div class="top-menu">
                         <a ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
-                           ui-sref-opts="{reload:true}" href="${createLink(controller: 'room', action: 'list', params: [offset: 0, max: 120])}">首页</a>
+                           ui-sref-opts="{reload:true}">首页</a>
                         <a ui-sref="room.type"
                            ui-sref-opts="{inherit: true, reload:true}">分类</a>
                         <a ui-sref="room.recommend({rPage:1})"

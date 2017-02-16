@@ -4,6 +4,25 @@
 (function(){
     var main = angular.module("main", ['tools', 'ui.router']);
     main.run(['$rootScope', function($rootScope){
+        // 生成背景图
+        var cloneA = $.extend({}, Trianglify.colorbrewer)
+        for(var k in cloneA){
+            var newArr = [];
+            $(cloneA[k]).each(function(i){
+                newArr.push(cloneA[k][cloneA[k].length - i -　1]);
+            });
+            Trianglify.colorbrewer[k + "_f"] = newArr;
+        }
+        $(".main").css({
+            "background-image": "url(" + Trianglify({
+                variance: "0.74",
+                // seed: 'random',
+                width: $(window).width(),
+                height: $(window).height(),
+                cell_size: 60,
+                x_colors: Trianglify.colorbrewer["Spectral_f"]/*,
+                x_colors: Trianglify.colorbrewer["Spectral_f"]*/}).png() + ")"
+        });
         $rootScope.ctx = window.ctx;
         $rootScope.webName = "zuoTV";
         var defaultTitle = $rootScope.webName + " - 聚合全网直播";
@@ -75,18 +94,6 @@
                         // 清空我的关注
                         $rootScope.collects = [];
                         $rootScope.collectMap = {};
-                    }
-                    var curDate = new Date().getTime();
-                    if(!$.cookie("show-JR") && new Date("2017/02/14").getTime() < curDate && new Date("2017/02/15").getTime() > curDate){
-                        // 节日效果
-                        setTimeout(function(){
-                            $(".main>.content").addClass("trans10").addClass("mohu");
-                            setTimeout(function(){
-                                $.cookie("show-JR", "1");
-                                $rootScope.windows.add({url: 'jieri-tem', closeBtn: false});
-                                $rootScope.$apply("windows");
-                            }, 10000);
-                        }, 8000);
                     }
 
 
@@ -275,6 +282,10 @@
             // 第一次resize 大部分模板没有初始化完毕 禁止$apply
             if(resizeIsInit){
                 resizeIsInit = false;
+                setTimeout(function(){
+                    $rootScope.roomShowTrans = true;
+                    $rootScope.$apply('roomShowTrans');
+                }, 1000);
             }else{
                 $rootScope.$apply('roomSize');
             }
@@ -535,32 +546,6 @@
                 }
             });
         }
-    }]);
-
-    main.controller('jieri214', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
-        $scope.jName = "情人节";
-        $scope.down = function(){
-            $scope.jName = "光棍节";
-            setTimeout(function(){
-
-                if($scope.$root.curUser){
-                    $http.post(window.ctx + "center/user/setVip").success(function(data){
-                        if(data.success){
-                            $scope.$root.loadLogin()
-                        }else{
-                            alert(data.message || "系统错误")
-                        }
-                    });
-                }
-                $scope.fx = true;
-                $scope.$apply("fx");
-            }, 2000);
-        };
-
-        $scope.up = function(){
-            $(".main>.content").removeClass("mohu").removeClass("trans10");
-            $scope.$root.windows.close($scope.curWindow);
-        };
     }]);
     
     

@@ -18,12 +18,12 @@ a{text-decoration: none; color: #313131}
 .filter-blur{-webkit-filter: blur(5px); -moz-filter: blur(5px); -ms-filter: blur(5px); -o-filter: blur(5px); filter: blur(5px); filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=4, MakeShadow=false);}
 
 /* 首页 */
-.main{background: #F2F2F2}
-.head{height: 50px;overflow: hidden;/* font-size: 27px; *//* font-weight: bold; */padding-left: 10px;line-height: 50px;background: #3498db;color: #fff;/* border-bottom: 1px solid #000; */}
-.main .body{/* padding-left: 10px; */overflow-y: auto;/* display: none; */height: 100%;}
+.main{background: #F2F2F2;background-size: 100% 100%;}
+.head{height: 50px;overflow: hidden;/* font-size: 27px; *//* font-weight: bold; */padding-left: 10px;line-height: 50px;/* background: #3498db; */background: rgba(0,0,0,0.1);color: #fff;/* border-bottom: 1px solid #000; */display: none;}
+.main .body{/* padding-left: 10px; */overflow-y: auto;/* display: none; */height: 100%;background: #f2f2f2;}
 .main .content>div{height:100%;overflow:hidden;}
-.main .content>.left{width: 245px;background: #2980b9;color: #fff;}
-.main .content>.left h1{margin: 0;padding: 0;line-height: 50px;background: #2980b9;color: #fff;padding-right: 20px;text-align: right;position: relative;}
+.main .content>.left{width: 245px;background: rgba(0, 0, 0, 0.3);color: #fff;}
+.main .content>.left h1{margin: 0;padding: 0;line-height: 50px;/* background: #2980b9; */color: #fff;padding-right: 20px;text-align: right;position: relative;}
 
 .main .content > .left h1 span {
     position: absolute;
@@ -93,12 +93,12 @@ a{text-decoration: none; color: #313131}
     padding: 4px 15px;
     margin-right: 9px;
     cursor: pointer;
-    border-radius: 4px;
+    /* border-radius: 4px; */
     color: #fff;
     margin-top: 10px;
     line-height: normal;
 }
-.top-menu a:hover{background: #2980b9;/* color: #fff; */}
+.top-menu a:hover{/* background: #2980b9; *//* color: #fff; *//* text-shadow: 0px -2px 9px #f2f2f2; *//* box-shadow: 0px 18px 27px -27px #000 inset; */}
 
 
 /* 用户显示 */
@@ -117,8 +117,8 @@ a{text-decoration: none; color: #313131}
 }
 .m-search h2{border-bottom: 1px solid #fff;margin: 5px 0 10px 0;padding: 2px 0;font-weight: 200;position: relative;}
 .m-search h2 a{font-size:13px;position: absolute;color: #fff;right: 0;bottom: 3px;cursor: pointer;}
-.m-search .checkeds a{color: #fff;display: inline-block;padding: 0 4px;margin: 0 4px 5px 0;background: #2980b9;border-radius: 4px;line-height: 20px;/* box-shadow: 0px 0px 0px 0 #000; */cursor: pointer;}
-.m-search .checkeds a.selected{/* box-shadow: 0px 0px 1px 0px #000; */background: #3498db;}
+.m-search .checkeds a{color: #fff;display: inline-block;padding: 0 4px;margin: 0 4px 5px 0;/* background: #2980b9; */border-radius: 2px;line-height: 20px;/* box-shadow: 0px 0px 0px 0 #000; */cursor: pointer;}
+.m-search .checkeds a.selected{/* box-shadow: 0px 0px 1px 0px #000; */background: rgba(0, 0, 0, 0.5);}
 
 .search-input{position: relative;}
 .search-input input{border-radius: 4px;width: 215px;border: none;padding: 6px 5px;}
@@ -134,7 +134,7 @@ a{text-decoration: none; color: #313131}
 .room .photo img{width: 100%;height: 100%;overflow: hidden;-webkit-filter: blur(0px);}
 /*.room:hover .photo img{-webkit-filter: blur(5px); -moz-filter: blur(5px); -ms-filter: blur(5px); -o-filter: blur(5px); filter: blur(5px); filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=4, MakeShadow=false);   }*/
 /* 播放图标 */
-.room .photo .pla-name{position: absolute;top: 0;right: 0;color: #fff;font-size: 13px;line-height: 18px;padding: 0 4px;text-shadow: 0 0 8px #000;border: 1px solid #fff;border-radius: 4px;margin: 5px;opacity: 0.5;}
+.room .photo .pla-name{position: absolute;top: 0;right: 0;color: #fff;font-size: 13px;line-height: 18px;padding: 0 4px;text-shadow: 0 0 8px #000;border: 1px solid #fff;border-radius: 4px;margin: 5px;opacity: 0.85;background: rgba(0,0,0,0.3);}
 /*.room .photo .play:before{font-size: 77px;display: inline-block;width: 30%;text-align: center;left: 35%;line-height: 100%;height: 50%;top: -50%}*/
 .room .photo .play{position: absolute;display: inline-block;font-size: 77px;width: 30%;text-align: center;left: 35%;line-height: 100%;height: 50%;top: -78px;color: #7f8c8d;text-shadow: 0 0 0 #000;/* overflow: hidden; */}
 .room .photo .play.insert{color: #fff;/* text-shadow: 0 0 20px #000; */}
@@ -158,6 +158,7 @@ a{text-decoration: none; color: #313131}
     margin-left: 10px;
     position: relative;
 }
+.show-params .btn{display: inline-block;font-size: 14px;line-height: 18px;border: 1px solid #000;padding: 0 5px;border-radius: 4px;}
 .show-params .fa{margin-right: 10px;color: #3498db;line-height: 40px;border-bottom: 1px solid #3498db;margin-bottom: -1px;}
 .show-params span{
     line-height: 40px;
@@ -219,7 +220,8 @@ a{text-decoration: none; color: #313131}
 
 
 /* 收藏的房间样式 */
-.room2{display: inline-block;width: 225px;height: 126px;position: relative;margin-bottom: 10px;border-radius: 4px;overflow: hidden;box-shadow: 0 0 5px 0 #000;}
+.room2{display: inline-block;width: 225px;height: 126px;position: relative;margin-bottom: 10px;border-radius: 4px;overflow: hidden;/* box-shadow: 0 2px 5px 0 #000; */}
+.room2:hover{box-shadow: 0px 5px 6px -2px #000;margin-top: -3px;margin-bottom: 13px;}
 .room2 img{width: 100%; height: 100%;}
 .room2>span{position: absolute;color: #fff;padding: 1% 2%;}
 
@@ -266,5 +268,16 @@ a{text-decoration: none; color: #313131}
 .jieri{padding: 20px 10px; text-align: center;}
 .jieri button{background: #3498db; border: none; border-radius: 4px; padding: 5px 10px; margin: 0 auto; cursor: pointer}
 
-.vip{border: 2px solid; border-radius: 50%; display: inline-block; width: 19px; height: 18px; vertical-align: middle; line-height: 18px; text-align: center; margin-left: 5px; color: black;}
+
+.vip{border: 2px solid;border-radius: 50%;display: inline-block;width: 19px;height: 18px;vertical-align: middle;line-height: 18px;text-align: center;margin-left: 5px;color: #fff; cursor: pointer}
+.vip:hover{box-shadow: 0 0 8px 1px;}
+
+/*左侧下方登录信息*/
+.f-user{position: absolute;width: 225px;bottom: 0;left: 10px;background: rgba(0, 0, 0, 0.6);z-index: 1;color: #fff;text-align: center;padding-top: 6px;border-radius: 2px 2px 0 0;}
+.f-user:hover{background: rgba(0, 0, 0, 0.9)}
+.f-user i{cursor: pointer;display: inline-block;font-size: 14px;line-height: 40px;padding: 0 12px;/* margin-left: 5px; */font-style: normal;}
+.f-user i:hover{text-shadow: 0 0 10px}
+.f-user .no-login{}
+.f-user .login-in{}
+.f-user a{color: #fff; line-height: 40px; margin: 0 10px; cursor: pointer}
 
