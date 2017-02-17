@@ -269,6 +269,7 @@
             var viewDiv = rightDiv.find(".m-view");
             rightDiv.width($(window).width() - rightDiv.offset().left);
             rightDiv.height($(window).height());
+            $(".main").height($(window).height());
             viewDiv.height($(window).height() - viewDiv.offset().top);
 
             // 重新调整滚动位置
