@@ -75,7 +75,7 @@
          * @returns {boolean}
          */
         $rootScope.isInsert = function(flag){
-            return flag != "panda" && flag != "zhanQi";
+            return flag != "panda"/* && flag != "zhanQi"*/;
         };
 
         // 刷新登录状态
@@ -417,7 +417,7 @@
                 $element.find(".cen").css({
                     'margin-top': 0,
                     width: maxHeight * radio
-                }).find("embed").css({
+                }).find(".embed-div").css({
                     height: maxHeight,
                     width: maxHeight * radio
                 });
@@ -425,7 +425,7 @@
                 $element.find(".cen").css({
                     'margin-top': (maxHeight - (maxWidth / radio)) / 2,
                     width: maxWidth
-                }).find("embed").css({
+                }).find(".embed-div").css({
                     height: maxWidth / radio,
                     width: maxWidth
                 });
@@ -439,12 +439,17 @@
                 return;
             }
             $scope.$root.title = $scope.curRoom.name + " - " + $scope.$root.webName;
-            if($scope.curRoom.quoteUrl){
-                var embedEle = $('<embed src="' + $scope.curRoom.quoteUrl + '" width="640" height="360" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">')
-                $element.find(".embed-div").append(embedEle);
+            if($scope.curRoom.quoteUrl || $scope.curRoom.platform.flag == 'zhanQi'){
+                var playEle;
+                if($scope.curRoom.quoteUrl){
+                    playEle = $('<embed src="' + $scope.curRoom.quoteUrl + '" style="width: 100%; height: 100%" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">')
+                }else{
+                    playEle = $('<iframe style="width:100%; height:100%; border:none;" src="http://www.zhanqi.tv/live/embed?roomId=' + $scope.curRoom.flag + '"></iframe>')
+                }
+                $element.find(".embed-div").append(playEle);
                 setTimeout(function(){
                     $(window).resize();
-                })
+                });
             }else{
                 $element.find("iframe").attr("src", $scope.curRoom.url);
             }

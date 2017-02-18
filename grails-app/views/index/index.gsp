@@ -248,7 +248,7 @@
             <!-- 背景 -->
             <img ng-src="{{curRoom.img}}" class="back-img filter-blur" />
             <!-- 内容 -->
-            <div class="d-content" ng-show="curRoom.quoteUrl">
+            <div class="d-content" ng-show="curRoom.quoteUrl || curRoom.platform.flag == 'zhanQi'">
                 <div class="top">
                     <i class="fa fa-close" title="关闭" ng-click="close()"></i>
                 </div>
@@ -270,7 +270,7 @@
 
             </div>
 
-            <div class="d-content-i" ng-show="!curRoom.quoteUrl">
+            <div class="d-content-i" ng-show="!curRoom.quoteUrl && curRoom.platform.flag != 'zhanQi'">
                 <i title="关注" roomId="{{room.id}}"
                    ng-click="$root.changeCollect($event, curRoom);$event.stopPropagation();"
                    ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
