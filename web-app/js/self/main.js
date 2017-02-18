@@ -61,6 +61,78 @@
         // 当前登录用户
         $rootScope.curUser = null;
 
+
+
+        // 分屏数据管理
+        $rootScope.splitScreen = {
+            url: "",
+            data: [],
+            localName: "splitScreenData",
+            save: function(){
+                window.localStorage[this.localName] = JSON.stringify(this.data);
+            },
+            loadUrl: function(){
+                var ids = [];
+                $($rootScope.splitScreen.data).each(function(){
+                    ids.push(this.id);
+                });
+                return "http://" + location.host + window.ctx + $state.href("room.split", {ids: JSON.stringify(ids)}, {inherit: true});
+            },
+            load: function(){
+                var localData = window.localStorage[this.localName];
+                if(localData){
+                    this.data = JSON.parse(localData);
+                }else{
+                    this.data = [];
+                }
+            },
+            add: function(room, $event){
+                if(this.indexOf(room.id) == -1){
+                    if(this.data.length >= 4){
+                        alert("分屏数量已达到上限");
+                    }else{
+                        this.data.push(room);
+                        this.save();
+                    }
+                }
+                if($event){
+                    $event.stopPropagation();
+                    $event.preventDefault();
+                }
+            },
+            remove: function(id, $event){
+                var index = this.indexOf(id);
+                if(index != -1){
+                    this.data.splice(index, 1);
+                    this.save();
+                }
+                if($event){
+                    $event.stopPropagation();
+                    $event.preventDefault();
+                }
+            },
+            indexOf: function(id){
+                for(var a = 0; a < this.data.length; a++){
+                    if(this.data[a].id == id){
+                        return a;
+                    }
+                }
+                return -1;
+            }
+        };
+        $rootScope.splitScreen.load();
+
+        // 复制链接
+        $('#copy-split').zclip({
+            path:'http://cdn.bootcss.com/zclip/1.1.2/ZeroClipboard.swf',
+            copy:function(){
+                return $rootScope.splitScreen.loadUrl();
+            },
+            afterCopy: function(){
+
+            }
+        });
+
         /**
          * 打开房间的时候调用
          * @param room 房间对象
@@ -341,6 +413,11 @@
             templateUrl: 'recommend-tem',
             controller: "recommend",
             title: "精彩推荐"
+        }).state('room.split', {
+            url: '/split/:ids',
+            templateUrl: 'split-tem',
+            controller: "room.split",
+            title: "分屏观看"
         });
         // 改变post提交方式 data所在位置
         $httpProvider.defaults.headers.post = {
@@ -481,6 +558,31 @@
         }
     }]);
 
+
+    main.controller('room.split', ['$scope', '$http', '$element', '$stateParams', '$state', '$sce', function($scope, $http, $element, $stateParams, $state, $sce){
+        if($stateParams.ids){
+            $scope.noLocal = true;
+            $http({
+                url: window.ctx + "room/split",
+                params: {
+                    ids: $stateParams.ids
+                }
+            }).success(function(data){
+                if(data.success){
+                    $scope.splitRooms = data.rooms;
+                }else{
+                    alert(data.message || "系统错误")
+                }
+            });
+
+        }
+        $scope.trustSrc = function(src) {
+            return $sce.trustAsResourceUrl(src);
+        }
+
+
+    }]);
+
     /**
      * 推荐
      */
@@ -517,7 +619,6 @@
         $scope.loginSubmit = function(){
             $http.post(window.ctx + "auth/login", $.param($scope.login)).success(function(data){
                 if(data.success){
-                    $.cookie("show-JR", "");
                     $scope.$root.loadLogin();
                     $scope.$root.windows.close($scope.curWindow);
                 }else{
@@ -531,7 +632,6 @@
         $scope.registerSubmit = function(){
             $http.post(window.ctx + "auth/register", $.param($scope.register)).success(function(data){
                 if(data.success){
-                    $.cookie("show-JR", "");
                     $scope.$root.loadLogin();
                     $scope.$root.windows.close($scope.curWindow);
                 }else{

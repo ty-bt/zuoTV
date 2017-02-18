@@ -23,13 +23,16 @@
     %{--<script type="text/javascript" src="${resource(file: '/js/jquery-3.1.0.min.js')}"></script>--}%
     <script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="http://cdn.bootcss.com/zclip/1.1.2/jquery.zclip.min.js"></script>
     <script src="http://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
     <script type="text/javascript" src="http://cdn.bootcss.com/angular.js/1.5.6/angular.min.js"></script>
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular.min.js')}"></script>--}%
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular-ui-router.min.js')}"></script>--}%
     <script src="http://cdn.bootcss.com/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
     <script src="http://cdn.bootcss.com/d3/4.5.0/d3.min.js"></script>
+
     <script src="http://cdn.bootcss.com/trianglify/1.0.1/trianglify.min.js"></script>
+
     <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}?v=${version}"></script>
     <script type="text/javascript" src="${resource(file: '/js/self/main.js')}?v=${version}"></script>
     %{-- 所有分类页面 --}%
@@ -117,6 +120,7 @@
                         <img ng-src="{{room.img}}"/>
                         <span class="pla-name">{{room.platform.name}}</span>
                         <i class="fa fa-play-circle play" ng-class="{insert: $root.isInsert(room.platform.flag)}"></i>
+                        <span class="add-ss" ng-click="$root.splitScreen.add(room, $event);" ng-if="$root.isInsert(room.platform.flag)">加入分屏</span>
                     </td>
                 </tr>
                 <tr class="top">
@@ -283,6 +287,22 @@
         </div>
 
     </script>
+
+    %{--分屏观看模板--}%
+    <script type="text/ng-template" id="split-tem">
+        <div class="room-split">
+            <div class="detail trans" ng-repeat="room in (noLocal ? splitRooms : $root.splitScreen.data)">
+                <iframe ng-if="room.platform.flag == 'zhanQi'" style="width:100%; height:100%; border:none;" src="{{trustSrc('http://www.zhanqi.tv/live/embed?roomId=' + $scope.curRoom.flag)}}"></iframe>
+                <embed ng-if="room.quoteUrl" src="{{trustSrc(room.quoteUrl)}}" style="width: 100%; height: 100%" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">
+                <iframe ng-if="room.platform.flag != 'zhanQi' && !room.quoteUrl" src="{{trustSrc(room.url)}}" style="width:100%; height:100%; border:none;"></iframe>
+                <i title="关注" roomId="{{room.id}}"
+                   ng-click="$root.changeCollect($event, room);"
+                   ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
+                   class="fa heart"></i>
+                <a class="fa fa-level-up" target="_blank" title="新窗口打开{{room.platform.name}}观看" href="{{room.url}}"></a>
+            </div>
+        </div>
+    </script>
 </head>
 
 <body style="overflow: hidden">
@@ -304,12 +324,17 @@
                    ui-sref-opts="{reload:true}" title="首页" href="${createLink(controller: 'room', action: 'list', params: [offset: 0, max: 120])}">
                     <h1><span>zuo</span> TV</h1>
                 </a>
+                <div class="condition search-input">
+                    <input type="text" placeholder="输入房间名或主播名搜索" ng-keyup="search.submit($event)" ng-model="search.kw" />
+                    <i class="fa fa-search" ng-click="$state.go('room', {page:1, kw: search.kw}, {inherit: true})"></i>
+                </div>
+
+                %{--<div>--}%
+                    %{--<button></button>--}%
+                %{--</div>--}%
                 %{--seo --}%
                 <div class="m-search trans2">
-                    <div class="condition search-input">
-                        <input type="text" placeholder="输入房间名或主播名搜索" ng-keyup="search.submit($event)" ng-model="search.kw" />
-                        <i class="fa fa-search" ng-click="$state.go('room', {page:1, kw: search.kw}, {inherit: true})"></i>
-                    </div>
+
                     <div class="condition" ng-show="topData.platforms">
                         <h2>平台<a ui-sref="room.recommend({rPage:1})"
                                  ui-sref-opts="{inherit: true, reload:true}">精彩推荐></a></h2>
@@ -339,6 +364,35 @@
                                ng-if="$index < 20 || t.name == $stateParams.tag"
                                ng-class="{selected: t.name == $stateParams.tag}">{{t.name}}</a>
 
+                        </div>
+                    </div>
+                    <div class="condition" ng-show="$root.splitScreen.data.length">
+                        <h2>分屏&nbsp;<span style="font-size: 13px;" ng-show="$root.splitScreen.data.length">{{$root.splitScreen.data.length}}</span>
+                            <span id="copy-split" class="fa fa-share-alt" title="复制分享链接"></span>
+                            <span class="fa fa-question-circle-o" title="点击开始进入分屏界面&#13;在分屏界面依然可以在左侧列表移除房间&#13;在分屏界面依然可以从左侧关注列表添加房间&#13;斗鱼和战旗体验比较好，暂不支持熊猫&#13;其他的平台在页面中点击网页全屏体验会好点"></span>
+                            <a ui-sref="room.split({ids: ''})"
+                               ui-sref-opts="{inherit: true, reload:true}" ng-show="$root.curUser && $root.collects.length">开始></a>
+                        </h2>
+
+                        <div>
+                            <a ng-repeat="room in $root.splitScreen.data"
+                            %{--<a ng-repeat="coll in $root.collects"--}%
+                               repeat-finish
+                               ng-click="openRoom(room)"
+                               class="room2 trans2"
+                               ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}">
+                                <img ng-src="{{room.img}}"/>
+                                <span class="ellipsis top pla-name">{{room.platform.name}}</span>
+                                <span class="ellipsis top anchor">
+                                    <i title="关注" roomId="{{room.id}}"
+                                       ng-click="$root.changeCollect($event, room);$event.stopPropagation();"
+                                       ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
+                                       class="fa heart"></i>{{room.anchor}}
+                                </span>
+                                <span class="ellipsis bottom room-name">{{room.name}}</span>
+                                <span class="ellipsis bottom num">{{room.adNum | wanNum}}</span>
+                                <span class="r-btn" ng-click="$root.splitScreen.remove(room.id, $event)">移除</span>
+                            </a>
                         </div>
                     </div>
                     <div class="condition">
@@ -373,6 +427,7 @@
                                 </span>
                                 <span class="ellipsis bottom room-name">{{room.name}}</span>
                                 <span class="ellipsis bottom num">{{room.adNum | wanNum}}</span>
+                                <span class="r-btn" ng-if="$root.isInsert(room.platform.flag)" ng-click="$root.splitScreen.add(room, $event)">加入分屏</span>
                                 %{--<i class="fa fa-play-circle play" ng-class="{insert: room.quoteUrl}"></i>--}%
                             </a>
                         </div>

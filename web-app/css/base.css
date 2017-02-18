@@ -22,18 +22,18 @@ a{text-decoration: none; color: #313131}
 .head{height: 50px;overflow: hidden;/* font-size: 27px; *//* font-weight: bold; */padding-left: 10px;line-height: 50px;/* background: #3498db; */background: rgba(0,0,0,0.1);color: #fff;/* border-bottom: 1px solid #000; */display: none;}
 .main .body{/* padding-left: 10px; */overflow-y: auto;/* display: none; */height: 100%;background: #f2f2f2;}
 .main .content>div{height:100%;overflow:hidden;}
-.main .content>.left{width: 245px;background: rgba(0, 0, 0, 0.3);color: #fff;}
+.main .content>.left{width: 225px;padding: 0 10px;background: rgba(0, 0, 0, 0.3);color: #fff;}
 .main .content>.left h1{margin: 0;padding: 0;line-height: 50px;/* background: #2980b9; */color: #fff;padding-right: 20px;text-align: right;position: relative;}
 
 .main .content > .left h1 span {
     position: absolute;
     font-size: 36px;
-    top: -1px;
+    top: -9px;
     left: 107px;
     transform: rotate(21deg);
     transform-origin: 0 100%;
     animation: logo-a 1.8s;
-    -webkit-transform: rotate(21deg);
+    -webkit-transform: rotate(20deg);
     -webkit-transform-origin: 0 100%;
     -webkit-animation: logo-a 1.8s;
     -moz-transform: rotate(21deg);
@@ -111,16 +111,17 @@ a{text-decoration: none; color: #313131}
 /* 搜索样式 */
 .m-search{
     width: 225px;
-    padding: 0 10px;
+    /* padding: 0 10px; */
     overflow: hidden;
     margin-top: 10px;
 }
-.m-search h2{border-bottom: 1px solid #fff;margin: 5px 0 10px 0;padding: 2px 0;font-weight: 200;position: relative;}
+.m-search h2{border-bottom: 1px solid #fff;margin: 5px 0 10px 0;padding: 2px 0;font-weight: 200;position: relative;font-size: 16px;}
 .m-search h2 a{font-size:13px;position: absolute;color: #fff;right: 0;bottom: 3px;cursor: pointer;}
+.m-search h2 .fa{cursor:pointer;/* font-size:14px */font-weight: 200;margin-left: 6px;}
 .m-search .checkeds a{color: #fff;display: inline-block;padding: 0 4px;margin: 0 4px 5px 0;/* background: #2980b9; */border-radius: 2px;line-height: 20px;/* box-shadow: 0px 0px 0px 0 #000; */cursor: pointer;}
 .m-search .checkeds a.selected{/* box-shadow: 0px 0px 1px 0px #000; */background: rgba(0, 0, 0, 0.5);}
 
-.search-input{position: relative;}
+.search-input{position: relative;width: 225px;margin: 0 auto;}
 .search-input input{border-radius: 4px;width: 215px;border: none;padding: 6px 5px;}
 .search-input i{position: absolute;color: #3498db;float: right;right: 0;padding: 0 5px;top: 0;line-height: 24px;cursor: pointer;}
 
@@ -130,15 +131,17 @@ a{text-decoration: none; color: #313131}
 .room table{table-layout:fixed ; width:100%;}
 .room tr td+td{width: 30%;}
 .room .ellipsis{padding: 0 5px;}
-.room .photo{width: 100%;position: relative;display: table-cell;}
+.room .photo{width: 100%;position: relative;display: table-cell;overflow: hidden;}
 .room .photo img{width: 100%;height: 100%;overflow: hidden;-webkit-filter: blur(0px);}
 /*.room:hover .photo img{-webkit-filter: blur(5px); -moz-filter: blur(5px); -ms-filter: blur(5px); -o-filter: blur(5px); filter: blur(5px); filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=4, MakeShadow=false);   }*/
 /* 播放图标 */
 .room .photo .pla-name{position: absolute;top: 0;right: 0;color: #fff;font-size: 13px;line-height: 18px;padding: 0 4px;text-shadow: 0 0 8px #000;border: 1px solid #fff;border-radius: 4px;margin: 5px;opacity: 0.85;background: rgba(0,0,0,0.3);}
 /*.room .photo .play:before{font-size: 77px;display: inline-block;width: 30%;text-align: center;left: 35%;line-height: 100%;height: 50%;top: -50%}*/
-.room .photo .play{position: absolute;display: inline-block;font-size: 77px;width: 30%;text-align: center;left: 35%;line-height: 100%;height: 50%;top: -78px;color: #7f8c8d;text-shadow: 0 0 0 #000;/* overflow: hidden; */}
+.room .photo .play{position: absolute;display: inline-block;font-size: 64px;width: 30%;text-align: center;left: 35%;/* line-height: 12px; *//* height: 40%; */top: -78px;color: #7f8c8d;text-shadow: 0 0 0 #000;/* overflow: hidden; */}
 .room .photo .play.insert{color: #fff;/* text-shadow: 0 0 20px #000; */}
-.room:hover .photo .play{top: 25%;/* overflow: visible */text-shadow: 0 0 10px #000;}
+.room:hover .photo .play{top: 30%;/* overflow: visible */text-shadow: 0 0 10px #000;}
+.room .photo .add-ss{position: absolute;bottom: -23px;left: 0;background: #000;color: #fff;padding: 5px 10px;}
+.room:hover .photo .add-ss{bottom: 0}
 .room .title{font-size: 14px;}
 .room .tag{color: #f60;}
 .room .bottom{color: #797979;height: 20px;}
@@ -231,6 +234,9 @@ a{text-decoration: none; color: #313131}
 .room2>span.anchor{width: 66%;left: 0;}
 .room2>span.room-name{width: 66%;left: 0;}
 .room2>span.num{width: 26%;right: 0;text-align: right;}
+.room2>span.r-btn{bottom: -25px;right: 0;background: rgba(0,0,0,0.8);padding: 5px 15px;}
+.room2>span.r-btn:hover{background: rgba(0,0,0, 1);}
+.room2:hover>span.r-btn{bottom: 0;}
 
 /* 更多分类 */
 .types{position: absolute;width: 96%;height: 100%;overflow-y: auto;padding: 0 2%;top: 0;left: 0;background: #fff;}
@@ -281,3 +287,10 @@ a{text-decoration: none; color: #313131}
 .f-user .login-in{}
 .f-user a{color: #fff; line-height: 40px; margin: 0 10px; cursor: pointer}
 
+/* 分屏观看 */
+.room-split{width:100%; height: 100%; position: absolute; top: 0; left:0;  background: #000}
+.room-split .detail{width: 50%;height: 50%;float: left; position: relative; overflow:hidden}
+.room-split .detail .fa{position: absolute;color: #fff;top: -50px;left: 0;font-size: 20px;margin: 5px 8px;text-shadow: 0 0 7px #000; cursor:pointer}
+.room-split .detail .heart.fa-heart{color: #c0392b}
+.room-split .detail .fa-level-up{left: 31px;}
+.room-split .detail:hover .fa{top:0}

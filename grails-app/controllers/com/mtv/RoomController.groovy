@@ -95,6 +95,57 @@ class RoomController {
         render([rooms: rooms, total: rooms.totalCount, recommends: recommends] as JSON)
     }
 
+    def split(){
+//        def start = System.currentTimeMillis()
+
+        List ids = JSON.parse(params.ids)
+        if(ids.size() > 4){
+            render(text: [success: false, message: "超出上限"])
+            return
+        }
+        def result = []
+        ids.each {
+            result.push(Room.get(it))
+        }
+//        render(text: "用时${System.currentTimeMillis() - start}")
+
+        render(text: [success: true, rooms: result] as JSON)
+
+    }
+
+    def splitTest(){
+        def start = System.currentTimeMillis()
+        List ids = JSON.parse(params.ids)
+        if(ids.size() > 4){
+            render(text: [success: false, message: "超出上限"])
+            return
+        }
+        def result = []
+        ids.each {
+            result.push(Room.get(it))
+        }
+        render(text: "用时${System.currentTimeMillis() - start}")
+//        render(text: [success: true, rooms: result] as JSON)
+
+    }
+
+    def splitTest1(){
+                def start = System.currentTimeMillis()
+        List<Integer> ids = JSON.parse(params.ids)
+        ids = ids.collect {
+            return it.longValue()
+        }
+        if(ids.size() > 4){
+            render(text: [success: false, message: "超出上限"])
+            return
+        }
+        def result = Room.createCriteria().list {
+            'in'('id', ids)
+        }
+                render(text: "用时${System.currentTimeMillis() - start}")
+
+    }
+
     def one(){
         def roomId = params.getLong("id")
         Assert.notNull(roomId, "ID不能为空")
