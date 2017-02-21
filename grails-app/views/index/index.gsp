@@ -12,8 +12,8 @@
     <title ng-bind="title">zuoTV - 聚合全网直播</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <%String version = Metadata.getCurrent()[Metadata.APPLICATION_VERSION]%>
-    <meta name="description" content="zuo TV,一站聚合六个直播平台百万主播,不用一个一个平台去找喜爱的主播. 包含妹纸直播(星秀),LOL直播,户外直播,一起看电影(放映室), 现已收录斗鱼,龙珠,虎牙,全民,战旗,熊猫平台..." />
-    <meta name="keywords" content="zuotv,聚合直播,作TV,nozuonodie,直播人数统计,直播平台统计,Zuo,Zuo TV,直播导航,直播推荐,妹纸直播,星秀,一起看电影"/>
+    <meta name="description" content="zuo TV,一站聚合六个直播平台百万主播,不用一个一个平台去找喜爱的主播.提供分屏观看功能,可以同时看四个主播,现已收录斗鱼,龙珠,虎牙,全民,战旗,熊猫平台..." />
+    <meta name="keywords" content="zuotv,聚合直播,作TV,nozuonodie,分屏直播,分屏观看,直播人数统计,直播平台统计,Zuo,Zuo TV,直播导航,直播推荐,妹纸直播,星秀,放映室"/>
     %{--<link href="${resource(file: '/css/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" />--}%
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     %{--<link href="${resource(file: '/css/normalize.css')}" rel="stylesheet" />--}%
@@ -292,7 +292,7 @@
     <script type="text/ng-template" id="split-tem">
         <div class="room-split">
             <div class="detail trans" ng-repeat="room in (noLocal ? splitRooms : $root.splitScreen.data)">
-                <iframe ng-if="room.platform.flag == 'zhanQi'" style="width:100%; height:100%; border:none;" src="{{trustSrc('http://www.zhanqi.tv/live/embed?roomId=' + $scope.curRoom.flag)}}"></iframe>
+                <iframe ng-if="room.platform.flag == 'zhanQi'" style="width:100%; height:100%; border:none;" src="{{trustSrc('http://www.zhanqi.tv/live/embed?roomId=' + room.flag)}}"></iframe>
                 <embed ng-if="room.quoteUrl" src="{{trustSrc(room.quoteUrl)}}" style="width: 100%; height: 100%" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">
                 <iframe ng-if="room.platform.flag != 'zhanQi' && !room.quoteUrl" src="{{trustSrc(room.url)}}" style="width:100%; height:100%; border:none;"></iframe>
                 <i title="关注" roomId="{{room.id}}"

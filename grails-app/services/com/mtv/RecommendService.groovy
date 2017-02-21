@@ -23,12 +23,19 @@ class RecommendService {
             order("adSum", "desc")
         }
         types.each {
-            OnLineRoom onLineRoom = OnLineRoom.findByTag(it.name)
-            if(reMap.containsKey(onLineRoom.id)){
-                reMap[onLineRoom.id].level++
-            }else{
-                reMap.put(onLineRoom.id, [level: 1, onLineRoom: onLineRoom])
+            String tagName = it.name
+            List<OnLineRoom> list = OnLineRoom.createCriteria().list {
+                setMaxResults(2)
+                eq('tag', tagName)
             }
+            list.each {
+                if(reMap.containsKey(it.id)){
+                    reMap[it.id].level++
+                }else{
+                    reMap.put(it.id, [level: 1, onLineRoom: it])
+                }
+            }
+
         }
         reMap.each {k, v->
             Recommend recommend = new Recommend()
