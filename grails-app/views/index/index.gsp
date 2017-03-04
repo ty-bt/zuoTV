@@ -147,8 +147,10 @@
                 <span><i class="fa fa-heart"></i>我的关注</span>
                 <a class="btn" ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
                    ui-sref-opts="{reload:true}" title="其实点击logo位置也可以回&#13;也可以直接使用浏览器的前进后退&#13;如果你的鼠标有侧键也是可以前进后退的&#13;介个按钮随时会删掉">回首页</a>
+                <a class="btn" ng-if="$root.collects.length >= 4" ng-click="$root.splitScreen.coverAll($root.collects);" title="分屏暂不支持熊猫">分屏查看前四个房间</a>
+
             </h2>
-            <a ng-repeat="coll in $root.collects" repeat-finish ng-init="room=coll.room" room-show></a>
+            <a ng-repeat="room in $root.collects" repeat-finish room-show></a>
         </div>
     </script>
 
@@ -159,6 +161,8 @@
                 <span><i class="fa fa-rocket"></i>精彩推荐</span>
                 <a class="btn" ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
                    ui-sref-opts="{reload:true}" title="其实点击logo位置也可以回&#13;也可以直接使用浏览器的前进后退&#13;如果你的鼠标有侧键也是可以前进后退的&#13;介个按钮随时会删掉">回首页</a>
+                <a class="btn" ng-if="recommends.length >= 4" ng-click="$root.splitScreen.coverAll(recommends);" title="分屏暂不支持熊猫">分屏查看前四个房间</a>
+
             </h2>
             <a ng-repeat="room in recommends" repeat-finish room-show></a>
             <div ng-if="rPaginate" t-paginate="rPaginate"></div>
@@ -222,6 +226,7 @@
                     <span><i class="fa fa-hand-o-right"></i>推荐</span>
                     <a class="btn" ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
                        ui-sref-opts="{reload:true}" title="其实点击logo位置也可以&#13;返回上一页点击浏览器后退就可以了&#13;介个按钮随时会删掉">刷新首页</a>
+                    <a class="btn" ng-if="recommends.length >= 4" ng-click="$root.splitScreen.coverAll(recommends);" title="分屏暂不支持熊猫">分屏查看前四个房间</a>
                     <a ui-sref="room.recommend({rPage:1})"
                        ui-sref-opts="{inherit: true}" class="more">更多></a>
                 </h2>
@@ -236,6 +241,7 @@
                 <span ng-if="$stateParams.platformName">{{$stateParams.platformName}}</span>
                 <span ng-if="$stateParams.tag">{{$stateParams.tag}}</span>
                 <span ng-if="$stateParams.kw">包含'{{$stateParams.kw}}'</span>
+                <a class="btn" ng-if="rooms.length >= 4" ng-click="$root.splitScreen.coverAll(rooms);" title="分屏暂不支持熊猫">分屏查看前四个房间</a>
             </h2>
             <h3 ng-if="rooms" class="show-tit" ng-show="!rooms.length">米有找到相应的房间...</h3>
             <a ng-repeat="room in rooms" repeat-finish room-show></a>
@@ -377,7 +383,7 @@
                             <span id="copy-split" class="fa fa-share-alt" title="复制分享链接"></span>
                             <span class="fa fa-question-circle-o" title="点击开始进入分屏界面&#13;在分屏界面依然可以在左侧列表移除房间&#13;在分屏界面依然可以从左侧关注列表添加房间&#13;斗鱼和战旗体验比较好，暂不支持熊猫&#13;其他的平台在页面中点击网页全屏体验会好点"></span>
                             <a ui-sref="room.split({ids: ''})"
-                               ui-sref-opts="{inherit: true, reload:true}" ng-show="$root.curUser && $root.collects.length">开始></a>
+                               ui-sref-opts="{inherit: true, reload:true}" ng-show="$root.splitScreen.data.length">开始></a>
                         </h2>
 
                         <div>

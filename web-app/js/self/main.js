@@ -119,8 +119,24 @@
                 }
                 return -1;
             },
-            coverAll: function(){
-
+            // 使用rooms中的前四个可以分屏的房间覆盖以前的分屏列表,并进入分屏界面
+            coverAll: function(rooms){
+                var splitRooms = [];
+                $(rooms).each(function(){
+                    if($rootScope.isInsert(this.platform.flag)){
+                        splitRooms.push(this);
+                    }
+                    if(splitRooms.length == 4){
+                        return false;
+                    }
+                });
+                if(splitRooms.length < 2){
+                    alert("可分屏的房间太少(分屏不支持熊猫)");
+                    return;
+                }
+                this.data = splitRooms;
+                this.save();
+                $rootScope.$state.go('room.split', {ids: ''}, {inherit: true});
             }
         };
         $rootScope.splitScreen.load();
@@ -207,15 +223,17 @@
             $http.post(window.ctx + "center/collect/list").success(function(data){
                 if(data.success){
                     // [collects: collects, total: collects.totalCount]
-                    $rootScope.collects = data.data.collects;
                     var collectMap = {};
                     $rootScope.onLineCollects= [];
-                    $($rootScope.collects).each(function(){
+                    var rooms = [];
+                    $(data.data.collects).each(function(){
                         collectMap[this.room.id] = this.id;
                         if(this.room.isOnLine){
                             $rootScope.onLineCollects.push(this);
                         }
+                        rooms.push(this.room);
                     });
+                    $rootScope.collects = rooms;
                     $rootScope.collectMap = collectMap;
                 }else{
                     $log.log(data.message || "系统错误");

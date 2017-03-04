@@ -162,7 +162,7 @@ a{text-decoration: none; color: #313131}
     margin-left: 10px;
     position: relative;
 }
-.show-params .btn{display: inline-block;font-size: 14px;line-height: 18px;border: 1px solid #000;padding: 0 5px;border-radius: 4px;}
+.show-params .btn{display: inline-block;font-size: 14px;line-height: 18px;border: 1px solid #000;padding: 0 5px;border-radius: 4px;cursor: pointer;}
 .show-params .fa{margin-right: 10px;color: #3498db;line-height: 40px;border-bottom: 1px solid #3498db;margin-bottom: -1px;}
 .show-params span{
     line-height: 40px;
