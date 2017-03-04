@@ -118,6 +118,9 @@
                     }
                 }
                 return -1;
+            },
+            coverAll: function(){
+
             }
         };
         $rootScope.splitScreen.load();
@@ -488,7 +491,7 @@
             // detailEle.width($(window).width());
             // 两边留白10px
             var maxWidth = detailEle.width() - 20;
-            var maxHeight = detailEle.height() - 110;
+            var maxHeight = detailEle.height() - 70;
             var radio = 1.777;
             if(maxHeight * radio < maxWidth){
                 $element.find(".cen").css({

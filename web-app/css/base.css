@@ -191,15 +191,16 @@ a{text-decoration: none; color: #313131}
 .r-detail .d-content a{color: #fff}
 .r-detail .d-content a.right{float: right}
 .r-detail .d-content .cen{margin: 0 auto;color: #fff;text-shadow: 0 0 3px #000;}
-.r-detail .d-content .cen h3{margin: 0;line-height: 40px;font-size: 18px;font-weight: 700;position: relative;padding-right: 30%; }
-.r-detail .d-content .cen h3 span{position: absolute;right: 0;font-size: 14px;font-weight: 500;}
+.r-detail .d-content .cen h3{margin: 0;line-height: 40px;font-size: 18px;font-weight: 700;}
+.r-detail .d-content .cen h3 a{font-size: 14px;font-weight: 500;border: 1px solid;padding: 0 5px;border-radius: 4px;line-height: 23px;float: right;margin-top: 5px;}
+.r-detail .d-content .cen h3 a i{border-left: 1px solid;margin-left: 5px;padding-left: 5px;cursor: pointer;}
 .r-detail .d-content .bottom{}
 
-.r-detail .d-content-i .fa{position: absolute;color: #fff;font-size: 20px;cursor: pointer;text-shadow: 0 0 6px #000;}
-.r-detail .d-content-i .fa.heart{left: 8px;bottom: 8px;}
-.r-detail .d-content-i .fa.fa-heart{color: #c0392b}
-.r-detail .d-content-i .fa.fa-close{top: 5px;right: 22px;}
-.r-detail .d-content-i .fa.fa-level-up{bottom: 5px;right: 22px;}
+.r-detail .fa{text-shadow: 0 0 5px #000; cursor:pointer}
+
+.r-detail .d-content-i .btns{position:absolute;background: rgba(0,0,0,0.3);border-radius: 4px;margin: 5px;padding: 0 10px;font-size: 17px;}
+.r-detail .d-content-i .btns:hover{background: rgba(0,0,0,0.7);}
+.r-detail .d-content-i .btns .fa{padding: 5px;color: #fff;}
 
 /* 弹出窗口*/
 .show-window{position: absolute;top: 50%;left: 50%;background: #fff;border-radius: 4px;box-shadow: 0 0 7px 0 #000;}
@@ -228,6 +229,7 @@ a{text-decoration: none; color: #313131}
 .room2:hover{box-shadow: 0px 5px 6px -2px #000;margin-top: -3px;margin-bottom: 13px;}
 .room2 img{width: 100%; height: 100%;}
 .room2>span{position: absolute;color: #fff;padding: 1% 2%;}
+.room2 .heart{margin-right:5px;text-shadow: 0 0 5px #000;}
 
 .room2>span.top{top:0;box-shadow: 0 36px 36px -36px #000 inset;}
 .room2>span.bottom{bottom: 0;box-shadow: 0 -36px 36px -36px #000 inset;}
@@ -292,6 +294,8 @@ a{text-decoration: none; color: #313131}
 .room-split{width:100%; height: 100%; position: absolute; top: 0; left:0;  background: #000}
 .room-split .detail{width: 50%;height: 50%;float: left; position: relative; overflow:hidden}
 .room-split .detail .fa{position: absolute;color: #fff;top: -50px;left: 0;font-size: 20px;margin: 5px 8px;text-shadow: 0 0 7px #000; cursor:pointer}
-.room-split .detail .heart.fa-heart{color: #c0392b}
+/*.room-split .detail .heart.fa-heart{color: #c0392b}*/
 .room-split .detail .fa-level-up{left: 31px;}
 .room-split .detail:hover .fa{top:0}
+
+.fa-heart:before{color: #c0392b}

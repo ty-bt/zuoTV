@@ -258,30 +258,36 @@
                 </div>
                 <div class="cen">
 
-                    <h3 class="ellipsis">{{curRoom.name}}<span><i class="fa fa-child"></i>{{curRoom.adNum | wanNum}}</span></h3>
+                    <h3 class="ellipsis">{{curRoom.name}}
+                            <a>{{curRoom.anchor}}
+                                <i
+                                    roomId="{{room.id}}"
+                                    ng-click="$root.changeCollect($event, curRoom);$event.stopPropagation();"
+                                    ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
+                                    class="fa heart">{{$root.collectMap[curRoom.id] ? "取消关注" : "关注"}}</i>
+                                <i class="fa fa-desktop" ng-click="$root.splitScreen.add(curRoom, $event)" title="加入分屏"></i>
+                            </a>
+
+                    </h3>
 
                     <div class="embed-div">
 
                     </div>
-                    <div class="bottom">
-                        <a ><i title="关注" roomId="{{room.id}}"
-                               ng-click="$root.changeCollect($event, curRoom);$event.stopPropagation();"
-                               ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
-                               class="fa heart"></i>{{curRoom.anchor}}</a>
-                        <a class="right" target="_blank" href="{{curRoom.url}}"><i class="fa fa-level-up"></i>跳转到{{curRoom.platform.name}}观看</a>
-                    </div>
+
                 </div>
 
             </div>
 
             <div class="d-content-i" ng-show="!curRoom.quoteUrl && curRoom.platform.flag != 'zhanQi'">
-                <i title="关注" roomId="{{room.id}}"
-                   ng-click="$root.changeCollect($event, curRoom);$event.stopPropagation();"
-                   ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
-                   class="fa heart"></i>
-                <i class="fa fa-close" title="关闭" ng-click="close()"></i>
-                <a class="fa fa-level-up" target="_blank" title="新窗口打开{{curRoom.platform.name}}观看" href="{{curRoom.url}}"></a>
-
+                <div class="btns trans2">
+                    <i title="{{$root.collectMap[curRoom.id] ? '取消关注' : '关注'}}" roomId="{{room.id}}"
+                       ng-click="$root.changeCollect($event, curRoom);$event.stopPropagation();"
+                       ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
+                       class="fa heart"></i>
+                    <i class="fa fa-desktop" title="加入分屏" ng-click="$root.splitScreen.add(curRoom, $event)"></i>
+                    <a class="fa fa-level-up" target="_blank" title="新窗口打开{{curRoom.platform.name}}观看" href="{{curRoom.url}}"></a>
+                </div>
+                <i class="fa fa-close" title="关闭" ng-click="close()" style="position: absolute;right: 0;top: 0;font-size: 20px;color: #fff;padding: 5px;margin: 5px 21px 0 0;"></i>
                 <iframe style="width:100%; height:100%; border:none;"></iframe>
             </div>
         </div>
@@ -384,7 +390,7 @@
                                 <img ng-src="{{room.img}}"/>
                                 <span class="ellipsis top pla-name">{{room.platform.name}}</span>
                                 <span class="ellipsis top anchor">
-                                    <i title="关注" roomId="{{room.id}}"
+                                    <i title="{{$root.collectMap[room.id] ? '取消关注' : '关注'}}" roomId="{{room.id}}"
                                        ng-click="$root.changeCollect($event, room);$event.stopPropagation();"
                                        ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
                                        class="fa heart"></i>{{room.anchor}}
@@ -420,7 +426,7 @@
                                 <img ng-src="{{room.img}}"/>
                                 <span class="ellipsis top pla-name">{{room.platform.name}}</span>
                                 <span class="ellipsis top anchor">
-                                    <i title="关注" roomId="{{room.id}}"
+                                    <i title="取消关注" roomId="{{room.id}}"
                                        ng-click="$root.changeCollect($event, room);$event.stopPropagation();"
                                        ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
                                        class="fa heart"></i>{{room.anchor}}
