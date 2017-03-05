@@ -5,7 +5,7 @@ class Room {
     static{
         grails.converters.JSON.registerObjectMarshaller(Room){
             return it.properties.findAll{k,v->
-                !(k in ['class', 'dateCreated', 'lastUpdated'])
+                !(k in ['class', 'dateCreated', 'lastUpdated', 'sort'])
             } + [id:it.id]
         }
     }
