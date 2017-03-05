@@ -54,14 +54,16 @@ class ZhanQiRoomService extends SupportLoadRoom {
                 if(!room){
                     room = new Room(platform: platform, flag: roomId)
                 }
-                room.isOnLine = true
                 room.name = it.title
                 room.img = it.bpic
                 room.tag = typeContrastService.getTypeName(it.gameName)
-                room.adNum = Long.parseLong(it.online)
+                room.reSetAdNum(Long.parseLong(it.online))
+
                 room.anchor = it.nickname
                 room.url = "https://www.zhanqi.tv" + it.url
                 room.lastUpdated = lastUpdated
+                // 在线状态最后改
+                room.isOnLine = true
                 room.save()
             }
         }

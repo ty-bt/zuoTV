@@ -75,14 +75,14 @@ class DouyuRoomService extends SupportLoadRoom {
             if(!room){
                 room = new Room(platform: platform, flag: rooMap.flag, quoteUrl: rooMap.quoteUrl)
             }
-            room.isOnLine = true
             room.name = rooMap.name
             room.img = rooMap.img
             room.tag = rooMap.tag
-            room.adNum = rooMap.adNum
+            room.reSetAdNum(rooMap.adNum)
             room.anchor = rooMap.anchor
             room.url = rooMap.url
             room.lastUpdated = lastUpdated
+            room.isOnLine = true
             room.save()
 //            print("${platform.name}: ${roomList.size()}/${i++}")
         }

@@ -56,14 +56,14 @@ class QuanMinRoomService extends SupportLoadRoom {
                 if(!room){
                     room = new Room(platform: platform, flag: roomId)
                 }
-                room.isOnLine = true
                 room.name = it.title
                 room.img = it.thumb
                 room.tag = typeContrastService.getTypeName(it.category_name)
-                room.adNum = Long.parseLong(it.view)
+                room.reSetAdNum(Long.parseLong(it.view))
                 room.anchor = it.nick
                 room.url = "http://www.quanmin.tv/v/" + roomId
                 room.lastUpdated = lastUpdated
+                room.isOnLine = true
                 room.save()
             }
         }

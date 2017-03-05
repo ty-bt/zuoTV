@@ -66,14 +66,14 @@ class PandaRoomService extends SupportLoadRoom {
                 if(!room){
                     room = new Room(platform: platform, flag: roomId)
                 }
-                room.isOnLine = true
                 room.name = it.name
                 room.img = it.pictures.img
                 room.tag = typeContrastService.getTypeName(it.classification.cname)
-                room.adNum = Long.parseLong(it.person_num)
+                room.reSetAdNum(Long.parseLong(it.person_num))
                 room.anchor = it.userinfo.nickName
                 room.url = "http://www.panda.tv/" + it.id
                 room.lastUpdated = lastUpdated
+                room.isOnLine = true
                 room.save()
             }
         }

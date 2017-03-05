@@ -53,14 +53,14 @@ class HuYaRoomService extends SupportLoadRoom {
                 if(!room){
                     room = new Room(platform: platform, flag: roomId)
                 }
-                room.isOnLine = true
                 room.name = it.introduction
                 room.img = it.screenshot
                 room.tag = typeContrastService.getTypeName(it.gameFullName)
-                room.adNum = Long.parseLong(it.totalCount)
+                room.reSetAdNum(Long.parseLong(it.totalCount))
                 room.anchor = it.nick
                 room.url = "http://www.huya.com/" + it.privateHost
                 room.lastUpdated = lastUpdated
+                room.isOnLine = true
                 room.save()
             }
         }

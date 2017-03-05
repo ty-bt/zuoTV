@@ -107,7 +107,7 @@ class RoomService {
         log.info("清空完成, 用时${System.currentTimeMillis() - olDate}ms")
         OnLineRoom.executeUpdate("""insert into
             OnLineRoom(id, platform, isOnLine, flag, name, img, tag, adNum, anchor, url, quoteUrl)
-            select r.id, r.platform, r.isOnLine, r.flag, r.name, r.img, r.tag, r.adNum, r.anchor, r.url, r.quoteUrl from Room r where r.isOnLine = true order by r.adNum desc""");
+            select r.id, r.platform, r.isOnLine, r.flag, r.name, r.img, r.tag, r.adNum, r.anchor, r.url, r.quoteUrl from Room r where r.isOnLine = true order by r.sort desc,r.adNum desc""");
         log.info("在线房间表更新完成, 用时${System.currentTimeMillis() - olDate}ms")
     }
 }

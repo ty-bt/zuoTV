@@ -53,14 +53,14 @@ class LongZhuRoomService extends SupportLoadRoom {
                 if(!room){
                     room = new Room(platform: platform, flag: roomId)
                 }
-                room.isOnLine = true
                 room.name = it.channel.status
                 room.img = it.preview
                 room.tag = typeContrastService.getTypeName(it.game ? it.game[0].name : "")
-                room.adNum = Long.parseLong(it.viewers)
+                room.reSetAdNum(Long.parseLong(it.viewers))
                 room.anchor = it.channel.name
                 room.url = it.channel.url
                 room.lastUpdated = lastUpdated
+                room.isOnLine = true
                 room.save()
             }
         }

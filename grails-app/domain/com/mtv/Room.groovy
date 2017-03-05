@@ -28,7 +28,7 @@ class Room {
     String tag
 
     /* 人数 */
-    Long adNum
+    Long adNum = 0L
 
     /* zb */
     String anchor
@@ -38,6 +38,9 @@ class Room {
 
     /* 外部引用url */
     String quoteUrl
+
+    /* 排序 越大越往前*/
+    Long sort = 0L
 
     /*创建时间*/
     Date dateCreated = new Date()
@@ -53,6 +56,12 @@ class Room {
 
     static constraints = {
         quoteUrl nullable: true
+    }
+
+    void reSetAdNum(Long adNum){
+        // 使用和上一次的观众数的差值做排序数
+        this.sort = this.isOnLine ? adNum - this.adNum : adNum
+        this.adNum = adNum
     }
 
 }
