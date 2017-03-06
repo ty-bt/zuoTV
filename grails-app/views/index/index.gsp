@@ -12,6 +12,7 @@
     <title ng-bind="title">zuoTV - 聚合全网直播</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <%String version = Metadata.getCurrent()[Metadata.APPLICATION_VERSION]%>
+    <link Rel="SHORTCUT ICON" href="${resource(file: 'favicon32.ico')}">
     <meta name="description" content="zuo TV,一站聚合六个直播平台百万主播,不用一个一个平台去找喜爱的主播.提供分屏观看功能,可以同时看四个主播,现已收录斗鱼,龙珠,虎牙,全民,战旗,熊猫平台..." />
     <meta name="keywords" content="zuotv,聚合直播,作TV,nozuonodie,分屏直播,分屏观看,直播人数统计,直播平台统计,Zuo,Zuo TV,直播导航,直播推荐,妹纸直播,星秀,放映室"/>
     %{--<link href="${resource(file: '/css/font-awesome/css/font-awesome.min.css')}" rel="stylesheet" />--}%
