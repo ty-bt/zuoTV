@@ -126,7 +126,8 @@
                 </tr>
                 <tr class="top">
                     <td class="ellipsis title">{{room.name}}</td>
-                    <td class="t-r ellipsis tag">{{room.tag}}</td>
+                    <td class="t-r ellipsis tag"><a ui-sref="room({page:1, tag: room.tag})"
+                                                    ui-sref-opts="{reload: true, inherit: true}">{{room.tag}}</a></td>
                 </tr>
                 <tr class="bottom">
                     <td class="ellipsis anchor">

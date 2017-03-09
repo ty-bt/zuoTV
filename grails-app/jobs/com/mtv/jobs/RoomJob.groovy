@@ -20,7 +20,6 @@ class RoomJob {
     }
 
     def execute() {
-        Room.get(1L).delete()
         Long start = System.currentTimeMillis()
         println "定时任务执行 " + new Date()
         // 只有生产环境开启
