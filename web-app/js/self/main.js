@@ -13,13 +13,15 @@
             });
             Trianglify.colorbrewer[k + "_f"] = newArr;
         }
+        var currentDate = new Date();
         $(".main").css({
             "background-image": "url(" + Trianglify({
-                variance: "0.74",
-                // seed: 'random',
-                width: $(window).width(),
+                // variance: "0.74",
+                // seed: currentDate.getYear() + currentDate.getDay() + currentDate.getDate() + currentDate.getHours(),
+                // width: $(window).width(),
+                width: 245,
                 height: $(window).height(),
-                cell_size: 60,
+                // cell_size: 30,
                 x_colors: Trianglify.colorbrewer["Spectral_f"]/*,
                 x_colors: Trianglify.colorbrewer["Spectral_f"]*/}).png() + ")"
         });

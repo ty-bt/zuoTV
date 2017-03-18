@@ -18,11 +18,11 @@ a{text-decoration: none; color: #313131}
 .filter-blur{-webkit-filter: blur(5px); -moz-filter: blur(5px); -ms-filter: blur(5px); -o-filter: blur(5px); filter: blur(5px); filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=4, MakeShadow=false);}
 
 /* 首页 */
-.main{background: #F2F2F2;background-size: 100% 100%;}
+.main{background: #F2F2F2;background-size: auto 100%;}
 .head{height: 50px;overflow: hidden;/* font-size: 27px; *//* font-weight: bold; */padding-left: 10px;line-height: 50px;/* background: #3498db; */background: rgba(0,0,0,0.1);color: #fff;/* border-bottom: 1px solid #000; */display: none;}
 .main .body{/* padding-left: 10px; */overflow-y: auto;/* display: none; */height: 100%;background: #f2f2f2;}
 .main .content>div{height:100%;overflow:hidden;}
-.main .content>.left{width: 225px;padding: 0 10px;background: rgba(0, 0, 0, 0.3);color: #fff;}
+.main .content>.left{width: 225px;padding: 0 10px;background: rgba(0, 0, 0, 0.5);color: #fff;}
 .main .content>.left h1{margin: 0;padding: 0;line-height: 50px;/* background: #2980b9; */color: #fff;padding-right: 20px;text-align: right;position: relative;}
 
 .main .content > .left h1 span {

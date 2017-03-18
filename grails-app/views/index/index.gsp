@@ -109,7 +109,7 @@
         <a class="room"
            ng-click="$root.openRoom(room)"
            ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}"
-           ng-class="{'off-line': !room.isOnLine, 'trans2': $root.roomShowTrans}"
+           ng-class="{'off-line': !room.isOnLine}"
            ng-style="roomSize">
             <table cellspacing="0" cellpadding="0">
                 <tr>
@@ -120,8 +120,8 @@
                     <td colspan="2" class="photo"  ng-style="{height: $root.roomSize.height - 50}">
                         <img ng-src="{{room.img}}"/>
                         <span class="pla-name">{{room.platform.name}}</span>
-                        <i class="fa fa-play-circle play" ng-class="{insert: $root.isInsert(room.platform.flag)}"></i>
-                        <span class="add-ss" ng-click="$root.splitScreen.add(room, $event);" ng-if="$root.isInsert(room.platform.flag)">加入分屏</span>
+                        <i class="fa fa-play-circle play trans2" ng-class="{insert: $root.isInsert(room.platform.flag)}"></i>
+                        <span class="add-ss trans2" ng-click="$root.splitScreen.add(room, $event);" ng-if="$root.isInsert(room.platform.flag)">加入分屏</span>
                     </td>
                 </tr>
                 <tr class="top">
