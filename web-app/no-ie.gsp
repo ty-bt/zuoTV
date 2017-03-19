@@ -44,7 +44,7 @@
             <p>推荐使用：<a href="https://www.baidu.com/s?wd=chrome">chrome(google浏览器)</a> 或 <a href="http://www.firefox.com.cn/" target="_blank">火狐</a></p>
             <p>如果你一定要使用IE，请<a href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads" target="_blank">下载最新版本</a></p>
             <p>如果你使用的国内的浏览器，请切换至极速模式或者闪电模式（其实就是chrome）</p>
-            <p><a href="mailto:ty_bt@live.cn" style="text-decoration: none">站务与建议:ty_bt@live.cn</a></p>
+            <p><a href="mailto:ty_bt@live.cn" style="text-decoration: none">站务与建议:ty_bt@live.cn</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="${createLink(uri:'/')}">回首页</a></p>
         </div>
     </div>
 </body>
