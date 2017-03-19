@@ -226,16 +226,12 @@
                 if(data.success){
                     // [collects: collects, total: collects.totalCount]
                     var collectMap = {};
-                    $rootScope.onLineCollects= [];
-                    var rooms = [];
+                    // 以前是获取所有的 现在只获取在线的
+                    $rootScope.onLineCollects= data.data.collects;
                     $(data.data.collects).each(function(){
-                        collectMap[this.room.id] = this.id;
-                        if(this.room.isOnLine){
-                            $rootScope.onLineCollects.push(this);
-                        }
-                        rooms.push(this.room);
+                        collectMap[this.id] = true;
                     });
-                    $rootScope.collects = rooms;
+                    $rootScope.collects = data.data.collects;
                     $rootScope.collectMap = collectMap;
                 }else{
                     $log.log(data.message || "系统错误");

@@ -7,21 +7,21 @@ import org.springframework.util.Assert
 
 class RoomController {
 
-    /**
-     * 喂给搜索引擎
-     * @return
-     */
-    def list(){
-        [rooms: getRoom(ParamUtils.limit())]
-    }
-
-    /**
-     * 喂给搜索引擎
-     * @return
-     */
-    def detail(){
-        [room: Room.get(params.getLong("id"))]
-    }
+//    /**
+//     * 喂给搜索引擎
+//     * @return
+//     */
+//    def list(){
+//        [rooms: getRoom(ParamUtils.limit())]
+//    }
+//
+//    /**
+//     * 喂给搜索引擎
+//     * @return
+//     */
+//    def detail(){
+//        [room: Room.get(params.getLong("id"))]
+//    }
 
     public List<OnLineRoom> getRoom(Object limit){
         return OnLineRoom.createCriteria().list(limit){
@@ -40,9 +40,6 @@ class RoomController {
                 Assert.notNull(platform, "找不到对应的平台")
                 eq('platform', platform)
             }
-//            eq('isOnLine', true)
-//            order('adNum', "desc")
-
         }
     }
 

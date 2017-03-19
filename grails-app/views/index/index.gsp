@@ -335,7 +335,7 @@
         <div class="content table">
             <div class="left">
                 <a ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
-                   ui-sref-opts="{reload:true}" title="首页" href="${createLink(controller: 'room', action: 'list', params: [offset: 0, max: 120])}">
+                   ui-sref-opts="{reload:true}" title="首页">
                     <h1><span>zuo</span> TV</h1>
                 </a>
                 <div class="condition search-input">
@@ -424,11 +424,10 @@
                         <div ng-if="$root.curUser">
                             <h3 class="show-tit" ng-show="!$root.onLineCollects.length">你关注的房间都没上线,哈哈...</h3>
                             <h3 class="show-tit" ng-show="!$root.collects.length">额,原来你一个房间都没关注 -.-</h3>
-                            <a ng-repeat="coll in $root.onLineCollects"
+                            <a ng-repeat="room in $root.onLineCollects"
                             %{--<a ng-repeat="coll in $root.collects"--}%
                                repeat-finish
-                               ng-init="room = coll.room"
-                               ng-click="openRoom(coll.room)"
+                               ng-click="openRoom(room)"
                                class="room2 trans2"
                                ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}">
                                 <img ng-src="{{room.img}}"/>

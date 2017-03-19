@@ -5,6 +5,14 @@ package com.mtv
  */
 class Type {
 
+    static{
+        grails.converters.JSON.registerObjectMarshaller(Type){
+            return it.properties.findAll{k,v->
+                !(k in ['class', 'dateCreated', 'sort'])
+            }
+        }
+    }
+
     // 分类名称
     String name
 

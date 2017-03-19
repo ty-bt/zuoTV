@@ -10,7 +10,9 @@ class CollectController {
 
     def collectService
 
-    def list(){
+    def list1(){
+//        def start = System.currentTimeMillis()
+
         User user = userService.getCurrentUser()
         def collects = Collect.createCriteria().list(ParamUtils.limit()){
             room{
@@ -19,7 +21,21 @@ class CollectController {
             }
             eq('user', user)
         }
+//        render("${System.currentTimeMillis() - start}-${collects.size()}")
+
         render Response.success([collects: collects, total: collects.totalCount]).toJSON()
+    }
+
+    def list(){
+//        def start = System.currentTimeMillis()
+        User user = userService.getCurrentUser()
+        def collects = Collect.findAllByUser(user)
+        def rooms = []
+        if(collects){
+            rooms = OnLineRoom.findAllByIdInList(collects*.roomId)
+        }
+//        render("${System.currentTimeMillis() - start}-${collects.size()}")
+        render Response.success([collects: rooms, total: collects.size()]).toJSON()
     }
 
     def add(){
