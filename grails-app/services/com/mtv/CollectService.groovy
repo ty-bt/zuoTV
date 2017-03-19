@@ -37,15 +37,19 @@ class CollectService {
         collect.save()
     }
 
-    public void delete(Long id, Long userId = null){
+    public void delete(Long id){
         Assert.notNull(id, "收藏ID不能为空")
         Collect collect = Collect.get(id)
         Assert.notNull(collect, "没有找到对应的收藏")
-        if(userId){
-            if(userId != collect.user.id){
-                Assert.notNull(collect, "没有找到对应的收藏")
-            }
+        collect.delete()
+    }
+
+    public void delete(Long roomId, Long userId){
+        Collect collect = Collect.createCriteria().get{
+            eq('room.id', roomId)
+            eq('user.id', userId)
         }
+        Assert.notNull(collect, "没有找到对应的收藏")
         collect.delete()
     }
 }

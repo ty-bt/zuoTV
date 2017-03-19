@@ -46,7 +46,7 @@ class CollectController {
 
     def delete(){
         User user = userService.getCurrentUser()
-        collectService.delete(params.long('id'), user.id)
+        collectService.delete(params.long('roomId'), user.id)
         render Response.success().toJSON()
     }
 }

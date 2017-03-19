@@ -276,10 +276,10 @@
                 $rootScope.login();
                 return;
             }
-            var collectId = $rootScope.collectMap[room.id];
-            if(collectId){
+            var isCollect = $rootScope.collectMap[room.id];
+            if(isCollect){
                 $http.post(window.ctx + "center/collect/delete", $.param({
-                    id: collectId
+                    roomId: room.id
                 })).success(function(data){
                     if(data.success){
                         $rootScope.loadCollect();
