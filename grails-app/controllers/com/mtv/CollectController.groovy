@@ -14,7 +14,7 @@ class CollectController {
 //        def start = System.currentTimeMillis()
 
         User user = userService.getCurrentUser()
-        def collects = Collect.createCriteria().list(ParamUtils.limit()){
+        List<Collect> collects = Collect.createCriteria().list(ParamUtils.limit()){
             room{
                 order('isOnLine', "desc")
                 order('adNum', "desc")
@@ -23,7 +23,7 @@ class CollectController {
         }
 //        render("${System.currentTimeMillis() - start}-${collects.size()}")
 
-        render Response.success([collects: collects, total: collects.totalCount]).toJSON()
+        render Response.success([collects: collects*.room, total: collects.totalCount]).toJSON()
     }
 
     def list(){

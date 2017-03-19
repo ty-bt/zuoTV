@@ -155,7 +155,7 @@
                 <a class="btn" ng-if="$root.collects.length >= 4" ng-click="$root.splitScreen.coverAll($root.collects);" title="分屏暂不支持熊猫">分屏查看前四个房间</a>
 
             </h2>
-            <a ng-repeat="room in $root.collects" repeat-finish room-show></a>
+            <a ng-repeat="room in allCollect" repeat-finish room-show></a>
         </div>
     </script>
 
@@ -413,7 +413,7 @@
                         </div>
                     </div>
                     <div class="condition">
-                        <h2>我的关注&nbsp;<span style="font-size: 13px;" ng-show="$root.collects.length">{{$root.onLineCollects.length}}/{{$root.collects.length}}</span>
+                        <h2>我的关注&nbsp;<span style="font-size: 13px;" ng-show="$root.collects.length">{{$root.onLineCollects.length}}/{{$root.collectsTotal}}</span>
                             <a ui-sref="room.collect"
                                ui-sref-opts="{inherit: true, reload:true}" ng-show="$root.curUser && $root.collects.length">全部></a>
                         </h2>

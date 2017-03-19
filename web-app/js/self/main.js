@@ -227,6 +227,7 @@
                     // [collects: collects, total: collects.totalCount]
                     var collectMap = {};
                     // 以前是获取所有的 现在只获取在线的
+                    $rootScope.collectsTotal = data.data.total;
                     $rootScope.onLineCollects= data.data.collects;
                     $(data.data.collects).each(function(){
                         collectMap[this.id] = true;
@@ -422,6 +423,7 @@
         }).state('room.collect', {
             url: '/collect',
             templateUrl: 'collect-tem',
+            controller: "collectCtrl",
             title: "我的关注"
         }).state('room.type', {
             url: '/type',
@@ -631,6 +633,20 @@
 
         $scope.$on("onRepeatFinish", function(){
             $(window).resize();
+        });
+    }]);
+
+    main.controller('collectCtrl', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
+        if(!$scope.$root.curUser){
+            $state.go('^');
+            return;
+        }
+        $http.post(window.ctx + "center/collect/list1").success(function(data){
+            if(data.success){
+                $scope.allCollect = data.data.collects;
+            }else{
+                $log.log(data.message || "系统错误");
+            }
         });
     }]);
 
