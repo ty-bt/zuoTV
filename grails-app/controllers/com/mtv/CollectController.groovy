@@ -31,11 +31,18 @@ class CollectController {
         User user = userService.getCurrentUser()
         def collects = Collect.findAllByUser(user)
         def rooms = []
+        // 如果表中数据被清空 则等2秒钟
+        if(!OnLineRoom.first()){
+            Thread.sleep(2000L)
+        }
         if(collects){
             rooms = OnLineRoom.findAllByIdInList(collects*.roomId)
         }
 //        render("${System.currentTimeMillis() - start}-${collects.size()}")
         render Response.success([collects: rooms, total: collects.size()]).toJSON()
+    }
+    def test(){
+        render text: OnLineRoom.first() as JSON
     }
 
     def add(){

@@ -59,9 +59,27 @@ class Room {
     }
 
     void reSetAdNum(Long adNum){
-        // 使用和上一次的观众数的差值做排序数
-        this.sort = this.isOnLine ? adNum - this.adNum : adNum
-        this.adNum = adNum
+
+        // 差值
+        if(this.isOnLine && this.adNum){
+            // 观察期 开播7-14分钟 不调整sort
+            if(this.adNum == this.sort){
+                this.sort = adNum + 1
+                this.adNum = adNum
+                return
+            }
+            // 观众升降比例
+            Double curRatio = (this.sort / this.adNum) * (adNum / this.adNum)
+            // 最大100倍
+            curRatio = curRatio > 100 ? 100 : curRatio
+            // 最小减少20倍
+            curRatio = curRatio < 0.05 ? 0.05 : curRatio
+            this.sort = curRatio * adNum
+            this.adNum = adNum
+        }else{
+            this.sort = adNum
+            this.adNum = adNum
+        }
     }
 
 }
