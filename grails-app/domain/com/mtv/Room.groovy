@@ -61,8 +61,8 @@ class Room {
     void reSetAdNum(Long adNum){
 
         // 差值
-        if(this.isOnLine && this.adNum){
-            // 观察期 开播7-14分钟 不调整sort
+        if(this.isOnLine && this.adNum && this.adNum > 800){
+            // 观察期 7-14分钟 不调整sort
             if(this.adNum == this.sort){
                 this.sort = adNum + 1
                 this.adNum = adNum
@@ -70,10 +70,14 @@ class Room {
             }
             // 观众升降比例
             Double curRatio = (this.sort / this.adNum) * (adNum / this.adNum)
-            // 最大100倍
-            curRatio = curRatio > 100 ? 100 : curRatio
-            // 最小减少20倍
-            curRatio = curRatio < 0.05 ? 0.05 : curRatio
+            // 调整上限 最大100倍
+            Double max = this.adNum / 800
+            max = max > 100 ? 100 : max
+            // 调整下限 最小减少50倍
+            Double min =  1 / max
+            min = min < 0.02 ? 0.02 : min
+            curRatio = curRatio > max ? max : curRatio
+            curRatio = curRatio < min ? min : curRatio
             this.sort = curRatio * adNum
             this.adNum = adNum
         }else{
