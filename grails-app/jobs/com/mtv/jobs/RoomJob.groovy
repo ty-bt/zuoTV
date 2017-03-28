@@ -11,12 +11,12 @@ class RoomJob {
     def platformService
     def recommendService
 
-    // 禁止同时出现两个 顺序执行
+    // 禁止同时执行两个 上一个还未执行完则等下一次
     def concurrent = false
 
     static triggers = {
-        // 10分钟刷新一次
-        simple repeatInterval: 60000L * 7, startDelay: 10000 // execute job once in 5 seconds
+        // 4分钟刷新一次
+        simple repeatInterval: 60000L * 4, startDelay: 10000 // execute job once in 5 seconds
     }
 
     def execute() {
