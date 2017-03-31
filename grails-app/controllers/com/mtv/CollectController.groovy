@@ -36,7 +36,10 @@ class CollectController {
             Thread.sleep(2000L)
         }
         if(collects){
-            rooms = OnLineRoom.findAllByIdInList(collects*.roomId)
+            rooms = OnLineRoom.createCriteria().list {
+                'in'('id', collects*.roomId)
+                order('adNum', 'desc')
+            }
         }
 //        render("${System.currentTimeMillis() - start}-${collects.size()}")
         render Response.success([collects: rooms, total: collects.size()]).toJSON()
