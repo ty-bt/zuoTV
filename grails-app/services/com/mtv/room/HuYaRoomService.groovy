@@ -11,6 +11,7 @@ class HuYaRoomService extends SupportLoadRoom {
 
     def typeContrastService
 
+    def roomLogService
     /**
      *
      * @param platformFlag 平台标识
@@ -53,6 +54,7 @@ class HuYaRoomService extends SupportLoadRoom {
                 if(!room){
                     room = new Room(platform: platform, flag: roomId)
                 }
+                Boolean oldOLStatus = room.isOnLine
                 room.name = it.introduction
                 room.img = it.screenshot
                 room.tag = typeContrastService.getTypeName(it.gameFullName)
@@ -62,6 +64,10 @@ class HuYaRoomService extends SupportLoadRoom {
                 room.lastUpdated = lastUpdated
                 room.isOnLine = true
                 room.save()
+                // 记录日志 必须保存完在调用
+                if(room.isLog){
+                    roomLogService.log(room, !oldOLStatus)
+                }
             }
         }
 

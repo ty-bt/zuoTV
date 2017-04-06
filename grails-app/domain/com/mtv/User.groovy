@@ -34,6 +34,7 @@ class User {
         email nullable: true
         name unique: true
         color nullable: true
+
     }
 
 }

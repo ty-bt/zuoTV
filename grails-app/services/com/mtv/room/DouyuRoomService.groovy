@@ -15,6 +15,8 @@ class DouyuRoomService extends SupportLoadRoom {
 
     def typeContrastService
 
+    def roomLogService
+
     public DouyuRoomService() {
         super("douyu")
     }
@@ -75,6 +77,7 @@ class DouyuRoomService extends SupportLoadRoom {
             if(!room){
                 room = new Room(platform: platform, flag: rooMap.flag, quoteUrl: rooMap.quoteUrl)
             }
+            Boolean oldOLStatus = room.isOnLine
             room.name = rooMap.name
             room.img = rooMap.img
             room.tag = rooMap.tag
@@ -84,6 +87,10 @@ class DouyuRoomService extends SupportLoadRoom {
             room.lastUpdated = lastUpdated
             room.isOnLine = true
             room.save()
+            // 记录日志 必须保存完在调用
+            if(room.isLog){
+                roomLogService.log(room, !oldOLStatus)
+            }
 //            print("${platform.name}: ${roomList.size()}/${i++}")
         }
         // 将平台下所有房间置为离线

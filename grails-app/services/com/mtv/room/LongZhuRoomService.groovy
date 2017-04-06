@@ -11,6 +11,7 @@ class LongZhuRoomService extends SupportLoadRoom {
 
     def typeContrastService
 
+    def roomLogService
     /**
      *
      * @param platformFlag 平台标识
@@ -53,6 +54,7 @@ class LongZhuRoomService extends SupportLoadRoom {
                 if(!room){
                     room = new Room(platform: platform, flag: roomId)
                 }
+                Boolean oldOLStatus = room.isOnLine
                 room.name = it.channel.status
                 room.img = it.preview
                 room.tag = typeContrastService.getTypeName(it.game ? it.game[0].name : "")
@@ -62,6 +64,10 @@ class LongZhuRoomService extends SupportLoadRoom {
                 room.lastUpdated = lastUpdated
                 room.isOnLine = true
                 room.save()
+                // 记录日志 必须保存完在调用
+                if(room.isLog){
+                    roomLogService.log(room, !oldOLStatus)
+                }
             }
         }
 

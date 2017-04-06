@@ -13,7 +13,7 @@ class Room {
     Platform platform
 
     /* 是否在线 */
-    Boolean isOnLine
+    Boolean isOnLine = false
 
     /* 平台中的唯一标识 房间号 */
     String flag
@@ -47,6 +47,9 @@ class Room {
 
     /*最后修改时间*/
     Date lastUpdated = new Date()
+
+    /* 是否记录日志 */
+    Boolean isLog = false
 
     static mapping = {
         // 更新的时候会自动更新lastUpdated 所以这个不用自动更新时间
