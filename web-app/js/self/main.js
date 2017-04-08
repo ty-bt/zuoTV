@@ -4,6 +4,10 @@
 (function(){
     var main = angular.module("main", ['tools', 'ui.router']);
     main.run(['$rootScope', function($rootScope){
+        // logo动画延迟
+        setTimeout(function(){
+            $(".main .content > .left h1 span").addClass("animation")
+        }, 2000);
         // 生成背景图
         var cloneA = $.extend({}, Trianglify.colorbrewer)
         for(var k in cloneA){
@@ -355,7 +359,6 @@
             }
             moveEle.data("realTop", targetMar).css("margin-top", targetMar);
         };
-        var resizeIsInit = true;
         $(window).resize(function(){
             var rightDiv = $(".main .content>.right");
             var viewDiv = rightDiv.find(".m-view");
@@ -371,17 +374,10 @@
             var bodyWidth = viewDiv.width() - $rootScope.scrollWidth;
             var size = Math.ceil(bodyWidth / (initWidth + 10));
             var width = Math.floor(bodyWidth / size - 10);
-            $rootScope.roomSize = {width: width, height: width / ratio};
-            // 第一次resize 大部分模板没有初始化完毕 禁止$apply
-            if(resizeIsInit){
-                resizeIsInit = false;
-                setTimeout(function(){
-                    $rootScope.roomShowTrans = true;
-                    $rootScope.$apply('roomShowTrans');
-                }, 1000);
-            }else{
-                $rootScope.$apply('roomSize');
-            }
+            var roomSize = {width: width, height: width / ratio};
+            $rootScope.roomSize = roomSize;
+            $(".room").css(roomSize);
+            $(".room .photo").css("height", roomSize.height - 50);
         }).resize();
 
         // 加载左侧滚轮事件
@@ -439,6 +435,11 @@
             templateUrl: 'split-tem',
             controller: "room.split",
             title: "分屏观看"
+        }).state('room.log', {
+            url: '/log/:lPage/:lMax/:order/:orderType/:roomId',
+            templateUrl: 'log-tem',
+            controller: "room.log",
+            title: "观众数量波动"
         });
         // 改变post提交方式 data所在位置
         $httpProvider.defaults.headers.post = {
@@ -602,6 +603,35 @@
         }
 
 
+    }]);
+
+    // 观众数量变化图表
+    main.controller('room.log', ['$scope', '$http', '$element', '$stateParams', '$state', '$sce', function($scope, $http, $element, $stateParams, $state, $sce){
+        $http({
+            url: window.ctx + "room/getRoomLog",
+            params: {
+                page: $stateParams.lPage,
+                max: $stateParams.lMax,
+                order: $stateParams.order,
+                orderType: $stateParams.orderType,
+                roomId: $stateParams.roomId
+            }
+        }).success(function(data){
+            $(window).resize();
+            if(data.success){
+                if(window.echarts){
+                    $scope.roomLogs = data.data.roomLogs;
+                }else{
+                    $.getScript("http://cdn.bootcss.com/echarts/3.5.0/echarts.min.js", function(){
+                        $scope.roomLogs = data.data.roomLogs;
+                        $scope.$apply("roomLogs");
+                    });
+
+                }
+            }else{
+                alert(data.message || "系统错误")
+            }
+        });
     }]);
 
     /**

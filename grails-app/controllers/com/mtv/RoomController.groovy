@@ -150,4 +150,22 @@ class RoomController {
         def room = Room.findById(roomId)
         render([room: room] as JSON)
     }
+
+    /**
+     * 获取观众数波动日志
+     * @return
+     */
+    def getRoomLog(){
+        def roomLogs = RoomLog.createCriteria().list(ParamUtils.limit()){
+            if(params.roomId){
+                eq('room.id', params.long('roomId'))
+            }
+            if(params.order){
+                order(params.order, params.orderType ?: "desc")
+            }
+        }
+        render Response.success([roomLogs: roomLogs, total: roomLogs.totalCount]).toJSON()
+    }
+
+
 }

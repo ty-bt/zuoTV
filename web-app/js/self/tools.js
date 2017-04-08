@@ -5,6 +5,27 @@ window.tool = {
 };
 
 (function(){
+
+    /**
+     * jquery扩展
+     * @param callback 一个方法或者字符串,
+     *          方法则会将方法的返回值组成数组返回,
+     *          字符串则会将对应的属性组成数组返回
+     */
+    $.fn.collect = function(callback){
+        var result = [];
+        if($.isFunction(callback)){
+            this.each(function(){
+                result.push(callback.apply(this, arguments));
+            });
+        }else{
+            this.each(function(){
+                result.push(this[callback]);
+            });
+        }
+        return result;
+    };
+
     var tools = angular.module("tools", []);
     // 房间人数过滤器
     tools.filter('wanNum',function(){
@@ -63,6 +84,60 @@ window.tool = {
             //     room: '=roomShow'
             // },
             link: function(scope, element, attr) {
+            }
+        };
+    });
+
+    /**
+     * 房间显示指令 外部scope必须有名字为roomLog的对象
+     */
+    tools.directive('logChar', function ($timeout) {
+        return {
+            restrict: 'A',
+            templateUrl: 'log-chart-tem',
+            replace: true,
+            link: function(scope, element, attr) {
+                var myChart = echarts.init(element.get(0));
+                var roomLog = scope.roomLog;
+                var contentData = JSON.parse(roomLog.content);
+                var option = {
+                    title: {
+                        text: roomLog.room.anchor + " - " + roomLog.room.name
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                            boundaryGap: false,
+                            data: $(contentData).collect(function(){
+                                var date = new Date(this.t);
+                                return date.getHours() + ":" + date.getMinutes();
+                            })
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name:'观看人数',
+                            type:'line',
+                            data: $(contentData).collect("n")
+                        }
+                    ]
+                };
+                myChart.setOption(option);
             }
         };
     });

@@ -4,6 +4,14 @@ import com.alibaba.fastjson.JSONArray
 
 class RoomLog {
 
+    static{
+        grails.converters.JSON.registerObjectMarshaller(RoomLog){
+            return it.properties.findAll{k,v->
+                !(k in ['class'])
+            } + [id:it.id]
+        }
+    }
+
     Room room
 
     /* 日志JSON [{d: "时间",n:"观看人数"}]*/
