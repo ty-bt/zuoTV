@@ -118,10 +118,10 @@ class UserService {
      * 获取当前登录用户  尝试cookie登录
      * @return
      */
-    public User getCurrentUser(){
+    public User getCurrentUser(Boolean autoLogin = true){
         HttpServletRequest request = RequestUtils.getRequest()
         // 尝试cookie登录
-        if(!request.session.getAttribute("user")){
+        if(autoLogin && !request.session.getAttribute("user")){
             // 判断是否有保持登录cookie
             Cookie cookie = request.cookies.find{
                 return it.name == UserToken.COOK_NAME

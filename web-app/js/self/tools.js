@@ -91,15 +91,48 @@ window.tool = {
     /**
      * 房间显示指令 外部scope必须有名字为roomLog的对象
      */
-    tools.directive('logChar', function ($timeout) {
+    tools.directive('logChart', function ($timeout) {
         return {
             restrict: 'A',
             templateUrl: 'log-chart-tem',
+            scope: {
+                roomLog: '=logChart'
+            },
             replace: true,
             link: function(scope, element, attr) {
-                var myChart = echarts.init(element.get(0));
+                var myChart = echarts.init(element.find(".chart").get(0));
                 var roomLog = scope.roomLog;
-                var contentData = JSON.parse(roomLog.content);
+                var contentData = scope.contentData = JSON.parse(roomLog.content);
+                // 波动范围统计
+                var radioRange = window.testRange ? window.testRange.concat() : [0.05, 0.1, 0.15];
+                var rangeStatistics = $(radioRange).collect(function(){
+                    return {
+                        value: this,
+                        title: (this * 100) + "%",
+                        count: 0
+                    }
+                });
+                rangeStatistics.push({
+                    value: -1,
+                    title: "其他",
+                    count: 0
+                });
+                $(contentData).each(function(i){
+                    if(!i){
+                        return;
+                    }
+                    var log = this;
+                    var wave = Math.abs(log.n / contentData[i - 1].n - 1);
+                    // 测试语句
+                    window.testLogFun && window.testLogFun.call(roomLog, log, contentData[i - 1], wave);
+                    $(rangeStatistics).each(function(){
+                        if(wave <= this.value || this.value == -1){
+                            this.count++;
+                            return false;
+                        }
+                    });
+                });
+                scope.rangeStatistics= rangeStatistics;
                 var option = {
                     title: {
                         text: roomLog.room.anchor + " - " + roomLog.room.name

@@ -7,6 +7,7 @@ import org.springframework.util.Assert
 
 class RoomController {
 
+    def userService
 //    /**
 //     * 喂给搜索引擎
 //     * @return
@@ -156,6 +157,10 @@ class RoomController {
      * @return
      */
     def getRoomLog(){
+        if(userService.getCurrentUser(false)?.id != 1){
+            render Response.failure("", "非管理员不能查看").toJSON()
+            return
+        }
         def roomLogs = RoomLog.createCriteria().list(ParamUtils.limit()){
             if(params.roomId){
                 eq('room.id', params.long('roomId'))

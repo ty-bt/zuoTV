@@ -324,7 +324,7 @@
     %{--用户观众变化图表--}%
     <script type="text/ng-template" id="log-tem">
     <div class="room-log">
-        <div ng-repeat="roomLog in roomLogs" log-char>
+        <div ng-repeat="roomLog in roomLogs" log-chart="roomLog">
 
         </div>
     </div>
@@ -333,8 +333,19 @@
     %{--单个观众变化图表指令--}%
     <script type="text/ng-template" id="log-chart-tem">
     <div class="log-chart">
+        <div>
+            <span class="chart-range">得分：{{roomLog.mark}}</span>
+            <span class="chart-range">样本总数：{{contentData.length}}</span>
+            <span class="chart-range" ng-repeat="range in rangeStatistics">波动{{range.title}}数量：{{range.count}}</span>
+            <span class="chart-range">{{roomLog.dateCreated}}</span>
+        </div>
+        <div class="chart">
+
+        </div>
 
     </div>
+
+
     </script>
 </head>
 
