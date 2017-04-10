@@ -90,7 +90,8 @@ class Room {
                 }
                 change *= this.adNum / 10000;
             }
-            this.mark += change;
+            this.mark += change
+            this.mark = this.mark >= 1000000 ? 1000000 : this.mark
             this.sort = adNum - this.adNum
         }else{
             this.sort = adNum
