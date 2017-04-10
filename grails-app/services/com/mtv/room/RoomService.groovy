@@ -65,6 +65,8 @@ class RoomService {
 
         Platform.createCriteria().list({
             order('onLineRoom')
+            // 测试用
+            // 'in'('id', [2l, 4l, 6l])
         }).each {
             Platform platform = it
             // 获取平台指定服务类
