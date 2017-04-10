@@ -64,36 +64,36 @@ class Room {
     void reSetAdNum(Long adNum){
 
         // 差值
-        if(this.isOnLine && this.adNum && this.adNum > 1000){
-            // Math.abs(log.n / contentData[i - 1].n - 1)
-            // 观众波动百分比
-            Double wave = Math.abs(adNum / this.adNum - 1)
-            // 以前的分值
-            Double curRatio = this.sort / this.adNum
-            // 分值变化比例
-            Double change = 1;
-            if(wave <= 0.05){           // 波动5%以内不管增加还是减少 都加分
-                change = 1.04;
-            }else if(wave <= 0.1){      // 波动超过10%则减少分数
-                change = 0.9
-            }else if(wave <= 0.15){
-                change = 0.85
-            }else{
-                change = 0.8
-            }
-            // 如果是上升 则增加1%分数
-            if(change < 1 && adNum > this.adNum){
-                change = 1.01
-            }
-            curRatio *= change
-            // 最大分值限定
-            curRatio = curRatio > 10000 ? 10000 : curRatio
-            this.sort = (adNum * curRatio).longValue()
-            this.adNum = adNum
+        if(this.isOnLine && this.adNum){
+//            // Math.abs(log.n / contentData[i - 1].n - 1)
+//            // 观众波动百分比
+//            Double wave = Math.abs(adNum / this.adNum - 1)
+//            // 以前的分值
+//            Double curRatio = this.sort / this.adNum
+//            // 分值变化比例
+//            Double change = 1;
+//            if(wave <= 0.05){           // 波动5%以内不管增加还是减少 都加分
+//                change = 1.04;
+//            }else if(wave <= 0.1){      // 波动超过10%则减少分数
+//                change = 0.5
+//            }else if(wave <= 0.15){
+//                change = 0.4
+//            }else{
+//                change = 0.3
+//            }
+//            // 如果是上升 则增加1%分数
+//            if(change < 1 && adNum > this.adNum){
+//                change = 1.01
+//            }
+//            curRatio *= change
+//            // 最大分值限定
+//            curRatio = curRatio > 10000 ? 10000 : curRatio
+//            this.sort = (adNum * curRatio).longValue()
+            this.sort = adNum - this.adNum
         }else{
             this.sort = adNum
-            this.adNum = adNum
         }
+        this.adNum = adNum
     }
 
 }
