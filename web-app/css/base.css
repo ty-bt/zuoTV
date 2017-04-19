@@ -255,7 +255,7 @@ a{text-decoration: none; color: #313131}
 /* 更多分类 */
 .types{position: absolute;width: 96%;height: 100%;overflow-y: auto;padding: 0 2%;top: 0;left: 0;background: #fff;}
 .types .show-params{margin-left: 0}
-.types .t a{display: inline-block;width: 86px;text-align: center;background: #2980b9;margin: 0 17px 15px 0;height: 100px;vertical-align: top;font-size: 17px;padding: 5px;color: #fff;border-radius: 2px;}
+.types .t a{display: inline-block;width: 86px;text-align: center;background: #1abc9c;margin: 0 17px 15px 0;height: 100px;vertical-align: top;font-size: 17px;padding: 5px;color: #fff;border-radius: 2px;}
 .types .t a span{width: 100%;display: inline-block;line-height: 44px;}
 .types .t a span.min{font-size:12px;line-height: 20px;}
 
