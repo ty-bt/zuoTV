@@ -348,8 +348,9 @@
         // var initWidth = 338;
         // $rootScope.roomSize = {width: 0, height: 0};
         var initWidth = 338;
-        $rootScope.roomSize = {width: initWidth, height: 251};
-        var ratio = initWidth / 251;
+        $rootScope.roomSize = {width: initWidth, height: 241};
+        // 图片比例
+        var ratio = 320 / 180;
 
         /**
          * 左侧滚轮事件
@@ -390,10 +391,10 @@
             var bodyWidth = viewDiv.width() - $rootScope.scrollWidth;
             var size = Math.ceil(bodyWidth / (initWidth + 10));
             var width = Math.floor(bodyWidth / size - 10);
-            var roomSize = {width: width, height: width / ratio};
+            var roomSize = {width: width, height: width / ratio + 48};
             $rootScope.roomSize = roomSize;
             $(".room").css(roomSize);
-            $(".room .photo").css("height", roomSize.height - 50);
+            $(".room .photo").css("height", roomSize.height - 48);
         }).resize();
 
         // 加载左侧滚轮事件

@@ -121,7 +121,7 @@
                 <td></td>
             </tr>
             <tr>
-                <td colspan="2" class="photo"  ng-style="{height: $root.roomSize.height - 50}">
+                <td colspan="2" class="photo"  ng-style="{height: $root.roomSize.height - 48}">
                     <img ng-src="{{room.img}}"/>
                     <span class="pla-name">{{room.platform.name}}</span>
                     <i class="fa fa-play-circle play trans2" ng-class="{insert: $root.isInsert(room.platform.flag)}"></i>
