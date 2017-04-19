@@ -264,7 +264,7 @@
         <!-- 背景 -->
         <img ng-src="{{curRoom.img}}" class="back-img filter-blur" />
         <!-- 内容 -->
-        <div class="d-content" ng-show="curRoom.quoteUrl || curRoom.platform.flag == 'zhanQi'">
+        <div class="d-content" ng-show="curRoom.quoteUrl || curRoom.iframeUrl">
             <div class="top">
                 <i class="fa fa-close" title="关闭" ng-click="close()"></i>
             </div>
@@ -290,7 +290,7 @@
 
         </div>
 
-        <div class="d-content-i" ng-show="!curRoom.quoteUrl && curRoom.platform.flag != 'zhanQi'">
+        <div class="d-content-i" ng-show="!curRoom.quoteUrl && !curRoom.iframeUrl">
             <div class="btns trans2">
                 <i title="{{$root.collectMap[curRoom.id] ? '取消关注' : '关注'}}" roomId="{{room.id}}"
                    ng-click="$root.changeCollect($event, curRoom);$event.stopPropagation();"
@@ -309,10 +309,10 @@
     %{--分屏观看模板--}%
     <script type="text/ng-template" id="split-tem">
     <div class="room-split">
-        <div class="detail trans" ng-repeat="room in (noLocal ? splitRooms : $root.splitScreen.data)">
-            <iframe ng-if="room.platform.flag == 'zhanQi'" style="width:100%; height:100%; border:none;" src="{{trustSrc('http://www.zhanqi.tv/live/embed?roomId=' + room.flag)}}"></iframe>
+        <div class="detail trans" ng-repeat="room in (noLocal ? splitRooms : $root.splitScreen.data)" ng-init="room.iframeUrl = $root.getIframeUrl(room)">
+            <iframe ng-if="room.iframeUrl" style="width:100%; height:100%; border:none;" src="{{trustSrc(room.iframeUrl)}}"></iframe>
             <embed ng-if="room.quoteUrl" src="{{trustSrc(room.quoteUrl)}}" style="width: 100%; height: 100%" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">
-                <iframe ng-if="room.platform.flag != 'zhanQi' && !room.quoteUrl" src="{{trustSrc(room.url)}}" style="width:100%; height:100%; border:none;"></iframe>
+                <iframe ng-if="!room.iframeUrl && !room.quoteUrl" src="{{trustSrc(room.url)}}" style="width:100%; height:100%; border:none;"></iframe>
                 <i title="关注" roomId="{{room.id}}"
                    ng-click="$root.changeCollect($event, room);"
                    ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"

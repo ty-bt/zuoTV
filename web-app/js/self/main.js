@@ -175,6 +175,22 @@
             return flag != "panda"/* && flag != "zhanQi"*/;
         };
 
+        /**
+         * 返回嵌入iframe播放的地址  没有则返回null
+         * @param room 房间对象
+         * @returns {boolean}
+         */
+        $rootScope.getIframeUrl = function(room){
+            switch (room.platform.flag){
+                case 'zhanQi':
+                    return "http://www.zhanqi.tv/live/embed?roomId=" + room.flag;
+                case 'huoMao':
+                    return "https://www.huomao.com/outplayer/index/" + room.flag;
+                default:
+                    return null;
+            }
+        };
+
         // 刷新登录状态
         $rootScope.loadLogin = function(){
             var colorArr = ["#1abc9c", "#16a085", "##2ecc71", "#27ae60", "#9b59b6", "#8e44ad", "#34495e", "#2c3e50", "#f1c40f", "#f39c12", "#e67e22", "#d35400", "#e74c3c", "#c0392b", "#ecf0f1", "#bdc3c7", "#95a5a6", "#7f8c8d"];
@@ -532,25 +548,28 @@
         });
 
         var loadEmbed = function(){
-            if(!$scope.$root.isInsert($scope.curRoom.platform.flag)){
-                window.open($scope.curRoom.url, "_blank");
+            var room = $scope.curRoom;
+            if(!$scope.$root.isInsert(room.platform.flag)){
+                window.open(room.url, "_blank");
                 $scope.close();
                 return;
             }
-            $scope.$root.title = $scope.curRoom.name + " - " + $scope.$root.webName;
-            if($scope.curRoom.quoteUrl || $scope.curRoom.platform.flag == 'zhanQi'){
+
+            room.iframeUrl = $scope.$root.getIframeUrl(room);
+            $scope.$root.title = room.name + " - " + $scope.$root.webName;
+            if(room.quoteUrl || room.iframeUrl){
                 var playEle;
-                if($scope.curRoom.quoteUrl){
+                if(room.quoteUrl){
                     playEle = $('<embed src="' + $scope.curRoom.quoteUrl + '" style="width: 100%; height: 100%" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">')
                 }else{
-                    playEle = $('<iframe style="width:100%; height:100%; border:none;" src="http://www.zhanqi.tv/live/embed?roomId=' + $scope.curRoom.flag + '"></iframe>')
+                    playEle = $('<iframe style="width:100%; height:100%; border:none;" src="' + room.iframeUrl + '"></iframe>')
                 }
                 $element.find(".embed-div").append(playEle);
                 setTimeout(function(){
                     $(window).resize();
                 });
             }else{
-                $element.find("iframe").attr("src", $scope.curRoom.url);
+                $element.find("iframe").attr("src", room.url);
             }
 
         };

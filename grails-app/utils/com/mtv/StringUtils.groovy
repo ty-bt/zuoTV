@@ -16,6 +16,7 @@ class StringUtils {
             return 0l
         }
         def pattern = ~/(\d*\.?\d*)万/
+        text = text.replace(",", "")
         if(text ==~ pattern){
             String wStr = (text =~ pattern)[0][1]
             if(!wStr.isDouble()){
