@@ -43,7 +43,7 @@ class Room {
     Long sort = 0L
 
     /* 分数 */
-    Double mark = 0
+    Double mark = 0D
 
     /*创建时间*/
     Date dateCreated = new Date()
@@ -70,28 +70,28 @@ class Room {
         if(this.isOnLine && this.adNum){
 //            // Math.abs(log.n / contentData[i - 1].n - 1)
 //            // 观众波动百分比
-            Double wave = Math.abs(adNum / this.adNum - 1)
-            Double change = 0;
-            if(this.adNum > 2000){
-                if(wave <= 0.05){
-                    change = 0.1;
-                }else if(wave <= 0.1){
-                    change = -0.5
-                }else if(wave <= 0.15){
-                    change = -1
-                }else{
-                    change = -1
-                }
-                if(change <= 0 && adNum > this.adNum){
-                    change = 0.15;
-
-                }else if(change <= 0 ){
-                    this.mark = this.mark > 0 ? (this.mark - 1).longValue() : this.mark.longValue();
-                }
-                change *= this.adNum / 10000;
-            }
-            this.mark += change
-            this.mark = this.mark >= 1000000 ? 1000000 : this.mark
+//            Double wave = Math.abs(adNum / this.adNum - 1)
+//            Double change = 0;
+//            if(this.adNum > 2000){
+//                if(wave <= 0.05){
+//                    change = 0.1;
+//                }else if(wave <= 0.1){
+//                    change = -0.5
+//                }else if(wave <= 0.15){
+//                    change = -1
+//                }else{
+//                    change = -1
+//                }
+//                if(change <= 0 && adNum > this.adNum){
+//                    change = 0.15;
+//
+//                }else if(change <= 0 ){
+//                    this.mark = this.mark > 0 ? (this.mark - 1).longValue() : this.mark.longValue();
+//                }
+//                change *= this.adNum / 10000;
+//            }
+//            this.mark += change
+//            this.mark = this.mark >= 1000000 ? 1000000 : this.mark
             this.sort = adNum - this.adNum
         }else{
             this.sort = adNum
