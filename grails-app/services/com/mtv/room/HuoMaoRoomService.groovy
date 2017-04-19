@@ -31,7 +31,7 @@ class HuoMaoRoomService extends SupportLoadRoom {
         int pageCount = 1
         for(int a = 1; a <= pageCount; a++){
             def page = this.getPageObj(a)
-            if(!a){
+            if(a == 1){
                 pageCount = Math.ceil(page.data.allCount / 120d)
                 log.info("${platformFlag}总条数:${page.data.allCount},总页数${pageCount}，火猫在线不在线的都在这里面")
             }
