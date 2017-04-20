@@ -138,6 +138,7 @@
                 }
             },
             remove: function(id, $event){
+                var _this = this;
                 var index = this.indexOf(id);
                 if(index != -1){
                     this.data.splice(index, 1);
