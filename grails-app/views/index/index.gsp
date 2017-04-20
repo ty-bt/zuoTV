@@ -54,7 +54,7 @@
                    ui-sref-opts="{reload: true, inherit: true}"
                    ng-class="{selected: pla.name == $stateParams.platformName}">
                     <span class="ellipsis">{{pla.name}}</span>
-                    <span class="min ellipsis"><i class="fa fa-child"></i>{{pla.onLineAd | wanNum}}</span>
+                    <span class="min ellipsis"><i class="fa fa-user"></i>{{pla.onLineAd | wanNum}}</span>
                     <span class="min ellipsis"><i class="fa fa-home"></i>{{pla.onLineRoom | wanNum}}</span>
                 </a>
             </div>
@@ -68,7 +68,7 @@
                    ui-sref-opts="{reload: true, inherit: true}"
                    ng-class="{selected: t.name == $stateParams.tag}">
                     <span class="ellipsis">{{t.name}}</span>
-                    <span class="min ellipsis"><i class="fa fa-child"></i>{{t.adSum | wanNum}}</span>
+                    <span class="min ellipsis"><i class="fa fa-user"></i>{{t.adSum | wanNum}}</span>
                     <span class="min ellipsis"><i class="fa fa-home"></i>{{t.roomCount | wanNum}}</span>
                 </a>
             </div>
@@ -124,7 +124,7 @@
                 <td colspan="2" class="photo"  ng-style="{height: $root.roomSize.height - 48}">
                     <img ng-src="{{room.img}}"/>
                     <span class="pla-name">{{room.platform.name}}</span>
-                    <i class="fa fa-play-circle play trans2" ng-class="{insert: $root.isInsert(room.platform.flag)}"></i>
+                    <i class="fa fa-play play trans2" ng-class="{insert: $root.isInsert(room.platform.flag)}"></i>
                     <span class="add-ss trans2" ng-click="$root.splitScreen.add(room, $event);" ng-if="$root.isInsert(room.platform.flag)">加入分屏</span>
                 </td>
             </tr>
@@ -140,7 +140,7 @@
                        ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
                        class="fa heart"></i>{{room.anchor}}
                 </td>
-                <td class="t-r ellipsis num"><i class="fa fa-child"></i>{{room.adNum | wanNum}}</td>
+                <td class="t-r ellipsis num"><i class="fa fa-user"></i>{{room.adNum | wanNum}}</td>
             </tr>
         </table>
     </a>
@@ -309,15 +309,27 @@
     %{--分屏观看模板--}%
     <script type="text/ng-template" id="split-tem">
     <div class="room-split">
-        <div class="detail trans" ng-repeat="room in (noLocal ? splitRooms : $root.splitScreen.data)" ng-init="room.iframeUrl = $root.getIframeUrl(room)">
+        <div class="detail trans s-pos-{{room.splitSort}}" ng-class="{'no-local': noLocal}" ng-repeat="room in (noLocal ? splitRooms : $root.splitScreen.data)" ng-init="room.iframeUrl = $root.getIframeUrl(room)">
             <iframe ng-if="room.iframeUrl" style="width:100%; height:100%; border:none;" src="{{trustSrc(room.iframeUrl)}}"></iframe>
             <embed ng-if="room.quoteUrl" src="{{trustSrc(room.quoteUrl)}}" style="width: 100%; height: 100%" allownetworking="all" allowscriptaccess="always" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">
                 <iframe ng-if="!room.iframeUrl && !room.quoteUrl" src="{{trustSrc(room.url)}}" style="width:100%; height:100%; border:none;"></iframe>
-                <i title="关注" roomId="{{room.id}}"
-                   ng-click="$root.changeCollect($event, room);"
-                   ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
-                   class="fa heart"></i>
-                <a class="fa fa-level-up" target="_blank" title="新窗口打开{{room.platform.name}}观看" href="{{room.url}}"></a>
+                <div class="split-tools">
+                    <i title="关注" roomId="{{room.id}}"
+                       ng-click="$root.changeCollect($event, room);"
+                       ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
+                       class="fa heart"></i>
+                    <span ng-if="!noLocal">
+                        <a class="fa fa-arrow-left" title="向前移动" ng-click="$root.splitScreen.move(room, 1)"></a>
+                        <a class="fa fa-arrow-right" title="向后移动" ng-click="$root.splitScreen.move(room, -1)"></a>
+                        <a class="fa fa-remove" title="从分屏列表移除" ng-click="$root.splitScreen.remove(room.id)"></a>
+                    </span>
+                    <span ng-if="noLocal">
+                        <a class="fa fa-desktop" title="添加到我的分屏" ng-click="$root.splitScreen.add(room)"></a>
+                    </span>
+
+                    <a class="fa fa-level-up" target="_blank" title="新窗口打开{{room.platform.name}}观看" href="{{room.url}}"></a>
+                </div>
+
         </div>
     </div>
     </script>
@@ -415,12 +427,13 @@
                     <h2>分屏&nbsp;<span style="font-size: 13px;" ng-show="$root.splitScreen.data.length">{{$root.splitScreen.data.length}}</span>
                         <span id="copy-split" class="fa fa-share-alt" title="复制分享链接"></span>
                         <span class="fa fa-question-circle-o" title="点击开始进入分屏界面&#13;在分屏界面依然可以在左侧列表移除房间&#13;在分屏界面依然可以从左侧关注列表添加房间&#13;斗鱼和战旗体验比较好，暂不支持熊猫&#13;其他的平台在页面中点击网页全屏体验会好点"></span>
+                        <span class="fa fa-remove-circle" title="清空分屏列表" ng-click="$root.splitScreen.clear()"></span>
                         <a ui-sref="room.split({ids: ''})"
                            ui-sref-opts="{inherit: true, reload:true}" ng-show="$root.splitScreen.data.length">开始></a>
                     </h2>
 
                     <div>
-                        <a ng-repeat="room in $root.splitScreen.data"
+                        <a ng-repeat="room in $root.splitScreen.data | orderBy : '-splitSort'"
                         %{--<a ng-repeat="coll in $root.collects"--}%
                            repeat-finish
                            ng-click="openRoom(room)"

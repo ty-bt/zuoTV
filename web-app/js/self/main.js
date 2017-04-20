@@ -73,9 +73,38 @@
         $rootScope.splitScreen = {
             url: "",
             data: [],
+            dataMap: {1: null, 2: null, 3: null, 4: null},
             localName: "splitScreenData",
             save: function(){
                 window.localStorage[this.localName] = JSON.stringify(this.data);
+            },
+            move: function(room, change){
+                var _this = this;
+                var data = $rootScope.splitScreen.data;
+                $(data).each(function(i){
+                    if(this == room){
+                        var targetIndex = this.splitSort + change;
+                        targetIndex = targetIndex > data.length ? 1 : targetIndex;
+                        targetIndex = targetIndex < 1 ? data.length : targetIndex;
+                        _this.dataMap[targetIndex].splitSort = room.splitSort;
+                        room.splitSort = targetIndex;
+                        _this.reloadSort();
+                        _this.save();
+                        return false;
+                    }
+
+                });
+            },
+            reloadSort: function(){
+                var _this = this;
+                var data = $rootScope.splitScreen.data;
+                $(data).sort(function(a, b){
+                    return (b.splitSort || 0) - (a.splitSort || 0);
+                }).each(function(i){
+                    var sort = data.length - i;
+                    _this.dataMap[sort] = this;
+                    this.splitSort = sort;
+                });
             },
             loadUrl: function(){
                 var ids = [];
@@ -91,6 +120,7 @@
                 }else{
                     this.data = [];
                 }
+                this.reloadSort();
             },
             add: function(room, $event){
                 if(this.indexOf(room.id) == -1){
@@ -98,6 +128,7 @@
                         alert("分屏数量已达到上限");
                     }else{
                         this.data.push(room);
+                        this.reloadSort();
                         this.save();
                     }
                 }
@@ -110,12 +141,17 @@
                 var index = this.indexOf(id);
                 if(index != -1){
                     this.data.splice(index, 1);
+                    _this.reloadSort();
                     this.save();
                 }
                 if($event){
                     $event.stopPropagation();
                     $event.preventDefault();
                 }
+            },
+            clear: function(){
+                this.data = [];
+                this.save();
             },
             indexOf: function(id){
                 for(var a = 0; a < this.data.length; a++){
@@ -141,6 +177,7 @@
                     return;
                 }
                 this.data = splitRooms;
+                this.reloadSort();
                 this.save();
                 $rootScope.$state.go('room.split', {ids: ''}, {inherit: true});
             }

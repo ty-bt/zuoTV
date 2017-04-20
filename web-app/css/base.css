@@ -303,11 +303,15 @@ a{text-decoration: none; color: #313131}
 
 /* 分屏观看 */
 .room-split{width:100%; height: 100%; position: absolute; top: 0; left:0;  background: #000}
-.room-split .detail{width: 50%;height: 50%;float: left; position: relative; overflow:hidden}
-.room-split .detail .fa{position: absolute;color: #fff;top: -50px;left: 0;font-size: 20px;margin: 5px 8px;text-shadow: 0 0 7px #000; cursor:pointer}
-/*.room-split .detail .heart.fa-heart{color: #c0392b}*/
-.room-split .detail .fa-level-up{left: 31px;}
-.room-split .detail:hover .fa{top:0}
+.room-split .detail{width: 50%;height: 50%; position: absolute; overflow:hidden}
+.room-split .detail.no-local{position: relative; float: left;}
+.room-split .detail .split-tools{position: absolute;background: rgba(0,0,0,0.5);color: #fff;top: -50px;left: 3px;font-size: 0px;border-radius: 4px 4px;}
+.room-split .detail .split-tools .fa{margin: 5px 8px;text-shadow: 0 0 7px #000;cursor:pointer;color: #fff;font-size: 20px;}
+.room-split .detail:hover .split-tools{top: 5px;}
+.s-pos-4{top: 0; left: 0;}
+.s-pos-3{top: 0; left: 50%;}
+.s-pos-2{top: 50%; left: 0;}
+.s-pos-1{top: 50%; left: 50%;}
 
 .fa-heart:before{color: #c0392b}
 
