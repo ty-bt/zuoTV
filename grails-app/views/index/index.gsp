@@ -427,7 +427,7 @@
                     <h2>分屏&nbsp;<span style="font-size: 13px;" ng-show="$root.splitScreen.data.length">{{$root.splitScreen.data.length}}</span>
                         <span id="copy-split" class="fa fa-share-alt" title="复制分享链接"></span>
                         <span class="fa fa-question-circle-o" title="点击开始进入分屏界面&#13;在分屏界面依然可以在左侧列表移除房间&#13;在分屏界面依然可以从左侧关注列表添加房间&#13;斗鱼和战旗体验比较好，暂不支持熊猫&#13;其他的平台在页面中点击网页全屏体验会好点"></span>
-                        <span class="fa fa-remove-circle" title="清空分屏列表" ng-click="$root.splitScreen.clear()"></span>
+                        <span class="fa fa-remove" title="清空分屏列表" ng-click="$root.splitScreen.clear()"></span>
                         <a ui-sref="room.split({ids: ''})"
                            ui-sref-opts="{inherit: true, reload:true}" ng-show="$root.splitScreen.data.length">开始></a>
                     </h2>
