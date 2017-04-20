@@ -378,7 +378,7 @@
     <div class="content table">
         <div class="left">
             <a ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
-               ui-sref-opts="{reload:true}" title="首页">
+               ui-sref-opts="{reload:true}" href="${createLink(controller: 'room', action: 'list')}" title="首页">
                 <h1><span>zuo</span> TV</h1>
             </a>
             <div class="condition search-input">
