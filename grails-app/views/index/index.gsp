@@ -47,6 +47,7 @@
             <h2 class="show-params"><span><i class="fa fa-ship"></i>平台</span>
                 <a class="btn" ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
                    ui-sref-opts="{reload:true}" title="其实点击logo位置也可以回&#13;也可以直接使用浏览器的前进后退&#13;如果你的鼠标有侧键也是可以前进后退的&#13;介个按钮随时会删掉">回首页</a>
+                <p>* 观众数小于10的房间不计入统计</p>
             </h2>
             <div class="t">
                 <a ng-repeat="pla in $root.topData.platforms"

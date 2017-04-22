@@ -17,7 +17,7 @@ class RoomLogService {
      * @param newOnLine 是否新上线
      * @return
      */
-    public RoomLog log(Room room, Boolean newOnLine){
+    public RoomLog log(Room room, Boolean newOnLine, Date date){
         // 先不用
         return null
 //        if(!newOnLine){

@@ -179,6 +179,7 @@ a{text-decoration: none; color: #313131}
     line-height: 40px;
     display: inline-block;
 }
+.show-params p{display:inline-block;margin: 0;font-size: 12px;line-height: 18px;vertical-align: text-bottom;color: #5c5c5c;}
 .show-params .more{font-size: 13px;font-family: 微软雅黑;color: #2980b9;position: absolute;right: 0px;bottom: -4px;}
 .show-params span+span:before{content: '>';margin-right: 6px;}
 

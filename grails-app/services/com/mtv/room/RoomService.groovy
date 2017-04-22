@@ -1,5 +1,6 @@
 package com.mtv.room
 
+import com.mtv.DateUtils
 import com.mtv.OnLineRoom
 import com.mtv.Platform
 import com.mtv.Recommend
@@ -82,6 +83,8 @@ class RoomService {
                     log.info("抓取${platform.name}开始")
                     Long startDate = System.currentTimeMillis()
                     dataMap[platform.flag] = supportLoadRoom.loadData()
+                    // 加载完成时间
+                    supportLoadRoom.loadTime = DateUtils.getDateNoMSEL()
                     log.info("抓取${platform.name}完成, 用时${System.currentTimeMillis() - startDate}ms")
                 }catch (e){
                     log.error("${platform.name}抓取数据出错")
@@ -98,7 +101,12 @@ class RoomService {
             if(!dataMap[k]){
                 return
             }
-            this.saveRoom(serverMap[k], dataMap[k])
+            try{
+                this.saveRoom(serverMap[k], dataMap[k])
+            }catch (e){
+                log.info("保存${k}出错, 用时${System.currentTimeMillis() - startDate}ms")
+                e.printStackTrace()
+            }
             log.info("保存${k}完成, 用时${System.currentTimeMillis() - startDate}ms")
         }
         Long olDate = System.currentTimeMillis()

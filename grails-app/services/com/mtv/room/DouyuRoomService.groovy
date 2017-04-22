@@ -67,7 +67,7 @@ class DouyuRoomService extends SupportLoadRoom {
     void saveRoom(Object obj) {
         List<Map> roomList = (List<Map>)obj
         // 最后修改时间
-        Date lastUpdated = DateUtils.getDateNoMSEL()
+        Date lastUpdated = this.loadTime
         // 解析并保存数据
         int i = 1
         roomList.each {
@@ -93,7 +93,7 @@ class DouyuRoomService extends SupportLoadRoom {
             room.save()
             // 记录日志 必须保存完在调用
             if(room.isLog){
-                roomLogService.log(room, !oldOLStatus)
+                roomLogService.log(room, !oldOLStatus, lastUpdated)
             }
 //            print("${platform.name}: ${roomList.size()}/${i++}")
         }

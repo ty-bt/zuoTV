@@ -1,5 +1,6 @@
 package com.mtv.room
 
+import com.mtv.DateUtils
 import com.mtv.Platform
 import com.mtv.utils.SupportBeanDefine
 import org.springframework.util.Assert
@@ -15,6 +16,9 @@ abstract class SupportLoadRoom implements SupportBeanDefine<String>{
 
     // 当前平台
     abstract Platform platform
+
+    // http加载完成后的时间
+    public Date loadTime = DateUtils.getDateNoMSEL()
 
     /**
      *

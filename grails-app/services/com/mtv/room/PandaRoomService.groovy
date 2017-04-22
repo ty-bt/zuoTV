@@ -54,7 +54,7 @@ class PandaRoomService extends SupportLoadRoom {
     @Override
     void saveRoom(Object obj) {
         List<List<Map>> pageList = (List<List<Map>>)obj
-        Date lastUpdated = DateUtils.getDateNoMSEL()
+        Date lastUpdated = this.loadTime
         int i = 1
         // 解析并保存数据
         pageList.each {
@@ -84,7 +84,7 @@ class PandaRoomService extends SupportLoadRoom {
                 room.save()
                 // 记录日志 必须保存完在调用
                 if(room.isLog){
-                    roomLogService.log(room, !oldOLStatus)
+                    roomLogService.log(room, !oldOLStatus, lastUpdated)
                 }
             }
         }
