@@ -72,6 +72,10 @@ class DouyuRoomService extends SupportLoadRoom {
         int i = 1
         roomList.each {
             Map rooMap = it
+            // 观众小于等于10的不收录
+            if(rooMap.adNum < 10){
+                return
+            }
             // 如果有数据则替换原来的数据 没有则新建
             Room room = Room.findByPlatformAndFlag(this.platform, rooMap.flag)
             if(!room){
@@ -80,7 +84,7 @@ class DouyuRoomService extends SupportLoadRoom {
             Boolean oldOLStatus = room.isOnLine
             room.name = rooMap.name
             room.img = rooMap.img
-            room.tag = rooMap.tag
+            room.tag = typeContrastService.getTypeName(rooMap.tag)
             room.reSetAdNum(rooMap.adNum)
             room.anchor = rooMap.anchor
             room.url = rooMap.url

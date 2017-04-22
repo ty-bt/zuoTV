@@ -48,6 +48,12 @@ class HuYaRoomService extends SupportLoadRoom {
         pageList.each {
             List<Map> list = it
             list.each{
+                Long adNum = Long.parseLong(it.totalCount)
+                // 观众小于等于10的不收录
+                if(adNum < 10){
+                    return
+                }
+
                 // 查看如果是老数据则覆盖,新数据则新建
                 String roomId = it.uid
                 Room room = Room.findByPlatformAndFlag(platform, roomId)
@@ -58,7 +64,7 @@ class HuYaRoomService extends SupportLoadRoom {
                 room.name = it.introduction
                 room.img = it.screenshot
                 room.tag = typeContrastService.getTypeName(it.gameFullName)
-                room.reSetAdNum(Long.parseLong(it.totalCount))
+                room.reSetAdNum(adNum)
                 room.anchor = it.nick
                 room.url = "http://www.huya.com/" + it.privateHost
                 room.lastUpdated = lastUpdated

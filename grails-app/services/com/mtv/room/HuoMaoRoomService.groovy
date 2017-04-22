@@ -59,6 +59,12 @@ class HuoMaoRoomService extends SupportLoadRoom {
                     return
                 }
 
+                Long adNum = StringUtils.parseNum(it.views)
+                // 观众小于等于10的不收录
+                if(adNum < 10){
+                    return
+                }
+
                 // 查看如果是老数据则覆盖,新数据则新建
                 String roomId = it.room_number
                 Room room = Room.findByPlatformAndFlag(platform, roomId)
@@ -69,7 +75,7 @@ class HuoMaoRoomService extends SupportLoadRoom {
                 room.name = it.channel
                 room.img = it.image
                 room.tag = room.tag = typeContrastService.getTypeName(it.gameCname)
-                room.reSetAdNum(StringUtils.parseNum(it.views))
+                room.reSetAdNum(adNum)
                 room.anchor = it.nickname
                 room.url = "https://www.huomao.com/" + it.room_number
                 room.lastUpdated = lastUpdated

@@ -48,6 +48,13 @@ class LongZhuRoomService extends SupportLoadRoom {
         pageList.each {
             List<Map> list = it
             list.each{
+
+                Long adNum = Long.parseLong(it.viewers)
+                // 观众小于等于10的不收录
+                if(adNum < 10){
+                    return
+                }
+
                 // 查看如果是老数据则覆盖,新数据则新建
                 String roomId = it.channel.id
                 Room room = Room.findByPlatformAndFlag(platform, roomId)
@@ -58,7 +65,7 @@ class LongZhuRoomService extends SupportLoadRoom {
                 room.name = it.channel.status
                 room.img = it.preview
                 room.tag = typeContrastService.getTypeName(it.game ? it.game[0].name : "")
-                room.reSetAdNum(Long.parseLong(it.viewers))
+                room.reSetAdNum(adNum)
                 room.anchor = it.channel.name
                 room.url = it.channel.url
                 room.lastUpdated = lastUpdated

@@ -50,6 +50,11 @@ class QuanMinRoomService extends SupportLoadRoom {
         pageList.each {
             List<Map> list = it
             list.each{
+                Long adNum = Long.parseLong(it.view)
+                // 观众小于等于10的不收录
+                if(adNum < 10){
+                    return
+                }
                 // 查看如果是老数据则覆盖,新数据则新建
                 // http://www.quanmin.tv/task/share?from=_39beabe71c3e2bc143558bee32c315f2_1849855
                 String roomId = it.uid
@@ -61,7 +66,7 @@ class QuanMinRoomService extends SupportLoadRoom {
                 room.name = it.title
                 room.img = it.thumb
                 room.tag = typeContrastService.getTypeName(it.category_name)
-                room.reSetAdNum(Long.parseLong(it.view))
+                room.reSetAdNum(adNum)
                 room.anchor = it.nick
                 room.url = "http://www.quanmin.tv/v/" + roomId
                 room.lastUpdated = lastUpdated

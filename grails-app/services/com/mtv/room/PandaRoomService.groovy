@@ -61,6 +61,11 @@ class PandaRoomService extends SupportLoadRoom {
 //            print("${platform.name}: ${pageList.size()}/${i++}")
             List<Map> list = it
             list.each{
+                Long adNum = Long.parseLong(it.person_num)
+                // 观众小于等于10的不收录
+                if(adNum < 10){
+                    return
+                }
                 // 查看如果是老数据则覆盖,新数据则新建
                 String roomId = it.id
                 Room room = Room.findByPlatformAndFlag(platform, roomId)
@@ -71,7 +76,7 @@ class PandaRoomService extends SupportLoadRoom {
                 room.name = it.name
                 room.img = it.pictures.img
                 room.tag = typeContrastService.getTypeName(it.classification.cname)
-                room.reSetAdNum(Long.parseLong(it.person_num))
+                room.reSetAdNum(adNum)
                 room.anchor = it.userinfo.nickName
                 room.url = "http://www.panda.tv/" + it.id
                 room.lastUpdated = lastUpdated

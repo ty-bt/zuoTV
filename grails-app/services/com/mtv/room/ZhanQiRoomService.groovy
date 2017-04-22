@@ -48,8 +48,13 @@ class ZhanQiRoomService extends SupportLoadRoom {
         pageList.each {
             List<Map> list = it
             list.each{
+                Long adNum = Long.parseLong(it.online)
+                // 观众小于等于10的不收录
+                if(adNum < 10){
+                    return
+                }
+
                 // 查看如果是老数据则覆盖,新数据则新建
-                // http://www.quanmin.tv/task/share?from=_39beabe71c3e2bc143558bee32c315f2_1849855
                 String roomId = it.id
                 Room room = Room.findByPlatformAndFlag(platform, roomId)
                 if(!room){
@@ -59,7 +64,7 @@ class ZhanQiRoomService extends SupportLoadRoom {
                 room.name = it.title
                 room.img = it.bpic
                 room.tag = typeContrastService.getTypeName(it.gameName)
-                room.reSetAdNum(Long.parseLong(it.online))
+                room.reSetAdNum(adNum)
 
                 room.anchor = it.nickname
                 room.url = "https://www.zhanqi.tv" + it.url
