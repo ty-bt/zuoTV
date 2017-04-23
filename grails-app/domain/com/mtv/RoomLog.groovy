@@ -39,7 +39,7 @@ class RoomLog {
         def logObj = [t: date.getTime(), n: r.adNum]
         // 是否新上线
         if(newOnLine){
-            logObj.put('n', 1)
+            logObj.put('l', 1)
         }
         array.push(logObj)
         this.content = array.toJSONString()
