@@ -320,8 +320,8 @@
                        ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
                        class="fa heart"></i>
                     <span ng-if="!noLocal">
-                        <a class="fa fa-arrow-left" title="向前移动" ng-click="$root.splitScreen.move(room, 1)"></a>
-                        <a class="fa fa-arrow-right" title="向后移动" ng-click="$root.splitScreen.move(room, -1)"></a>
+                        <a class="fa fa-arrow-left" title="向前移动" ng-click="$root.splitScreen.move(room, -1)"></a>
+                        <a class="fa fa-arrow-right" title="向后移动" ng-click="$root.splitScreen.move(room, 1)"></a>
                         <a class="fa fa-remove" title="从分屏列表移除" ng-click="$root.splitScreen.remove(room.id)"></a>
                     </span>
                     <span ng-if="noLocal">

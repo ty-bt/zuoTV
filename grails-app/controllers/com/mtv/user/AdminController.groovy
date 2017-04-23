@@ -7,6 +7,8 @@ class AdminController {
 
     def userService
 
+    def roomLogService
+
     def openRoomLog(){
         if(userService.getCurrentUser().id != 1l){
             return
@@ -21,5 +23,13 @@ class AdminController {
         room.save(flush: true)
         render Response.success(null, "ok").toJSON()
 
+    }
+
+    def splitLog(){
+        if(userService.getCurrentUser().id != 1l){
+            return
+        }
+        roomLogService.splitTable(params.getDate('date', "yyyy-MM-dd"))
+        render Response.success(null, "ok").toJSON()
     }
 }

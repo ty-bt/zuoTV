@@ -16,7 +16,7 @@ class RoomJob {
 
     static triggers = {
         // 4分钟刷新一次
-        simple repeatInterval: 60000L * 4, startDelay: 10000 // execute job once in 5 seconds
+        simple repeatInterval: 60000L * 5, startDelay: 10000 // execute job once in 5 seconds
     }
 
     def execute() {

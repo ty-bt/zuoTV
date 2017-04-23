@@ -83,9 +83,7 @@ class PandaRoomService extends SupportLoadRoom {
                 room.isOnLine = true
                 room.save()
                 // 记录日志 必须保存完在调用
-                if(room.isLog){
-                    roomLogService.log(room, !oldOLStatus, lastUpdated)
-                }
+                roomLogService.log(room, !oldOLStatus, lastUpdated)
             }
         }
 

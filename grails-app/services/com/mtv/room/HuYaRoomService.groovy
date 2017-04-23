@@ -67,13 +67,13 @@ class HuYaRoomService extends SupportLoadRoom {
                 room.reSetAdNum(adNum)
                 room.anchor = it.nick
                 room.url = "http://www.huya.com/" + it.privateHost
+                // <embed width="800" height="500" allownetworking="all" allowscriptaccess="always" src="http://liveshare.huya.com/14837713/huyacoop.swf" quality="high" bgcolor="#000" wmode="window" allowfullscreen="true" allowFullScreenInteractive="true" type="application/x-shockwave-flash">
+                room.quoteUrl = "http://liveshare.huya.com/${it.privateHost}/huyacoop.swf"
                 room.lastUpdated = lastUpdated
                 room.isOnLine = true
                 room.save()
                 // 记录日志 必须保存完在调用
-                if(room.isLog){
-                    roomLogService.log(room, !oldOLStatus, lastUpdated)
-                }
+                roomLogService.log(room, !oldOLStatus, lastUpdated)
             }
         }
 

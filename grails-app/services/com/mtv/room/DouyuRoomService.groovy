@@ -92,9 +92,7 @@ class DouyuRoomService extends SupportLoadRoom {
             room.isOnLine = true
             room.save()
             // 记录日志 必须保存完在调用
-            if(room.isLog){
-                roomLogService.log(room, !oldOLStatus, lastUpdated)
-            }
+            roomLogService.log(room, !oldOLStatus, lastUpdated)
 //            print("${platform.name}: ${roomList.size()}/${i++}")
         }
         // 将平台下所有房间置为离线

@@ -17,21 +17,31 @@ class RoomLog {
     /* 日志JSON [{d: "时间",n:"观看人数"}]*/
     String content
 
-    /*创建时间*/
-    Date dateCreated = new Date()
+    /* http抓取时间*/
+    Date dateStart
 
     /*最后修改时间*/
-    Date lastUpdated = new Date()
+    Date lastUpdated
 
     static constraints = {
     }
 
-    void addLog(Room r){
+    static mapping = {
+
+        cache true
+    }
+
+    void addLog(Room r, Date date, Boolean newOnLine){
         if(!this.content){
             this.content = "[]"
         }
         JSONArray array = JSONArray.parse(this.content)
-        array.push([t: new Date().getTime(), n: r.adNum])
+        def logObj = [t: date.getTime(), n: r.adNum]
+        // 是否新上线
+        if(newOnLine){
+            logObj.put('n', 1)
+        }
+        array.push(logObj)
         this.content = array.toJSONString()
     }
 }
