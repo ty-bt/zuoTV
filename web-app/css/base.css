@@ -203,8 +203,8 @@ a{text-decoration: none; color: #313131}
 .r-detail .d-content a{color: #fff}
 .r-detail .d-content a.right{float: right}
 .r-detail .d-content .cen{margin: 0 auto;color: #fff;text-shadow: 0 0 3px #000;}
-.r-detail .d-content .cen h3{margin: 0;line-height: 40px;font-size: 18px;font-weight: 700;}
-.r-detail .d-content .cen h3 a{font-size: 14px;font-weight: 500;border: 1px solid;padding: 0 5px;border-radius: 4px;line-height: 23px;float: right;margin-top: 5px;}
+.r-detail .d-content .cen h3{margin: 0;line-height: 40px;font-size: 18px;font-weight: 700;position: relative;}
+.r-detail .d-content .cen h3 a{font-size: 14px;font-weight: 500;border: 1px solid;padding: 0 5px;border-radius: 4px;line-height: 23px;/* float: right; */position: absolute;margin-top: 5px;right: 0;top: 3px;}
 .r-detail .d-content .cen h3 a i{border-left: 1px solid;margin-left: 5px;padding-left: 5px;cursor: pointer;}
 .r-detail .d-content .bottom{}
 
