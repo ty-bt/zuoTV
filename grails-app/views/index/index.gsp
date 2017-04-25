@@ -126,7 +126,10 @@
                     <img ng-src="{{room.img}}"/>
                     <span class="pla-name">{{room.platform.name}}</span>
                     <i class="fa fa-play play trans2" ng-class="{insert: $root.isInsert(room.platform.flag)}"></i>
-                    <span class="add-ss trans2" ng-click="$root.splitScreen.add(room, $event);" ng-if="$root.isInsert(room.platform.flag)">加入分屏</span>
+                    <span class="add-ss trans2">
+                        <i class="fa fa-desktop" title="加入分屏" ng-click="$root.splitScreen.add(room, $event);" ng-if="$root.isInsert(room.platform.flag)"></i>
+                        <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(room, $event);"></i>
+                    </span>
                 </td>
             </tr>
             <tr class="top">
@@ -225,6 +228,8 @@
     </script>
 
 
+
+
     %{--房间首页列表--}%
     <script type="text/ng-template" id="index-tem">
     <div class="body">
@@ -279,6 +284,7 @@
                                 ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
                                 class="fa heart">{{$root.collectMap[curRoom.id] ? "取消关注" : "关注"}}</i>
                         <i class="fa fa-desktop" ng-click="$root.splitScreen.add(curRoom, $event)" title="加入分屏"></i>
+                        <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(curRoom, $event);"></i>
                     </a>
 
                 </h3>
@@ -298,6 +304,7 @@
                    ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
                    class="fa heart"></i>
                 <i class="fa fa-desktop" title="加入分屏" ng-click="$root.splitScreen.add(curRoom, $event)"></i>
+                <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(curRoom, $event);"></i>
                 <a class="fa fa-level-up" target="_blank" title="新窗口打开{{curRoom.platform.name}}观看" href="{{curRoom.url}}"></a>
             </div>
             <i class="fa fa-close" title="关闭" ng-click="close()" style="position: absolute;right: 0;top: 0;font-size: 20px;color: #fff;padding: 5px;margin: 5px 21px 0 0;"></i>
@@ -319,10 +326,12 @@
                        ng-click="$root.changeCollect($event, room);"
                        ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
                        class="fa heart"></i>
+                    <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(room, $event);"></i>
                     <span ng-if="!noLocal">
                         <a class="fa fa-arrow-left" title="向前移动" ng-click="$root.splitScreen.move(room, -1)"></a>
                         <a class="fa fa-arrow-right" title="向后移动" ng-click="$root.splitScreen.move(room, 1)"></a>
                         <a class="fa fa-remove" title="从分屏列表移除" ng-click="$root.splitScreen.remove(room.id)"></a>
+
                     </span>
                     <span ng-if="noLocal">
                         <a class="fa fa-desktop" title="添加到我的分屏" ng-click="$root.splitScreen.add(room)"></a>
@@ -344,15 +353,22 @@
     </div>
     </script>
 
+    <!-- 波动图表 -->
+    <script type="text/ng-template" id="one-chart-tem">
+        <div class="one-chart" ng-controller="oneLog">
+            <div ng-if="roomLog" log-chart="roomLog"></div>
+        </div>
+    </script>
+
     %{--单个观众变化图表指令--}%
     <script type="text/ng-template" id="log-chart-tem">
     <div class="log-chart">
-        <div>
-            <span class="chart-range">得分：{{roomLog.mark}}</span>
-            <span class="chart-range">样本总数：{{contentData.length}}</span>
-            <span class="chart-range" ng-repeat="range in rangeStatistics">波动{{range.title}}数量：{{range.count}}</span>
-            <span class="chart-range">{{roomLog.dateCreated}}</span>
-        </div>
+        %{--<div>--}%
+            %{--<span class="chart-range">得分：{{roomLog.mark}}</span>--}%
+            %{--<span class="chart-range">样本总数：{{contentData.length}}</span>--}%
+            %{--<span class="chart-range" ng-repeat="range in rangeStatistics">波动{{range.title}}数量：{{range.count}}</span>--}%
+            %{--<span class="chart-range">{{roomLog.dateCreated}}</span>--}%
+        %{--</div>--}%
         <div class="chart">
 
         </div>
@@ -450,7 +466,10 @@
                             </span>
                             <span class="ellipsis bottom room-name">{{room.name}}</span>
                             <span class="ellipsis bottom num">{{room.adNum | wanNum}}</span>
-                            <span class="r-btn" ng-click="$root.splitScreen.remove(room.id, $event)">移除</span>
+                            <span class="r-btn" >
+                                <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(room, $event);"></i>
+                                <i class="fa fa-remove" title="移除" ng-click="$root.splitScreen.remove(room.id, $event)"></i>
+                            </span>
                         </a>
                     </div>
                 </div>
@@ -485,7 +504,11 @@
                             </span>
                             <span class="ellipsis bottom room-name">{{room.name}}</span>
                             <span class="ellipsis bottom num">{{room.adNum | wanNum}}</span>
-                            <span class="r-btn" ng-if="$root.isInsert(room.platform.flag)" ng-click="$root.splitScreen.add(room, $event)">加入分屏</span>
+                            <span class="r-btn" >
+                                <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(room, $event);"></i>
+                                <i class="fa fa-desktop" title="加入分屏" ng-if="$root.isInsert(room.platform.flag)" ng-click="$root.splitScreen.add(room, $event)"></i>
+                            </span>
+                            %{--<span class="r-btn" ng-if="$root.isInsert(room.platform.flag)" ng-click="$root.splitScreen.add(room, $event)">加入分屏</span>--}%
                             %{--<i class="fa fa-play-circle play" ng-class="{insert: room.quoteUrl}"></i>--}%
                         </a>
                     </div>

@@ -141,9 +141,9 @@ window.tool = {
                         trigger: 'axis'
                     },
                     grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
+                        left: '1%',
+                        right: '1%',
+                        bottom: '1%',
                         containLabel: true
                     },
                     toolbox: {
@@ -168,7 +168,8 @@ window.tool = {
                             type:'line',
                             data: $(contentData).collect("n")
                         }
-                    ]
+                    ],
+                    color: ["#1abc9c"]
                 };
                 myChart.setOption(option);
             }
@@ -270,6 +271,10 @@ window.tool = {
 
                 config.resize = function(win){
                     var winEle = element.find("[index=" + win.index + "]");
+                    winEle.css({
+                        width: win.width || 'auto',
+                        height: win.height || 'auto'
+                    });
                     winEle.css({
                         'margin-left': -winEle.width() / 2,
                         'margin-top': -winEle.height() / 2

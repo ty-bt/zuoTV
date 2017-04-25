@@ -263,6 +263,12 @@
             $rootScope.windows.add({url: 'register-tem'});
         };
 
+        $rootScope.showChart = function(room, $event){
+            $rootScope.windows.add({url: 'one-chart-tem', room: room, width: '80%'});
+            $event.stopPropagation();
+            $event.preventDefault();
+        };
+
         // 退出
         $rootScope.logout = function(){
             $http.post(window.ctx + "auth/logout").success(function(data){
@@ -688,6 +694,33 @@
                 }
             }else{
                 alert(data.message || "系统错误")
+            }
+        });
+    }]);
+
+    // 单个观众数量
+    main.controller('oneLog', ['$scope', '$http', '$element', '$stateParams', '$state', '$sce', function($scope, $http, $element, $stateParams, $state, $sce){
+        var room = $scope.curWindow.room;
+        $http({
+            url: window.ctx + "roomLog/one",
+            params: {
+                roomId: room.id
+            }
+        }).success(function(data){
+            $(window).resize();
+            if(data.success){
+                if(window.echarts){
+                    $scope.roomLog = data.data;
+                }else{
+                    $.getScript("http://cdn.bootcss.com/echarts/3.5.0/echarts.min.js", function(){
+                        $scope.roomLog = data.data;
+                        $scope.$apply("roomLog");
+                    });
+
+                }
+            }else{
+                $scope.$root.windows.close($scope.curWindow);
+                alert(data.message || "系统错误");
             }
         });
     }]);
