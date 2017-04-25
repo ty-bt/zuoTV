@@ -128,7 +128,7 @@
                     <i class="fa fa-play play trans2" ng-class="{insert: $root.isInsert(room.platform.flag)}"></i>
                     <span class="add-ss trans2">
                         <i class="fa fa-desktop" title="加入分屏" ng-click="$root.splitScreen.add(room, $event);" ng-if="$root.isInsert(room.platform.flag)"></i>
-                        <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(room, $event);"></i>
+                        <i class="fa fa-bar-chart" title="观众变化图表" ng-click="$root.showChart(room, $event);"></i>
                     </span>
                 </td>
             </tr>
@@ -284,7 +284,7 @@
                                 ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
                                 class="fa heart">{{$root.collectMap[curRoom.id] ? "取消关注" : "关注"}}</i>
                         <i class="fa fa-desktop" ng-click="$root.splitScreen.add(curRoom, $event)" title="加入分屏"></i>
-                        <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(curRoom, $event);"></i>
+                        <i class="fa fa-bar-chart" title="观众变化图表" ng-click="$root.showChart(curRoom, $event);"></i>
                     </a>
 
                 </h3>
@@ -304,7 +304,7 @@
                    ng-class="{'fa-heart': $root.collectMap[curRoom.id], 'fa-heart-o': !$root.collectMap[curRoom.id]}"
                    class="fa heart"></i>
                 <i class="fa fa-desktop" title="加入分屏" ng-click="$root.splitScreen.add(curRoom, $event)"></i>
-                <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(curRoom, $event);"></i>
+                <i class="fa fa-bar-chart" title="观众变化图表" ng-click="$root.showChart(curRoom, $event);"></i>
                 <a class="fa fa-level-up" target="_blank" title="新窗口打开{{curRoom.platform.name}}观看" href="{{curRoom.url}}"></a>
             </div>
             <i class="fa fa-close" title="关闭" ng-click="close()" style="position: absolute;right: 0;top: 0;font-size: 20px;color: #fff;padding: 5px;margin: 5px 21px 0 0;"></i>
@@ -326,7 +326,7 @@
                        ng-click="$root.changeCollect($event, room);"
                        ng-class="{'fa-heart': $root.collectMap[room.id], 'fa-heart-o': !$root.collectMap[room.id]}"
                        class="fa heart"></i>
-                    <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(room, $event);"></i>
+                    <i class="fa fa-bar-chart" title="观众变化图表" ng-click="$root.showChart(room, $event);"></i>
                     <span ng-if="!noLocal">
                         <a class="fa fa-arrow-left" title="向前移动" ng-click="$root.splitScreen.move(room, -1)"></a>
                         <a class="fa fa-arrow-right" title="向后移动" ng-click="$root.splitScreen.move(room, 1)"></a>
@@ -467,7 +467,7 @@
                             <span class="ellipsis bottom room-name">{{room.name}}</span>
                             <span class="ellipsis bottom num">{{room.adNum | wanNum}}</span>
                             <span class="r-btn" >
-                                <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(room, $event);"></i>
+                                <i class="fa fa-bar-chart" title="观众变化图表" ng-click="$root.showChart(room, $event);"></i>
                                 <i class="fa fa-remove" title="移除" ng-click="$root.splitScreen.remove(room.id, $event)"></i>
                             </span>
                         </a>
@@ -505,7 +505,7 @@
                             <span class="ellipsis bottom room-name">{{room.name}}</span>
                             <span class="ellipsis bottom num">{{room.adNum | wanNum}}</span>
                             <span class="r-btn" >
-                                <i class="fa fa-bar-chart" title="查看观众波动" ng-click="$root.showChart(room, $event);"></i>
+                                <i class="fa fa-bar-chart" title="观众变化图表" ng-click="$root.showChart(room, $event);"></i>
                                 <i class="fa fa-desktop" title="加入分屏" ng-if="$root.isInsert(room.platform.flag)" ng-click="$root.splitScreen.add(room, $event)"></i>
                             </span>
                             %{--<span class="r-btn" ng-if="$root.isInsert(room.platform.flag)" ng-click="$root.splitScreen.add(room, $event)">加入分屏</span>--}%
