@@ -12,8 +12,8 @@
     <title ng-bind="title">zuoTV - 聚合全网直播</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <%String version = Metadata.getCurrent()[Metadata.APPLICATION_VERSION]%>
-    <meta name="description" content="zuo TV,一站聚合六个直播平台百万主播,不用一个一个平台去找喜爱的主播.提供分屏观看功能,可以同时看四个主播,现已收录斗鱼,龙珠,虎牙,全民,战旗,熊猫平台..." />
-    <meta name="keywords" content="zuotv,聚合直播,作TV,nozuonodie,分屏直播,分屏观看,直播人数统计,直播平台统计,Zuo,Zuo TV,直播导航,直播推荐,妹纸直播,星秀,放映室"/>
+    <meta name="description" content="zuoTV,一站聚合七个直播平台百万主播,支持分屏观看,提供观众变化图表等统计功能..." />
+    <meta name="keywords" content="zuoTV,聚合直播,作TV,nozuonodie,分屏观看,观众变化图表,直播人数统计,直播平台统计,直播导航,直播推荐"/>
 
     <link Rel="SHORTCUT ICON" href="${resource(file: 'favicon32.ico')}">
     <!--[if lt IE 10]>
@@ -560,7 +560,6 @@
 
     </div>
 </div>
-</body>
 <script type="text/javascript">
     // google跟踪代码
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -573,6 +572,8 @@
 
     // baidu跟踪代码
     var _hmt = _hmt || [];
+    // 关闭自动记录
+    _hmt.push(['_setAutoPageview', false]);
     (function() {
         var hm = document.createElement("script");
         hm.src = "https://hm.baidu.com/hm.js?ef1feae8cc0e92928cabf9ef9c690893";
@@ -580,4 +581,6 @@
         s.parentNode.insertBefore(hm, s);
     })();
 </script>
+</body>
+
 </html>
