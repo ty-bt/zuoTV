@@ -28,6 +28,8 @@ class RoomLogService {
         RoomLog roomLog = RoomLog.createCriteria().get{
             eq('room.id', room.id)
             ge('dateStart', DateUtils.formatDayMin(date))
+            // 避免一次抓到两个
+            lt('dateStart', date)
         }
         if(!roomLog){
             roomLog = new RoomLog()
