@@ -450,7 +450,19 @@
     // 路由配置
     main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
         // 无效链接全部转向首页
-        $urlRouterProvider.otherwise('/1////');
+        // $urlRouterProvider.otherwise('/1////');
+        $urlRouterProvider.otherwise(function(a, cur){
+            // 以前首页只有四个参数 现在有五个 老链接跳转
+            try{
+                var strArr = cur.$$path.match(/^((\/[^\/]*){4})(\/[^\d]+(\/[^\/]*)*)$/);
+                if(strArr){
+                    return strArr[1] + "/" + strArr[3]
+                }
+            }catch(e){
+            }
+            return '/1////';
+
+        });
 
         // 首页
         $stateProvider.state('room', {
