@@ -254,6 +254,8 @@
             <span ng-if="$stateParams.tag">{{$stateParams.tag}}</span>
             <span ng-if="$stateParams.kw">包含'{{$stateParams.kw}}'</span>
             <a class="btn" ng-if="rooms.length >= 4" ng-click="$root.splitScreen.coverAll(rooms);" title="分屏暂不支持熊猫">分屏查看前四个房间</a>
+            <a class="btn" ng-if="$stateParams.order" ui-sref="room({page:1, order: ''})">默认排序</a>
+            <a class="btn" ng-if="!$stateParams.order" ui-sref="room({page:1, order: 1})">按观看数排序</a>
         </h2>
         <h3 ng-if="rooms" class="show-tit" ng-show="!rooms.length">米有找到相应的房间...</h3>
         <a ng-repeat="room in rooms" repeat-finish room-show></a>

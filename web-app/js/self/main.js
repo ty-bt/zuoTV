@@ -450,11 +450,11 @@
     // 路由配置
     main.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
         // 无效链接全部转向首页
-        $urlRouterProvider.otherwise('/1///');
+        $urlRouterProvider.otherwise('/1////');
 
         // 首页
         $stateProvider.state('room', {
-            url: '/:page/:kw/:platformName/:tag',
+            url: '/:page/:kw/:platformName/:tag/:order',
             templateUrl: "index-tem",
             controller: 'room.index',
             title: function(event, toState, toParams, fromState, fromParams){
@@ -528,7 +528,8 @@
                     page: page,
                     tag: $stateParams.tag,
                     kw: $stateParams.kw,
-                    platformName: $stateParams.platformName
+                    platformName: $stateParams.platformName,
+                    order: $stateParams.order
                 }
             }).success(function(data){
                 $scope.rooms = data.rooms;

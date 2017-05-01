@@ -41,6 +41,9 @@ class RoomController {
                 Assert.notNull(platform, "找不到对应的平台")
                 eq('platform', platform)
             }
+            if(params.order){
+                order('adNum', 'desc')
+            }
         }
     }
 
