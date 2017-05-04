@@ -135,9 +135,9 @@ a{text-decoration: none; color: #313131}
 .search-input i{position: absolute;color: #1abc9c;float: right;right: 0;padding: 0 5px;top: 0;line-height: 24px;cursor: pointer;}
 
 /* 房间块样式*/
-.room{width: 338px;height: 251px;display: inline-block;background: #fff;margin: 10px 0px 10px 10px;overflow: hidden;box-shadow: 0px 2px 0px 0px #fff;}
-.room:hover{box-shadow: 0px 2px 0px 0px #1abc9c;/* border: 1px solid; */}
-.room table{table-layout:fixed ; width:100%;}
+.room{width: 338px;height: 251px;display: inline-block;background: #fff;margin: 10px 0px 10px 10px;overflow: hidden;border-bottom: 2px solid #fff;}
+.room:hover{/* box-shadow: 0px 2px 0px 0px #1abc9c; */border-bottom: 2px solid #1abc9c;}
+.room table{table-layout:fixed;width:100%;height: 100%;}
 .room tr td+td{width: 30%;}
 .room .ellipsis{padding: 0 5px;}
 .room .photo{width: 100%;position: relative;display: table-cell;overflow: hidden;font-size: 0;}
