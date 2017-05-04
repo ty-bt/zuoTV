@@ -18,16 +18,15 @@
             Trianglify.colorbrewer[k + "_f"] = newArr;
         }
         var currentDate = new Date();
-        $(".main").css({
+        $(".left-bg").css({
             "background-image": "url(" + Trianglify({
                 // variance: "0.74",
-                // seed: currentDate.getYear() + currentDate.getDay() + currentDate.getDate() + currentDate.getHours(),
+                seed: currentDate.getYear() + currentDate.getDay() + currentDate.getDate() + currentDate.getHours(),
                 // width: $(window).width(),
                 width: 245,
                 height: $(window).height(),
-                // cell_size: 30,
-                x_colors: Trianglify.colorbrewer["Spectral_f"]/*,
-                x_colors: Trianglify.colorbrewer["Spectral_f"]*/}).png() + ")"
+                cell_size: 30,
+                x_colors: "random"}).png() + ")"
         });
         $rootScope.ctx = window.ctx;
         $rootScope.webName = "zuoTV";
@@ -423,10 +422,10 @@
         $(window).resize(function(){
             var rightDiv = $(".main .content>.right");
             var viewDiv = rightDiv.find(".m-view");
-            rightDiv.width($(window).width() - rightDiv.offset().left);
-            rightDiv.height($(window).height());
-            $(".main").height($(window).height());
-            viewDiv.height($(window).height() - viewDiv.offset().top);
+            // rightDiv.width($(window).width() - rightDiv.offset().left);
+            // rightDiv.height($(window).height());
+            // $(".main").height($(window).height());
+            // viewDiv.height($(window).height() - viewDiv.offset().top);
 
             // 重新调整滚动位置
             leftMousewheel(0);
@@ -526,6 +525,7 @@
      * 显示所有房间
      */
     main.controller('room.index', ['$scope', '$http', '$element', '$stateParams', '$state', function($scope, $http, $element, $stateParams, $state){
+        $(window).resize();
         $scope.$stateParams = $stateParams;
         $scope.$root.search.kw = $stateParams.kw;
         // 每页显示
@@ -567,7 +567,7 @@
         }
 
         $scope.$on("onRepeatFinish", function(){
-            $(window).resize();
+            // $(window).resize();
         });
     }]);
 

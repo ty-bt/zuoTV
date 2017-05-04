@@ -117,7 +117,7 @@
        ng-class="{'off-line': !room.isOnLine}"
        ng-style="roomSize">
         <table cellspacing="0" cellpadding="0">
-            <tr>
+            <tr style="height: 0">
                 <td style="width:70%;"></td>
                 <td></td>
             </tr>
@@ -394,21 +394,18 @@
         </div>
         <a href="mailto:ty_bt@live.cn" style="color:#797979; line-height: 20px; margin-top:6px;">站务与建议:ty_bt@live.cn</a>
     </div>
-    <div class="content table">
+    <div class="content">
+        <div class="left-bg"></div>
         <div class="left">
             <a ui-sref="room({page:1, tag: '', platformName: '', kw: ''})"
                ui-sref-opts="{reload:true}" href="${createLink(controller: 'room', action: 'list')}" title="首页">
-                <h1><span>zuo</span> TV</h1>
+                <h1 class="trans"><span>zuo</span> TV</h1>
             </a>
             <div class="condition search-input">
                 <input type="text" placeholder="输入房间名或主播名搜索" ng-keyup="search.submit($event)" ng-model="search.kw" />
                 <i class="fa fa-search" ng-click="$state.go('room', {page:1, kw: search.kw}, {inherit: true})"></i>
             </div>
 
-            %{--<div>--}%
-            %{--<button></button>--}%
-            %{--</div>--}%
-            %{--seo --}%
             <div class="m-search trans2">
 
                 <div class="condition" ng-show="topData.platforms">
@@ -553,7 +550,6 @@
 
             </div>
         </div>
-        <div class="clear"></div>
     </div>
 
 
