@@ -156,7 +156,7 @@ window.tool = {
                             boundaryGap: false,
                             data: $(contentData).collect(function(){
                                 var date = new Date(this.t);
-                                return date.getHours() + ":" + date.getMinutes();
+                                return date.getHours() + ":" + (date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes());
                             })
                     },
                     yAxis: {
