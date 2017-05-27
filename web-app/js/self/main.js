@@ -199,7 +199,14 @@
          * 打开房间的时候调用
          * @param room 房间对象
          */
-        $rootScope.openRoom = function(room){
+        $rootScope.openRoom = function(room, $event){
+            // 不可以嵌入直接打开
+            if(!$rootScope.isInsert(room.platform.flag)){
+                $event.stopPropagation();
+                $event.preventDefault();
+                window.open(room.url, "_blank")
+                return;
+            }
             $rootScope.curRoom = room;
         };
 
@@ -209,7 +216,7 @@
          * @returns {boolean}
          */
         $rootScope.isInsert = function(flag){
-            return flag != "panda"/* && flag != "zhanQi"*/;
+            return flag != "panda" && flag != "quanMin";
         };
 
         /**

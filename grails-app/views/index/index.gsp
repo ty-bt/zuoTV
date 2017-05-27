@@ -12,10 +12,10 @@
     <title ng-bind="title">zuoTV - 聚合全网直播</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <%String version = Metadata.getCurrent()[Metadata.APPLICATION_VERSION]%>
-    <meta name="description" content="zuoTV,一站聚合七个直播平台百万主播,支持分屏观看,提供观众变化图表等统计功能..." />
-    <meta name="keywords" content="zuoTV,聚合直播,作TV,nozuonodie,分屏观看,观众变化图表,直播人数统计,直播平台统计,直播导航,直播推荐"/>
+    <meta name="description" content="zuoTV,一站聚合七个直播平台百万主播,现已收录斗鱼,熊猫,虎牙,全民,龙珠,战旗,火猫平台,支持分屏观看,查看观众波动图表..." />
+    <meta name="keywords" content="zuoTV,聚合直播,美女直播,游戏直播,分屏观看,观众变化图表,直播人数统计,直播导航,直播推荐"/>
 
-    <link Rel="SHORTCUT ICON" href="${resource(file: 'favicon32.ico')}">
+    %{--<link Rel="SHORTCUT ICON" href="${resource(file: 'favicon32.ico')}">--}%
     <!--[if lt IE 10]>
         <script type="text/javascript">window.location.href = "${resource(file: 'no-ie.gsp')}";</script>
     <![endif]-->
@@ -112,7 +112,7 @@
     %{-- 房间显示模板 --}%
     <script type="text/ng-template" id="room-show-tem">
     <a class="room"
-       ng-click="$root.openRoom(room)"
+       ng-click="$root.openRoom(room, $event)"
        ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}"
        ng-class="{'off-line': !room.isOnLine}"
        ng-style="roomSize">
@@ -452,7 +452,7 @@
                         <a ng-repeat="room in $root.splitScreen.data | orderBy : '-splitSort'"
                         %{--<a ng-repeat="coll in $root.collects"--}%
                            repeat-finish
-                           ng-click="openRoom(room)"
+                           ng-click="openRoom(room, $event)"
                            class="room2 trans2"
                            ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}">
                             <img ng-src="{{room.img}}"/>
@@ -490,7 +490,7 @@
                         <a ng-repeat="room in $root.onLineCollects"
                         %{--<a ng-repeat="coll in $root.collects"--}%
                            repeat-finish
-                           ng-click="openRoom(room)"
+                           ng-click="openRoom(room, $event)"
                            class="room2 trans2"
                            ng-href="{{$state.href('room.insetDetail', {roomId: room.id}, {inherit: true})}}">
                             <img ng-src="{{room.img}}"/>
