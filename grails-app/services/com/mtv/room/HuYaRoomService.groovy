@@ -31,7 +31,7 @@ class HuYaRoomService extends SupportLoadRoom {
         for(int a = 1; a <= pageCount; a++){
             def page = this.getPageObj(a)
             if(a == 1){
-                pageCount = Math.ceil(Integer.parseInt(page.data.total) / 20d)
+                pageCount = Math.ceil(page.data.total / 20d)
                 log.info("${platformFlag}总条数:${page.data.total},总页数${pageCount}")
             }
             pageList << page.data.list

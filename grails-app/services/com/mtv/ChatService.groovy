@@ -21,8 +21,8 @@ class ChatService {
         if(msg.length() > 500){
             throw new Exception("内容过长")
         }
-        def sendMap = [u: [n: user.name, i: user.id], msg: msg, d: new Date()];
-        brokerMessagingTemplate.convertAndSend("/topic/chatMsg", JSON.toJSONString(sendMap))
+        def sendMap = [u: [n: user.name, i: user.id, c: user.color], msg: msg, d: new Date(),];
+        brokerMessagingTemplate.convertAndSend("/topic/chatMsg", (sendMap as grails.converters.JSON).toString())
         this.log(sendMap)
     }
 
@@ -36,7 +36,7 @@ class ChatService {
         Assert.notNull(type, "类型不能为空")
 
         def sendMap = [msg: msg, type: type, d: new Date()];
-        brokerMessagingTemplate.convertAndSend("/topic/chatMsg", JSON.toJSONString(sendMap))
+        brokerMessagingTemplate.convertAndSend("/topic/chatMsg", (sendMap as grails.converters.JSON).toString())
         this.log(sendMap)
     }
 
@@ -76,6 +76,7 @@ class ChatService {
             chatLog.content = JSON.toJSONString(saveData)
             chatLog.startDate = saveData[0].d
             chatLog.endDate = saveData[-1].d
+            chatLog.size = saveData.size()
             chatLog.save()
         }
 

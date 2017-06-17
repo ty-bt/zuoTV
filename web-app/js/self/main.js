@@ -30,6 +30,8 @@
         });
         $rootScope.ctx = window.ctx;
         $rootScope.webName = "zuoTV";
+        // 是否显示聊天窗口
+        $rootScope.showChat = false;
         var defaultTitle = $rootScope.webName + " - 聚合全网直播";
         $rootScope.title = defaultTitle;
         $rootScope.$root.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
@@ -377,11 +379,18 @@
             socket: new SockJS(window.ctx + "stomp"),
             client: null,
             logs: [],
+            show: false,
             init: function(){
                 var _this = this;
                 $http.post(window.ctx + "chat/latelyLog").success(function(data){
                     if(data.success){
                         _this.logs = data.data.concat(_this.logs);
+                        $(_this.logs).each(function(i){
+                            // 间隔超过5分钟或第一条要显示时间
+                            if(!i || new Date(this.d).getTime() - new Date(_this.logs[i - 1].d).getTime() >= 300000){
+                                this.longTime = true;
+                            }
+                        });
                         _this.setScrollBottom();
                     }else{
                         $log.log("加载最近聊天记录错误", data);
@@ -395,14 +404,43 @@
                         var data = JSON.parse(JSON.parse(message.body));
                         if(data.msg){
                             $rootScope.$apply(function(){
+                                if(!_this.logs.length || new Date(new Date(data.d).getTime() - _this.logs[_this.logs.length - 1].d).getTime() >= 300000){
+                                    // 间隔超过5分钟要显示时间
+                                    data.longTime = true;
+                                }
                                 _this.logs.push(data);
                                 _this.setScrollBottom();
+
+                                var top = 0;
+                                var lastSp = $(".danmu span:last");
+                                if(lastSp.length){
+                                    var lastTop = parseInt(lastSp.css("top"))
+                                    if(lastTop < 50){
+                                        top = lastTop + 25;
+                                    }
+                                }
+                                var sp = $("<span></span>").text(data.msg).css({top: top});
+                                // 74
+                                $(".danmu").append(sp);
+                                setTimeout(function(){
+                                    sp.remove();
+                                    $(".chat-icon").removeClass("hover");
+                                }, 3000);
+                                $(".chat-icon").addClass("hover");
                             });
                         }
                     });
                 });
 
                 return this;
+            },
+            showHide: function(){
+                this.show = !this.show;
+                this.setScrollBottom(true);
+                setTimeout(function(){
+                    // 重新调整滚动位置
+                    leftMousewheel(0);
+                }, 100);
             },
             send: function(msg){
                 if(!msg.trim()){
@@ -510,7 +548,6 @@
             var targetMar = curMar + delta * 150;
             // 最小上边距
             var minMar = $(window).height() - leftEle.offset().top - height;
-            // console.log(targetMar + "-" + minMar + "-" + height);
             if(targetMar < minMar){
                 targetMar = minMar
             }

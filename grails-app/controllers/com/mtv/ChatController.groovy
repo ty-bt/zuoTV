@@ -49,7 +49,7 @@ class ChatController {
 
 
     /**
-     * websocket 发送消息, 推送消息地址
+     * websocket 发送消息, 推送消息地址 已废弃(20170618)
      * @param headerAccessor
      * @param text
      * @return
@@ -69,7 +69,7 @@ class ChatController {
         if(headerAccessor.sessionAttributes.httpSessionID){
             User user = sessionTrackerService.getSessionById(headerAccessor.sessionAttributes.httpSessionID)?.user
             if(obj?.c && user){
-                brokerMessagingTemplate.convertAndSend("/topic/chatMsg", ([u: [n: user.name, i: user.id], msg: obj?.c] as grails.converters.JSON).toString())
+                brokerMessagingTemplate.convertAndSend("/topic/chatMsg", JSON.toJSONString([u: [n: user.name, i: user.id], msg: obj?.c]))
                 return JSON.toJSONString([success: true])
             }
         }

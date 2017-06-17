@@ -388,7 +388,7 @@
     <div class="f-user trans2">
         <div class="no-login" ng-if="curUser">
             <i style="cursor: default"><span class="fa fa-user"></span>&nbsp;{{curUser.name}}<span ng-if="curUser.isVip" class="vip" title="传说中尊贵的SVIP" ng-style="{color: curUser.color}">贵</span></i>
-            <i class="fa fa-comments" ng-click="windows.add({url: 'update-pwd-tem'})" title="网站弹幕"></i>
+            <i class="fa fa-comments chat-icon" ng-click="$root.chat.showHide()" title="网站闲聊"></i>
             <i class="fa fa-key" ng-click="windows.add({url: 'update-pwd-tem'})" title="修改密码"></i>
             <i class="fa fa-power-off" ng-click="$root.logout()" title="退出"></i>
         </div>
@@ -515,7 +515,7 @@
                         </a>
                     </div>
                 </div>
-                <div style="height: 60px;"></div>
+                <div ng-style="{height: $root.chat.show ? 355 : 60}"></div>
             </div>
         </div>
         <div class="right">
@@ -562,13 +562,17 @@
     </div>
 
 </div>
+<div class="danmu">
+
+</div>
 %{-- 聊天 --}%
-<div class="chat">
-    <div class="chat-head">聊天</div>
+<div class="chat" ng-show="$root.chat.show" ng-cloak>
+    <div class="chat-head">闲聊<a class="fa fa-close" ng-click="$root.chat.showHide()"></a></div>
     <div class="chat-logs">
         <div class="chat-logs-height">
-            <div ng-repeat="log in chat.logs" class="log" ng-class="{self: curUser && log.u.n === curUser.name}">
-                <div class="name" title="{{log.u.n}}">{{log.u.n.substr(-1, 1)}}</div>
+            <div ng-repeat-start="log in chat.logs" ng-if="log.longTime" class="date">{{log.d | date: 'MM-dd HH:mm'}}</div>
+            <div ng-repeat-end class="log" ng-class="{self: curUser && log.u.n === curUser.name}">
+                <div class="name" ng-style="{color: log.u.c}" title="{{log.u.n}}">{{log.u.n.substr(-1, 1)}}</div>
                 <div class="msg"><pre>{{log.msg}}</pre></div>
                 <div class="clear"></div>
             </div>
