@@ -1,6 +1,6 @@
 @charset "UTF-8";
-body{font-size: 12px; font-family: '微软雅黑';}
-a{text-decoration: none; color: #313131}
+body{font-size: 12px;font-family: 'Avant Garde','微软雅黑';}
+a{text-decoration: none;color: #313131;cursor: pointer;margin: 0 10px;}
 
 .table{display: table; table-layout: fixed; width: 100%;}
 .table>div{display: table-cell; vertical-align: top}
@@ -333,3 +333,95 @@ a{text-decoration: none; color: #313131}
 .log-chart .chart-range{display: inline-block; margin-right: 20px; font-weight: bold}
 
 .one-chart{min-width: 800px;height: 300px;margin-top: 10px;padding: 20px 20px;}
+
+/* 聊天 */
+.chat{position: absolute;top: 15px;left: 20px;width: 245px;border-radius: 6px;overflow: hidden;box-shadow: 0 0 3px 0px #62caff;}
+.chat .chat-head{
+    font-size: 14px;
+    text-align: center;
+    line-height: 30px;
+    background: #62caff;
+    color: #fff;
+}
+.chat .chat-logs{
+    height: 200px;
+    background: #f7fcff;
+    overflow: auto;
+}
+.chat .chat-logs .chat-logs-height{padding: 15px 10px}
+.chat .chat-logs .log{
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.chat .chat-logs .log>div:not(.clear){float:left;}
+.chat .chat-logs .log .name{
+    width: 30px;
+    text-align: center;
+    background: #1abc9c;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+}
+.chat .chat-logs .log .msg{
+    max-width: 160px;
+    box-sizing: border-box;
+    padding: 8px 11px;
+    background: #fff;
+    border-radius: 0 5px 5px 5px;
+    box-shadow: 0px 2px 13px -6px;
+    margin-left: 10px;
+    position: relative;
+}
+.chat .chat-logs .log .msg pre{margin: 0;word-break: break-all;white-space: pre-wrap;}
+.chat .chat-logs .log .msg:before{content: '';position: absolute;width: 10px;height: 10px;left: -10px;top: 0;background: #fff;}
+.chat .chat-logs .log .msg:after{content: '';position: absolute;width: 10px;height: 10px;left: -10px;top: 0px;background: #f7fcff;border-radius: 0 5px 0 0;}
+.chat .chat-logs .log.self>div:not(.clear){float:right}
+.chat .chat-logs .log.self .msg{
+    margin: 0 10px 0 0;
+    background: #65c8ff;
+    border-radius: 10px 0px 10px 10px;
+    box-shadow: none;
+    color: #d6ffff;
+}
+.chat .chat-logs .log.self .msg:before{right: -8px;left: auto;background: #62caff;}
+.chat .chat-logs .log.self .msg:after{left: auto;right: -10px;border-radius: 5px 0 0 0;}
+
+.chat .chat-send{
+    position: relative;
+}
+.chat .chat-send textarea{
+    resize: none;
+    border: none;
+    height: 44px;
+    padding: 8px 44px 8px 10px;
+    font-size: 13px;
+    width: 100%;
+    outline: none;
+    box-shadow: 0 0 2px 0px #62caff;
+    box-sizing: border-box;
+}
+.chat .chat-send textarea:focus{box-shadow: 0 0 10px -1px #62caff;}
+.chat .chat-send a{
+    color: #62caff;
+    font-size: 25px;
+    line-height: 44px;
+    text-align: center;
+    width: 44px;
+    background: #fff;
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 0;
+}
+.chat .chat-send a:hover{}
+.chat .chat-login{
+    background: #fff;
+    line-height: 45px;
+    text-align: center;
+}
+.chat .chat-login a{}

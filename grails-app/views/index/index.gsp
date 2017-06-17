@@ -30,13 +30,15 @@
     <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="http://cdn.bootcss.com/zclip/1.1.2/jquery.zclip.min.js"></script>
     <script src="http://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
-    <script type="text/javascript" src="http://cdn.bootcss.com/angular.js/1.5.6/angular.min.js"></script>
+    <script src="http://cdn.bootcss.com/angular.js/1.5.6/angular.min.js"></script>
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular.min.js')}"></script>--}%
     %{--<script type="text/javascript" src="${resource(file: '/js/angular/angular-ui-router.min.js')}"></script>--}%
     <script src="http://cdn.bootcss.com/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
     <script src="http://cdn.bootcss.com/d3/4.5.0/d3.min.js"></script>
 
     <script src="http://cdn.bootcss.com/trianglify/1.0.1/trianglify.min.js"></script>
+    <script src="http://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="http://cdn.bootcss.com/stomp.js/2.3.3/stomp.js"></script>
 
     <script type="text/javascript" src="${resource(file: '/js/self/tools.js')}?v=${version}"></script>
     <script type="text/javascript" src="${resource(file: '/js/self/main.js')}?v=${version}"></script>
@@ -386,6 +388,7 @@
     <div class="f-user trans2">
         <div class="no-login" ng-if="curUser">
             <i style="cursor: default"><span class="fa fa-user"></span>&nbsp;{{curUser.name}}<span ng-if="curUser.isVip" class="vip" title="传说中尊贵的SVIP" ng-style="{color: curUser.color}">贵</span></i>
+            <i class="fa fa-comments" ng-click="windows.add({url: 'update-pwd-tem'})" title="网站弹幕"></i>
             <i class="fa fa-key" ng-click="windows.add({url: 'update-pwd-tem'})" title="修改密码"></i>
             <i class="fa fa-power-off" ng-click="$root.logout()" title="退出"></i>
         </div>
@@ -556,6 +559,28 @@
     %{-- 弹出窗口管理 --}%
     <div m-window="windows">
 
+    </div>
+
+</div>
+%{-- 聊天 --}%
+<div class="chat">
+    <div class="chat-head">聊天</div>
+    <div class="chat-logs">
+        <div class="chat-logs-height">
+            <div ng-repeat="log in chat.logs" class="log" ng-class="{self: curUser && log.u.n === curUser.name}">
+                <div class="name" title="{{log.u.n}}">{{log.u.n.substr(-1, 1)}}</div>
+                <div class="msg"><pre>{{log.msg}}</pre></div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="chat-send trans" ng-if="curUser">
+        <textarea ng-model="chat._sendMsg" spellcheck="false" maxlength="500" ng-keyup="chat.keyupSend($event)"></textarea>
+        <a class="fa fa-send-o" ng-click="chat.keyupSend()"></a>
+    </div>
+    <div class="chat-login" ng-if="!curUser">
+        <a class="login-btn" ng-click="$root.login()">登录</a>
+        <a class="register-btn" ng-click="$root.register()">注册</a>
     </div>
 </div>
 <script type="text/javascript">

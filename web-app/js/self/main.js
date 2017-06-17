@@ -237,15 +237,11 @@
 
         // 刷新登录状态
         $rootScope.loadLogin = function(){
-            var colorArr = ["#1abc9c", "#16a085", "##2ecc71", "#27ae60", "#9b59b6", "#8e44ad", "#34495e", "#2c3e50", "#f1c40f", "#f39c12", "#e67e22", "#d35400", "#e74c3c", "#c0392b", "#ecf0f1", "#bdc3c7", "#95a5a6", "#7f8c8d"];
             $http.post(window.ctx + "auth/getCurrentUser").success(function(data){
                 if(data.success){
                     $rootScope.curUser = data.data;
                     if($rootScope.curUser){
-                        // 随机个性颜色
-                        // if(!$rootScope.curUser.color){
-                        //     $rootScope.curUser.color = colorArr[parseInt(Math.random() * 100) % colorArr.length]
-                        // }
+
                         $rootScope.loadCollect();
                     }else{
                         // 清空我的关注
@@ -366,12 +362,109 @@
             }
         };
 
-        $rootScope.loadLogin();
-
         //platforms: platforms, types: types]
         // 获取分类和平台
         $http.get(window.ctx + "index/getIndexData").success(function(data){
             $rootScope.topData = data.data;
+        });
+
+        // 刷新登录状态
+        $rootScope.loadLogin();
+
+
+        // 聊天室加载
+        $rootScope.chat = ({
+            socket: new SockJS(window.ctx + "stomp"),
+            client: null,
+            logs: [],
+            init: function(){
+                var _this = this;
+                $http.post(window.ctx + "chat/latelyLog").success(function(data){
+                    if(data.success){
+                        _this.logs = data.data.concat(_this.logs);
+                        _this.setScrollBottom();
+                    }else{
+                        $log.log("加载最近聊天记录错误", data);
+                    }
+                });
+                var client = this.client = Stomp.over(this.socket);
+
+                client.connect({}, function() {
+                    client.subscribe("/topic/chatMsg", function(message) {
+                        // 有双层转换
+                        var data = JSON.parse(JSON.parse(message.body));
+                        if(data.msg){
+                            $rootScope.$apply(function(){
+                                _this.logs.push(data);
+                                _this.setScrollBottom();
+                            });
+                        }
+                    });
+                });
+
+                return this;
+            },
+            send: function(msg){
+                if(!msg.trim()){
+                    alert("不能空值");
+                    return;
+                }
+                if(!$rootScope.curUser){
+                    alert("同志, 要登录才能玩...");
+                    return;
+                }
+                var _this = this;
+                $http.post(window.ctx + "chat/send", $.param({msg: msg})).success(function(data){
+                    if(!data.success){
+                        alert(data.message || "系统错误")
+                    }else{
+                        _this._sendMsg = '';
+                    }
+                });
+
+            },
+            /**
+             * 将滚动条拉到最底
+             */
+            setScrollBottom: function(noIf){
+                var scrollEle = $(".chat .chat-logs").stop(true, true);
+                var allHeightEle = $(".chat .chat-logs-height");
+                // 滚动条距离底部低于30，则强制跳到最下方
+                if(noIf || allHeightEle.innerHeight() - scrollEle.height() - scrollEle.scrollTop() <= 30){
+                    // 等待angular加载页面
+                    setTimeout(function(){
+                        var maxTop = allHeightEle.innerHeight() - scrollEle.height();
+                        // scrollEle.scrollTop(maxTop);
+                        scrollEle.animate({
+                            scrollTop: maxTop
+                        }, 200);
+                    });
+                }
+            },
+            // 输入框绑定值
+            _sendMsg: "",
+            keyupSend: function($event){
+                if($event && $event.keyCode !== 13){
+                    return;
+                }
+                if(!this._sendMsg.trim()){
+                    return;
+                }
+                this.send(this._sendMsg);
+                if($event){
+                    $event.stopPropagation();
+                    $event.preventDefault();
+                }
+
+            }
+        }).init();
+        var socket = new SockJS(window.ctx + "stomp");
+        var client = Stomp.over(socket);
+
+
+
+        $("#helloButton").click(function() {
+            client.send("/app/chatMsg", {}, JSON.stringify({content: $(".msg").val()}));
         });
 
         // 关键字搜索
