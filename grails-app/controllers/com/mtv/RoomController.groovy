@@ -12,17 +12,17 @@ class RoomController {
      * 喂给搜索引擎
      * @return
      */
-    def list(){
-        [rooms: getRoom(ParamUtils.limit())]
-    }
-
-    /**
-     * 喂给搜索引擎
-     * @return
-     */
-    def detail(){
-        [room: Room.get(params.getLong("id"))]
-    }
+//    def list(){
+//        [rooms: getRoom(ParamUtils.limit())]
+//    }
+//
+//    /**
+//     * 喂给搜索引擎
+//     * @return
+//     */
+//    def detail(){
+//        [room: Room.get(params.getLong("id"))]
+//    }
 
     public List<OnLineRoom> getRoom(Object limit){
         return OnLineRoom.createCriteria().list(limit){
@@ -84,12 +84,14 @@ class RoomController {
         def recommends = []
         if(!params.kw && !params.tag){
             int rCount = Recommend.count()
-            RandomUtils.nextInt(rCount)
-            recommends = Recommend.createCriteria().list(max: 5, offset: RandomUtils.nextInt(rCount - 6)){
-                setMaxResults(5)
-                order("sort", "desc")
-            }.collect {
-                return it.onLineRoom
+            if(rCount){
+                RandomUtils.nextInt(rCount)
+                recommends = Recommend.createCriteria().list(max: 5, offset: RandomUtils.nextInt(rCount - 6)){
+                    setMaxResults(5)
+                    order("sort", "desc")
+                }.collect {
+                    return it.onLineRoom
+                }
             }
         }
 

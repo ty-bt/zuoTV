@@ -385,6 +385,11 @@
 
 <body style="overflow: hidden">
 <div class="main" ng-cloak>
+    <div class="danmu">
+
+    </div>
+
+    %{-- 用户信息--}%
     <div class="f-user trans2">
         <div class="no-login" ng-if="curUser">
             <i style="cursor: default"><span class="fa fa-user"></span>&nbsp;{{curUser.name}}<span ng-if="curUser.isVip" class="vip" title="传说中尊贵的SVIP" ng-style="{color: curUser.color}">贵</span></i>
@@ -562,9 +567,7 @@
     </div>
 
 </div>
-<div class="danmu">
 
-</div>
 %{-- 聊天 --}%
 <div class="chat" ng-show="$root.chat.show" ng-cloak>
     <div class="chat-head">闲聊<a class="fa fa-close" ng-click="$root.chat.showHide()"></a></div>

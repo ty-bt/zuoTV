@@ -27,7 +27,7 @@ a{text-decoration: none;color: #313131;cursor: pointer;margin: 0 10px;}
 }
 .main .content>div{height:100%;overflow:hidden;width: 100%;}
 .main .content>.left-bg{position:absolute;width: 245px;height: 100%;left: 0;filter: blur(5px);}
-.main .content>.left{width: 225px;padding: 0 10px;background: rgba(0, 0, 0, 0.43);color: #fff;position: absolute;left: 0;}
+.main .content>.left{width: 225px;padding: 0 10px;background: rgba(0, 0, 0, 0.43);color: #fff;position: absolute;left: 0;z-index: 2;}
 .main .content>.left h1{margin: 0;padding: 0;line-height: 50px;/* background: #2980b9; */color: #fff;padding-right: 20px;text-align: right;position: relative;}
 .main .content > .left h1 span {
     position: absolute;
@@ -224,7 +224,7 @@ a{text-decoration: none;color: #313131;cursor: pointer;margin: 0 10px;}
 .r-detail .d-content-i .btns .fa{padding: 5px;color: #fff;}
 
 /* 弹出窗口*/
-.show-window{position: absolute;top: 50%;left: 50%;background: #fff;border-radius: 4px;box-shadow: 0 0 7px 0 #000;}
+.show-window{position: absolute;z-index: 99;top: 50%;left: 50%;background: #fff;border-radius: 4px;box-shadow: 0 0 7px 0 #000;}
 .show-window>.close{position: absolute;right: 10px;top: 10px;cursor: pointer;font-size: 20px;}
 .show-window>.close:hover{color: #1abc9c}
 
@@ -304,7 +304,7 @@ a{text-decoration: none;color: #313131;cursor: pointer;margin: 0 10px;}
 .vip:hover{box-shadow: 0 0 8px 1px;}
 
 /*左侧下方登录信息*/
-.f-user{position: absolute;width: 225px;bottom: 0;left: 10px;background: rgba(0, 0, 0, 0.6);z-index: 1;color: #fff;text-align: center;padding-top: 6px;border-radius: 2px 2px 0 0;}
+.f-user{position: absolute;width: 225px;bottom: 0;left: 10px;background: rgba(0, 0, 0, 0.6);z-index: 3;color: #fff;text-align: center;padding-top: 6px;border-radius: 2px 2px 0 0;}
 .f-user:hover{background: rgba(0, 0, 0, 0.9)}
 .f-user i{cursor: pointer;display: inline-block;font-size: 14px;line-height: 40px;padding: 0 12px;/* margin-left: 5px; */font-style: normal;}
 .f-user i:hover,.f-user i.hover{text-shadow: 0 0 10px}
@@ -428,7 +428,7 @@ a{text-decoration: none;color: #313131;cursor: pointer;margin: 0 10px;}
     text-align: center;
 }
 .chat .chat-login a{}
-.danmu{position: absolute;width: 245px;top: 0;z-index: 5;left: 0;overflow: hidden;height: 80px;}
+.danmu{position: absolute;width: 245px;top: 0;z-index: 1;left: 0;overflow: hidden;height: 80px;}
 .danmu span{position: absolute;word-break: normal;word-wrap: normal;animation: dm 3s ease-out;/* width: 9999px; */left: -100%;width: 100%;color: #fff;opacity: 0.5;line-height: 25px;z-index: 99999;}
 
 @-webkit-keyframes dm /* Safari 和 Chrome */

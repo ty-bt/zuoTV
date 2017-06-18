@@ -54,28 +54,28 @@ class ChatController {
      * @param text
      * @return
      */
-    @MessageMapping("chatMsg")
-    @SendToUser("/topic/chatMsg1")
-    @SendTo
-    protected String chat(SimpMessageHeaderAccessor headerAccessor, Map obj){
-        if(!headerAccessor.getUser()){
-            headerAccessor.setUser(new Principal() {
-                @Override
-                public String getName() {
-                    return ""
-                }
-            })
-        }
-        if(headerAccessor.sessionAttributes.httpSessionID){
-            User user = sessionTrackerService.getSessionById(headerAccessor.sessionAttributes.httpSessionID)?.user
-            if(obj?.c && user){
-                brokerMessagingTemplate.convertAndSend("/topic/chatMsg", JSON.toJSONString([u: [n: user.name, i: user.id], msg: obj?.c]))
-                return JSON.toJSONString([success: true])
-            }
-        }
-        return JSON.toJSONString([success: false])
-
-    }
+//    @MessageMapping("chatMsg")
+//    @SendToUser("/topic/chatMsg1")
+//    @SendTo
+//    protected String chat(SimpMessageHeaderAccessor headerAccessor, Map obj){
+//        if(!headerAccessor.getUser()){
+//            headerAccessor.setUser(new Principal() {
+//                @Override
+//                public String getName() {
+//                    return ""
+//                }
+//            })
+//        }
+//        if(headerAccessor.sessionAttributes.httpSessionID){
+//            User user = sessionTrackerService.getSessionById(headerAccessor.sessionAttributes.httpSessionID)?.user
+//            if(obj?.c && user){
+//                brokerMessagingTemplate.convertAndSend("/topic/chatMsg", JSON.toJSONString([u: [n: user.name, i: user.id], msg: obj?.c]))
+//                return JSON.toJSONString([success: true])
+//            }
+//        }
+//        return JSON.toJSONString([success: false])
+//
+//    }
 
 //        @MessageMapping("hello")
 //        @SendTo("/topic/hello")
