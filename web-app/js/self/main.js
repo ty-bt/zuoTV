@@ -404,7 +404,7 @@
                         var data = JSON.parse(JSON.parse(message.body));
                         if(data.msg){
                             $rootScope.$apply(function(){
-                                if(!_this.logs.length || new Date(new Date(data.d).getTime() - _this.logs[_this.logs.length - 1].d).getTime() >= 300000){
+                                if(!_this.logs.length || new Date(data.d).getTime() - new Date(_this.logs[_this.logs.length - 1].d).getTime() >= 300000){
                                     // 间隔超过5分钟要显示时间
                                     data.longTime = true;
                                 }
