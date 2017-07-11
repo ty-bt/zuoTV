@@ -34,9 +34,7 @@ environments {
     production {
         dataSource {
             dbCreate = ""
-            username = "root"
-            password = "123456"
-            url = "jdbc:mysql://127.0.0.1:3306/tv?userUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull"
+
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                jmxEnabled = true
