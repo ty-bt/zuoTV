@@ -3,6 +3,8 @@
 
 [演示地址: nozuonodie.cn](http://www.nozuonodie.cn)
 
+![图片](https://github.com/ty-bt/zuoTV/blob/master/i.png)
+
 ## 定时任务(RoomJob)
 > 5分钟执行一次,如果5分钟之内没有执行完在等5分钟
 * 抓取支持平台的所有在线房间
